@@ -30,7 +30,6 @@ class _UpdateScreenState extends State<UpdateScreen> {
             children: [
               Flexible(
                 child: UpdateTextFeild(
-                    
                     controller: _nameController,
                     hintText: 'Enter name',
                     autofocus: false,
@@ -102,6 +101,12 @@ class _UpdateScreenState extends State<UpdateScreen> {
   }
 
   addVerticalSpace(Size size) {
+    return SizedBox(
+      height: size.height * 0.03,
+    );
+  }
+
+  addHorizontalSpace(Size size) {
     return SizedBox(
       height: size.height * 0.03,
     );
