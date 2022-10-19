@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 import 'package:savvy/models/login_user.dart';
+import 'package:savvy/models/user.dart';
 import 'package:savvy/screens/intro_page.dart';
 import 'package:savvy/services/api_services.dart';
 
@@ -12,6 +13,7 @@ import '../utils/color_constants.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
+  static const String screenName = 'Login';
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -110,9 +112,9 @@ class _LoginPageState extends State<LoginPage> {
             Expanded(
               child: SignUpPageTextFeild(
                 controller: _emailController,
-                hintText: 'Enter your Email',
+                hintText: 'Enter your email',
                 autofocus: true,
-                labelText: 'Enter Email',
+                labelText: 'email',
               ),
             ),
             Expanded(
@@ -140,15 +142,10 @@ class _LoginPageState extends State<LoginPage> {
             onesignalId: "onesignal_id"));
 
         if (response.statusCode == 200 && mounted) {
-          print(_emailController.text);
-          print(_passwordController.text);
-          print('okay');
-          print(response.statusCode.toString());
-          Navigator.push(context, MaterialPageRoute(
-            builder: (context) {
-              return const IntroPage();
-            },
-          ));
+          User? user = User.fromJson(response.body.toString());
+          print(user.data.user.usersCustomersId.toString());
+          Navigator.popAndPushNamed(context, IntroPage.screenName,
+              arguments: user);
         } else {
           showDialog(
             context: context,
@@ -157,9 +154,6 @@ class _LoginPageState extends State<LoginPage> {
             },
           );
         }
-
-        debugPrint(_emailController.text);
-        debugPrint(_passwordController.text);
       },
       width: size.width * 0.6,
       height: size.height * 0.1,

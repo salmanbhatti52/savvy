@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../utils/color_constants.dart';
-
-class SignUpPageTextFeild extends StatelessWidget {
-  const SignUpPageTextFeild({
+class UpdateTextFeild extends StatelessWidget {
+  const UpdateTextFeild({
     Key? key,
     required this.controller,
     this.maxLines,
@@ -37,13 +35,17 @@ class SignUpPageTextFeild extends StatelessWidget {
       validator: validator,
       controller: controller,
       decoration: InputDecoration(
+        filled: true,
+        fillColor: Colors.black.withOpacity(0.3),
         label: Text(labelText),
-        disabledBorder: InputBorder.none,
-        floatingLabelStyle:
-            GoogleFonts.actor(color: ColorConstants.buttonColorLight),
-        enabledBorder: UnderlineInputBorder(
-            borderSide: BorderSide(width: size.width * 0.003)),
-        border: const UnderlineInputBorder(borderSide: BorderSide(width: 3)),
+        disabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(width: size.width * 0.003),
+        ),
+        floatingLabelStyle: GoogleFonts.actor(color: Colors.black),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(width: size.width * 0.003),
+        ),
+        border: const OutlineInputBorder(borderSide: BorderSide(width: 3)),
         constraints: BoxConstraints(maxWidth: size.width * 0.7),
         hintText: hintText,
       ),

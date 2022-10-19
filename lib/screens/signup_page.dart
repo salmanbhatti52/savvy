@@ -13,6 +13,7 @@ import '../utils/color_constants.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
+  static const String screenName = 'SignUp';
 
   @override
   State<SignUpPage> createState() => _SignUpPageState();
@@ -31,6 +32,14 @@ class _SignUpPageState extends State<SignUpPage> {
     _nameController = TextEditingController();
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _nameController.dispose();
+    _passwordController.dispose();
+    super.dispose();
   }
 
   late Size size;
@@ -154,8 +163,9 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget _actionButton() {
     return MyButton(
       ontap: () async {
+        Response response;
         if (formKey.currentState!.validate()) {
-          Response response = await _apiServices.signUpWithApi(CreateUser(
+          response = await _apiServices.signUpWithApi(CreateUser(
             onesignalId: "",
             fullName: _nameController.text.toString(),
             userEmail: _emailController.text.toString(),
@@ -164,19 +174,15 @@ class _SignUpPageState extends State<SignUpPage> {
           ));
 
           if (response.statusCode == 200 && mounted) {
-            Navigator.push(context, MaterialPageRoute(
-              builder: (context) {
-                return const IntroPage();
-              },
-            ));
+            Navigator.popAndPushNamed(context, IntroPage.screenName);
           } else {
-            print(response.statusCode.toString());
+            throw Exception();
           }
         } else {
           showDialog(
             context: context,
             builder: (context) {
-              return signUpFailedAlertDialog('Please enter Empty feilds');
+              return signUpFailedAlertDialog('');
             },
           );
         }

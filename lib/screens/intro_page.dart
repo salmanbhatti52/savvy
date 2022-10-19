@@ -2,17 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:savvy/common/widgets/custom_button.dart';
+import 'package:savvy/models/user.dart';
+import 'package:savvy/screens/features/otp_screen.dart';
+import 'package:savvy/screens/features/updateuser_screen.dart';
 import 'package:savvy/screens/page_view_Screens/page_view_screen_one.dart';
 import 'package:savvy/utils/color_constants.dart';
 
 class IntroPage extends StatelessWidget {
   const IntroPage({super.key});
+  static const String screenName = 'Intro';
 
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
+    var user = ModalRoute.of(context)!.settings.arguments as User?;
+    //print("${user!.data.user.usersCustomersId}at intro page");
+
     return SafeArea(
       child: Scaffold(
+        drawer: _buildDrawer(context, user),
+        appBar: _buldAppBar(),
         body: Center(child: introPageBody(size, context)),
       ),
     );
@@ -23,7 +32,6 @@ class IntroPage extends StatelessWidget {
       children: [
         Positioned(
             bottom: 0,
-            //left: ,
             right: size.width * 0.71,
             child: SizedBox(
               height: size.height * 0.19,
@@ -111,5 +119,60 @@ class IntroPage extends StatelessWidget {
           style: GoogleFonts.raleway(
               fontSize: size.height * 0.02, fontWeight: FontWeight.bold),
         ));
+  }
+
+  _buldAppBar() {
+    return AppBar(
+      elevation: 0,
+      leading: Builder(
+        builder: (context) {
+          return IconButton(
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              },
+              icon: const Icon(
+                Icons.menu_open,
+                color: Colors.green,
+              ));
+        },
+      ),
+      backgroundColor: Colors.transparent,
+    );
+  }
+
+  _buildDrawer(BuildContext context, User? user) {
+    return Drawer(
+      backgroundColor: ColorConstants.buttonColor,
+      child: Column(
+        children: [
+          ListTile(
+            leading: const Icon(Icons.settings),
+            title: const Text("Update Info"),
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(
+                builder: (context) {
+                  return UpdateScreen(
+                    user: user,
+                  );
+                },
+              ));
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.lock_reset),
+            title: const Text("Reset Password"),
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(
+                builder: (context) {
+                  return OtpScreen(
+                    user: user,
+                  );
+                },
+              ));
+            },
+          ),
+        ],
+      ),
+    );
   }
 }
