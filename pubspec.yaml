@@ -42,8 +42,8 @@ dependencies:
   flutter_native_splash:
   easy_sidemenu:
   context_menus:
-  http:
-  dio:
+  http: ^0.13.5
+  dio: ^4.0.6
 
 dev_dependencies:
   change_app_package_name: ^0.1.3
