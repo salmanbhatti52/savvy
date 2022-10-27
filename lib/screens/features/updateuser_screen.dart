@@ -1,9 +1,12 @@
+import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
-import 'package:savvy/common/widgets/update_textfeilds.dart';
-import 'package:savvy/models/create_user.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:savvy/common/widgets/otp_screen_textfeild.dart';
 import 'package:savvy/models/user.dart';
 import 'package:savvy/services/api_services.dart';
+
+import '../../common/widgets/custom_button.dart';
+import '../../utils/color_constants.dart';
 
 class UpdateScreen extends StatefulWidget {
   const UpdateScreen({super.key, this.user});
@@ -22,14 +25,17 @@ class _UpdateScreenState extends State<UpdateScreen> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     // print("${widget.user!.data.user.usersCustomersId}at update page");
-    return SafeArea(
+    return ColorfulSafeArea(
+      color: Colors.white,
       child: Scaffold(
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Flexible(
-                child: UpdateTextFeild(
+                  flex: 2, child: Image.asset(r'assets/images/updatepng.png')),
+              Flexible(
+                child: OtpTextFeild(
                     controller: _nameController,
                     hintText: 'Enter name',
                     autofocus: false,
@@ -37,7 +43,7 @@ class _UpdateScreenState extends State<UpdateScreen> {
               ),
               addVerticalSpace(size),
               Flexible(
-                child: UpdateTextFeild(
+                child: OtpTextFeild(
                     controller: _emailController,
                     hintText: 'Enter Email',
                     autofocus: false,
@@ -45,7 +51,7 @@ class _UpdateScreenState extends State<UpdateScreen> {
               ),
               addVerticalSpace(size),
               Flexible(
-                child: UpdateTextFeild(
+                child: OtpTextFeild(
                     controller: _passwordController,
                     hintText: 'Enter Password',
                     autofocus: false,
@@ -53,32 +59,19 @@ class _UpdateScreenState extends State<UpdateScreen> {
               ),
               addVerticalSpace(size),
               Flexible(
-                  child: ElevatedButton(
-                onPressed: () async {
-                  Response response = await _apiServices.updateUSerWithApi(
-                      widget.user,
-                      CreateUser(
-                          onesignalId: "",
-                          fullName: _nameController.text,
-                          userEmail: _emailController.text,
-                          userPassword: _passwordController.text,
-                          notificationSwitch: "yes"));
-
-                  if (response.statusCode == 200 && mounted) {
-                    Navigator.pop(context);
-                  } else {
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return updateFailedAlertDialog(
-                            response.body.toString());
-                      },
-                    );
-                  }
-
-                  // debugPrint(ApiUrls.endPointUpdate + id);
-                },
-                child: const Text('Update'),
+                  child: MyButton(
+                radius: size.width * 0.07,
+                color: ColorConstants.buttonColorLight,
+                height: size.height * 0.06,
+                width: size.width * 0.6,
+                spreadRadius: 0,
+                child: Text(
+                  'Update',
+                  style: GoogleFonts.abel(
+                      fontSize: size.height * 0.02,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold),
+                ),
               )),
             ],
           ),

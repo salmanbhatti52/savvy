@@ -1,3 +1,4 @@
+import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -20,9 +21,10 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
   @override
   Widget build(BuildContext context) {
     size = MediaQuery.of(context).size;
-    return SafeArea(
+    return ColorfulSafeArea(
+      color: Colors.white,
       child: Scaffold(
-        backgroundColor: ColorConstants.slectedPlanBg,
+        //  backgroundColor: ColorConstants.slectedPlanBg,
         drawerEnableOpenDragGesture: false,
         //endDrawer: myEndDrawer(),
         appBar: _buildAppBar(),
@@ -34,7 +36,7 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
   AppBar _buildAppBar() {
     return AppBar(
       elevation: 0,
-      backgroundColor: ColorConstants.slectedPlanBg,
+      backgroundColor: Colors.transparent,
       centerTitle: true,
       title: Text(
         'Savvy',
@@ -93,7 +95,7 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [SvgPicture.asset(r'assets/svgs/earthsvg.svg')],
+                children: [Image.asset(r'assets/images/earth.png')],
               ),
             ),
           ),
@@ -102,14 +104,15 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
     );
   }
 
-  seekBarContainer() {
+  Widget seekBarContainer() {
     return Column(
       children: [
         Flexible(
             flex: 5,
             child: Container(
+              decoration: myBoxDecoration(),
               width: size.width * 0.9,
-              color: Colors.white54,
+              //    color: Colors.green,
               child: SizedBox(
                 width: size.width * 0.5,
                 child: Padding(
@@ -146,11 +149,14 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
                 ),
               ),
             )),
+        const SizedBox(
+          height: 5,
+        ),
         Flexible(
             flex: 3,
             child: Container(
               width: size.width * 0.9,
-              color: ColorConstants.slectedPlanBg1,
+              decoration: myBoxDecorationn(),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
@@ -160,7 +166,7 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
                         child: Text(
                           'Your investments after 10 years',
                           style: GoogleFonts.raleway(
-                              color: ColorConstants.introPageTextColor,
+                              color: Colors.black,
                               fontSize: size.height * 0.020),
                         )),
                     SizedBox(
@@ -180,9 +186,10 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
                               child: Text(
                                 '''3128.61''',
                                 style: TextStyle(
-                                    fontSize: size.height * 0.030,
-                                    fontWeight: FontWeight.bold,
-                                    color: ColorConstants.introPageTextColor),
+                                  fontSize: size.height * 0.030,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                ),
                               ),
                             ),
                           ],
@@ -197,6 +204,7 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
 
   Widget mySlider() {
     return Slider(
+        label: '''200''',
         inactiveColor: Colors.grey,
         activeColor: ColorConstants.buttonColorLight,
         thumbColor: ColorConstants.buttonColorLight,
@@ -213,6 +221,7 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
 
   Widget mySliderTwo() {
     return Slider(
+        label: '''200''',
         inactiveColor: Colors.grey,
         activeColor: ColorConstants.buttonColorLight,
         thumbColor: ColorConstants.buttonColorLight,
@@ -295,6 +304,20 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
           ],
         ),
       ),
+    );
+  }
+
+  myBoxDecoration() {
+    return BoxDecoration(
+      color: Colors.grey.withOpacity(0.1),
+      borderRadius: BorderRadius.circular(10),
+    );
+  }
+
+  myBoxDecorationn() {
+    return BoxDecoration(
+      color: Colors.teal.shade100,
+      borderRadius: BorderRadius.circular(10),
     );
   }
 }

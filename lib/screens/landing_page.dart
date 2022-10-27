@@ -1,9 +1,8 @@
+import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:savvy/screens/signup_page.dart';
 import 'package:savvy/utils/color_constants.dart';
-
 import '../common/widgets/custom_button.dart';
 import 'login_page.dart';
 
@@ -14,35 +13,23 @@ class LandingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return SafeArea(
-      child: Scaffold(
-        body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: size.width * 0.03),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Expanded(
-                flex: 1,
-                child: SizedBox(
-                  height: size.height * 0.03,
-                ),
-              ),
-              Expanded(flex: 1, child: title(size)),
-              SizedBox(
-                height: size.height * 0.02,
-              ),
-              Expanded(flex: 7, child: svgImage()),
-              SizedBox(
-                height: size.height * 0.03,
-              ),
-              Expanded(flex: 1, child: actionButtons(size, context)),
-              Expanded(
-                flex: 1,
-                child: SizedBox(
-                  height: size.height * 0.03,
-                ),
-              ),
-            ],
+    return Container(
+      color: Colors.white,
+      child: ColorfulSafeArea(
+        color: Colors.white,
+        child: Scaffold(
+          body: Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: size.width * 0.03,
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Flexible(flex: 3, child: title(size)),
+                Flexible(flex: 10, child: svgImage()),
+                Flexible(flex: 1, child: actionButtons(size, context)),
+              ],
+            ),
           ),
         ),
       ),
@@ -56,7 +43,7 @@ class LandingPage extends StatelessWidget {
       children: [
         Text('Savvy',
             style: GoogleFonts.acme(
-                fontSize: size.height * 0.08,
+                fontSize: size.height * 0.07,
                 color: ColorConstants.landingPageTitleColor)),
       ],
     );
@@ -64,7 +51,7 @@ class LandingPage extends StatelessWidget {
 
   Widget svgImage() {
     return SizedBox(
-      child: SvgPicture.asset(r'assets/svgs/svg_one.svg'),
+      child: Image.asset(r'assets/images/landigpgpng.png'),
     );
   }
 
@@ -84,7 +71,7 @@ class LandingPage extends StatelessWidget {
               },
               width: size.width * 0.4,
               height: size.height * 0.1,
-              radius: size.height * 0.03,
+              radius: size.height * 0.05,
               spreadRadius: 2,
               color: ColorConstants.buttonColorLight,
               child: Text(
@@ -112,7 +99,7 @@ class LandingPage extends StatelessWidget {
               spreadRadius: 2,
               width: size.width * 0.4,
               height: size.height * 0.1,
-              radius: size.height * 0.03,
+              radius: size.height * 0.05,
               color: ColorConstants.buttonColor,
               child: Text(
                 'Sign Up',
@@ -127,3 +114,28 @@ class LandingPage extends StatelessWidget {
     );
   }
 }
+
+// // Flexible(
+//             //   flex: 1,
+//             //   child: SizedBox(
+//             //     height: size.height * 0.01,
+//             //   ),
+//             // ),
+//             Flexible(flex: 5, child: title(size)),
+//             SizedBox(
+//               height: size.height * 0.02,
+//             ),
+//             Flexible(flex: 9, child: svgImage()),
+//             Flexible(
+//               flex: 1,
+//               child: SizedBox(
+//                 height: size.height * 0.03,
+//               ),
+//             ),
+//             Flexible(flex: 1, child: actionButtons(size, context)),
+//             Flexible(
+//               flex: 1,
+//               child: SizedBox(
+//                 height: size.height * 0.03,
+//               ),
+//             ),

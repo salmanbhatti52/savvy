@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 import 'package:savvy/screens/landing_page.dart';
 
@@ -19,7 +20,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return ColorfulSafeArea(
+      color: Colors.white,
       child: Scaffold(
         backgroundColor: Colors.white,
         body: Center(

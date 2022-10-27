@@ -1,13 +1,17 @@
+import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
-import 'package:savvy/screens/intro_page.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:savvy/common/widgets/otp_screen_textfeild.dart';
 import 'package:savvy/services/api_services.dart';
 
-import '../../common/widgets/update_textfeilds.dart';
+import '../../common/widgets/custom_button.dart';
+import '../../common/widgets/loader.dart';
+import '../../utils/color_constants.dart';
+import '../intro_page.dart';
 
 class ResetScreen extends StatefulWidget {
-  const ResetScreen({super.key, required this.userId});
-  final String userId;
+  const ResetScreen({super.key, this.userId});
+  final String? userId;
 
   @override
   State<ResetScreen> createState() => _ResetScreenState();
@@ -18,18 +22,20 @@ class _ResetScreenState extends State<ResetScreen> {
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
   final ApiServices _apiServices = ApiServices();
+  bool isClicked = false;
 
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    return SafeArea(
+    return ColorfulSafeArea(
+      color: Colors.white,
       child: Scaffold(
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Flexible(
-                child: UpdateTextFeild(
+                child: OtpTextFeild(
                     controller: _otpController,
                     hintText: 'Enter OTP',
                     autofocus: false,
@@ -37,7 +43,7 @@ class _ResetScreenState extends State<ResetScreen> {
               ),
               addVerticalSpace(size),
               Flexible(
-                child: UpdateTextFeild(
+                child: OtpTextFeild(
                     controller: _passwordController,
                     hintText: 'New Password',
                     autofocus: false,
@@ -45,37 +51,42 @@ class _ResetScreenState extends State<ResetScreen> {
               ),
               addVerticalSpace(size),
               Flexible(
-                child: UpdateTextFeild(
+                child: OtpTextFeild(
                     controller: _confirmPasswordController,
                     hintText: 'Confirm Password',
                     autofocus: false,
                     labelText: 'Confirm'),
               ),
+              addVerticalSpace(size),
               Flexible(
-                  child: ElevatedButton(
-                onPressed: () async {
-                  var id = widget.userId;
-                  // print("${id}at reset Screen");
-                  Response response = await _apiServices.resetPasswordWithApi(
-                      id,
-                      _otpController.text,
-                      _passwordController.text,
-                      _confirmPasswordController.text);
-
-                  if (response.statusCode == 200 && mounted) {
-                    Navigator.popUntil(
-                        context, ModalRoute.withName(IntroPage.screenName));
-                  } else {
-                    showDialog(
-                      context: context,
+                child: MyButton(
+                  ontap: () {
+                    setState(() {
+                      isClicked = true;
+                    });
+                    Navigator.push(context, MaterialPageRoute(
                       builder: (context) {
-                        return resetScreenAlertDialog(response.body.toString());
+                        isClicked = false;
+                        return const IntroPage();
                       },
-                    );
-                  }
-                },
-                child: const Text('Done'),
-              )),
+                    ));
+                  },
+                  radius: size.width * 0.07,
+                  color: ColorConstants.buttonColorLight,
+                  height: size.height * 0.06,
+                  width: size.width * 0.6,
+                  spreadRadius: 0,
+                  child: !isClicked
+                      ? Text(
+                          '''Done''',
+                          style: GoogleFonts.abel(
+                              fontSize: size.height * 0.02,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold),
+                        )
+                      : const Loader(),
+                ),
+              ),
             ],
           ),
         ),

@@ -2,10 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../utils/color_constants.dart';
-
-class SignUpPageTextFeild extends StatelessWidget {
-  const SignUpPageTextFeild({
+class OtpTextFeild extends StatelessWidget {
+  const OtpTextFeild({
     Key? key,
     required this.controller,
     this.maxLines,
@@ -15,14 +13,9 @@ class SignUpPageTextFeild extends StatelessWidget {
     this.counterStyle,
     this.hintStyle,
     required this.autofocus,
-    required this.labelText,
+    this.labelText,
     this.validator,
-    required this.obscureText,
-    this.suffixIcon,
-    this.suffix,
-    this.inputType,
   }) : super(key: key);
-
   final TextEditingController controller;
   final int? maxLines;
   final int? minLines;
@@ -31,12 +24,8 @@ class SignUpPageTextFeild extends StatelessWidget {
   final TextStyle? counterStyle;
   final TextStyle? hintStyle;
   final bool autofocus;
-  final String labelText;
+  final String? labelText;
   final String? Function(String?)? validator;
-  final bool obscureText;
-  final Widget? suffixIcon;
-  final Widget? suffix;
-  final TextInputType? inputType;
 
   @override
   Widget build(BuildContext context) {
@@ -45,28 +34,29 @@ class SignUpPageTextFeild extends StatelessWidget {
       autofocus: autofocus,
       validator: validator,
       controller: controller,
-      obscureText: obscureText,
-      keyboardType: inputType,
       decoration: InputDecoration(
+        contentPadding: const EdgeInsets.all(8),
         filled: true,
-        suffixIcon: suffixIcon,
-        contentPadding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-        suffix: suffix,
-        label: Text(labelText),
-        disabledBorder: const OutlineInputBorder(),
-        floatingLabelStyle:
-            GoogleFonts.actor(color: ColorConstants.buttonColorLight),
-        focusedBorder: OutlineInputBorder(
+        fillColor: Colors.grey.withOpacity(0.3),
+        //label: Text(labelText),
+        disabledBorder: OutlineInputBorder(
           borderSide:
               BorderSide(width: size.width * 0.003, color: Colors.transparent),
-          borderRadius: BorderRadius.circular(size.width * 0.2),
         ),
+        floatingLabelStyle: GoogleFonts.actor(color: Colors.black),
         enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(20),
           borderSide:
               BorderSide(width: size.width * 0.003, color: Colors.transparent),
-          borderRadius: BorderRadius.circular(size.width * 0.3),
         ),
-        constraints: BoxConstraints(maxWidth: size.width * 0.8),
+        border: const OutlineInputBorder(borderSide: BorderSide(width: 3)),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(20),
+          borderSide:
+              BorderSide(width: size.width * 0.003, color: Colors.transparent),
+        ),
+        constraints: BoxConstraints(
+            maxWidth: size.width * 0.7, minWidth: size.width * 0.6),
         hintText: hintText,
       ),
     );

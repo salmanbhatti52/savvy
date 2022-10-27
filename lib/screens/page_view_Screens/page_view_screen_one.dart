@@ -1,4 +1,7 @@
+import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
+import 'package:savvy/common/widgets/page_view_text.dart';
+import 'package:savvy/common/widgets/round_icon_button.dart';
 import 'package:savvy/screens/page_view_Screens/page_view_screen_two.dart';
 
 import '../../common/widgets/custom_button.dart';
@@ -12,16 +15,19 @@ class PageViewScreenOne extends StatelessWidget {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
 
-    return SafeArea(
+    return ColorfulSafeArea(
+      color: Colors.white,
       child: Scaffold(
         body: Padding(
           padding: const EdgeInsets.symmetric(vertical: 20),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Expanded(flex: 1, child: headingText(size)),
-              Expanded(flex: 1, child: descriptonText(size)),
-              Expanded(flex: 4, child: svgImage(size)),
-              Expanded(flex: 1, child: actionButtons(size, context)),
+              Flexible(flex: 1, child: _iconButton(context)),
+              Flexible(flex: 1, child: headingText(size)),
+              Flexible(flex: 1, child: descriptonText(size)),
+              Flexible(flex: 4, child: svgImage(size)),
+              Flexible(flex: 1, child: actionButtons(size, context)),
             ],
           ),
         ),
@@ -41,85 +47,25 @@ class PageViewScreenOne extends StatelessWidget {
   }
 
   Widget actionButtons(Size size, BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          Flexible(
-            child: SizedBox(
-              child: MyButton(
-                  ontap: () {
-                    Navigator.pop(context);
-                  },
-                  radius: size.height * 0.02,
-                  color: ColorConstants.introPageTextColor,
-                  height: size.height * 0.05,
-                  width: size.width * 0.4,
-                  spreadRadius: 2,
-                  child: Text(
-                    'Back',
-                    style: TextStyle(
-                        color: Colors.white, fontSize: size.height * 0.020),
-                  )),
-            ),
-          ),
-          Flexible(
-            child: SizedBox(
-              child: MyButton(
-                  ontap: () {
-                    Navigator.push(context, MaterialPageRoute(
-                      builder: (context) {
-                        return const PageViewScreenTwo();
-                      },
-                    ));
-                  },
-                  radius: size.height * 0.02,
-                  color: ColorConstants.buttonColor,
-                  height: size.height * 0.05,
-                  width: size.width * 0.4,
-                  spreadRadius: 2,
-                  child: Text(
-                    'Next',
-                    style: TextStyle(
-                        color: Colors.white, fontSize: size.height * 0.020),
-                  )),
-            ),
-          ),
-        ],
-      ),
+    return MyButton(
+      ontap: () {
+        Navigator.push(context, MaterialPageRoute(
+          builder: (context) {
+            return const PageViewScreenTwo();
+          },
+        ));
+      },
+      radius: size.width * 0.07,
+      color: ColorConstants.buttonColorLight,
+      height: size.height * 0.06,
+      width: size.width * 0.6,
+      spreadRadius: 0,
+      child: ButtonText.buttonText(size),
     );
   }
 
   Widget svgImage(Size size) {
-    return Stack(
-      children: [
-        Container(
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            gradient: containerGradient(),
-          ),
-        ),
-        Positioned(
-          top: size.height * 0.075,
-          left: size.width * 0.080,
-          child: SizedBox(
-            height: size.height * 0.4,
-            width: size.width * 0.8,
-            child: Image.asset(r'assets/images/pgviewonesvg.png'),
-          ),
-        ),
-      ],
-    );
-  }
-
-  LinearGradient containerGradient() {
-    return const LinearGradient(colors: [
-      ColorConstants.gradientColorOne,
-      ColorConstants.gradientColorTwo,
-      ColorConstants.gradientColorThree,
-    ]);
+    return Image.asset(r'assets/images/pgview1png.png');
   }
 
   descriptonText(Size size) {
@@ -129,6 +75,24 @@ class PageViewScreenOne extends StatelessWidget {
       style: TextStyle(
           color: ColorConstants.introPageTextColor,
           fontSize: size.height * 0.03),
+    );
+  }
+
+  Widget _iconButton(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: Row(
+        children: [
+          RoundButton(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              icon: const Icon(
+                Icons.arrow_back,
+                color: Colors.white,
+              ))
+        ],
+      ),
     );
   }
 }

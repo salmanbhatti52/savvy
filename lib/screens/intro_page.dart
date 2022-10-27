@@ -3,7 +3,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:savvy/common/widgets/custom_button.dart';
 import 'package:savvy/models/user.dart';
-import 'package:savvy/screens/features/otp_screen.dart';
 import 'package:savvy/screens/features/updateuser_screen.dart';
 import 'package:savvy/screens/page_view_Screens/page_view_screen_one.dart';
 import 'package:savvy/utils/color_constants.dart';
@@ -16,7 +15,6 @@ class IntroPage extends StatelessWidget {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     var user = ModalRoute.of(context)!.settings.arguments as User?;
-    //print("${user!.data.user.usersCustomersId}at intro page");
 
     return SafeArea(
       child: Scaffold(
@@ -152,19 +150,6 @@ class IntroPage extends StatelessWidget {
               Navigator.push(context, MaterialPageRoute(
                 builder: (context) {
                   return UpdateScreen(
-                    user: user,
-                  );
-                },
-              ));
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.lock_reset),
-            title: const Text("Reset Password"),
-            onTap: () {
-              Navigator.push(context, MaterialPageRoute(
-                builder: (context) {
-                  return OtpScreen(
                     user: user,
                   );
                 },

@@ -1,15 +1,14 @@
+import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:http/http.dart';
-import 'package:savvy/models/login_user.dart';
-import 'package:savvy/models/user.dart';
+import 'package:savvy/common/widgets/custom_button.dart';
+import 'package:savvy/common/widgets/loader.dart';
+import 'package:savvy/common/widgets/text_feilds.dart';
+import 'package:savvy/screens/features/otp_screen.dart';
 import 'package:savvy/screens/intro_page.dart';
-import 'package:savvy/services/api_services.dart';
-
-import '../common/widgets/custom_button.dart';
-import '../common/widgets/text_feilds.dart';
-import '../utils/color_constants.dart';
+import 'package:savvy/screens/signup_page.dart';
+import 'package:savvy/utils/color_constants.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -20,185 +19,238 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  final ApiServices _apiServices = ApiServices();
-
+  bool isClicked = false;
   late Size size;
   @override
   Widget build(BuildContext context) {
     size = MediaQuery.of(context).size;
-    return SafeArea(
+    return ColorfulSafeArea(
+      color: Colors.white,
       child: Scaffold(
-        body: SingleChildScrollView(child: _buildBody()),
+        body: _builBody(),
       ),
     );
   }
 
-  Widget _buildBody() {
-    return Stack(
-      children: [
-        Positioned(
-          left: size.width * 0.52,
-          child: SizedBox(
-              child: SvgPicture.asset(
-            r'assets/svgs/signupleafs.svg',
-            fit: BoxFit.scaleDown,
+  Widget _builBody() {
+    return Column(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+      const Flexible(flex: 1, child: SizedBox()),
+      Flexible(flex: 4, child: _title()),
+      Flexible(flex: 7, child: _textFeilds()),
+      Flexible(flex: 2, child: _loginButton()),
+      Flexible(
+          flex: 1,
+          child: Text(
+            'OR',
+            style: GoogleFonts.aBeeZee(
+                color: const Color(0xFF5D407B), fontSize: size.height * 0.017),
           )),
-        ),
-        Positioned(
-          child: SizedBox(
-            height: size.height,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Expanded(flex: 3, child: SizedBox()),
-                Expanded(flex: 2, child: _title()),
-                Expanded(flex: 2, child: _signInWith()),
-                Expanded(flex: 6, child: _textFeilds()),
-                Expanded(flex: 1, child: SizedBox(child: _actionButton())),
-                Expanded(flex: 2, child: _policyText()),
-                const Expanded(flex: 3, child: SizedBox())
-              ],
-            ),
-          ),
-        ),
-      ],
-    );
+      Flexible(flex: 1, child: _signInWith()),
+      const Flexible(flex: 2, child: SizedBox()),
+      Flexible(flex: 1, child: _signInText()),
+    ]);
   }
 
   Widget _title() {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        _addHorizontalSpace(size.width * 0.3),
         Text(
-          'Log In',
-          style: GoogleFonts.abhayaLibre(fontSize: 45),
-        ),
-      ],
-    );
-  }
-
-  Widget _signInWith() {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _addHorizontalSpace(size.width * 0.21),
-        const Text('with'),
-        _addHorizontalSpace(size.width * 0.21),
-        SizedBox(
-          height: 50,
-          width: 50,
-          child: Image.asset(r'assets/images/googlepng.png'),
-        ),
-        _addHorizontalSpace(size.width * 0.07),
-        SizedBox(
-          height: 50,
-          width: 50,
-          child: Image.asset(r'assets/images/facebookpng.png'),
+          'Login',
+          style: GoogleFonts.aBeeZee(
+              fontSize: size.height * 0.05,
+              color: ColorConstants.introPageTextColor,
+              fontWeight: FontWeight.bold),
         ),
       ],
     );
   }
 
   Widget _textFeilds() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        _addHorizontalSpace(size.width * 0.03),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Expanded(
-              child: SignUpPageTextFeild(
-                controller: _emailController,
-                hintText: 'Enter your email',
-                autofocus: true,
-                labelText: 'email',
+        Flexible(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Flexible(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Flexible(
+                      child: Text(
+                        'Email',
+                        style: textStyle(),
+                      ),
+                    ),
+                    SizedBox(
+                      height: size.height * 0.007,
+                    ),
+                    Flexible(
+                      child: SignUpPageTextFeild(
+                          controller: TextEditingController(),
+                          hintText: '',
+                          autofocus: false,
+                          labelText: '',
+                          obscureText: true),
+                    )
+                  ],
+                ),
               ),
-            ),
-            Expanded(
-              child: SignUpPageTextFeild(
-                  controller: _passwordController,
-                  hintText: 'Enter Password Here',
-                  autofocus: false,
-                  labelText: 'Password'),
-            ),
-            const Expanded(
-              child: SizedBox(),
-            )
-          ],
+            ],
+          ),
+        ),
+        Flexible(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Flexible(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Flexible(
+                      child: Text(
+                        'Password',
+                        style: textStyle(),
+                      ),
+                    ),
+                    SizedBox(
+                      height: size.height * 0.007,
+                    ),
+                    Flexible(
+                      child: SignUpPageTextFeild(
+                          controller: TextEditingController(),
+                          hintText: '',
+                          autofocus: false,
+                          labelText: '',
+                          obscureText: true),
+                    )
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        Flexible(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Flexible(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Flexible(
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(
+                            builder: (context) {
+                              return const OtpScreen();
+                            },
+                          ));
+                        },
+                        child: Text(
+                          'Forgot Password?',
+                          style: textStyle(),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: size.height * 0.007,
+                    ),
+                    Flexible(
+                      child: Container(
+                        width: size.width * 0.8,
+                        color: Colors.transparent,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ],
     );
   }
 
-  Widget _actionButton() {
+  Widget _loginButton() {
     return MyButton(
-      ontap: () async {
-        Response response = await _apiServices.loginWithApi(Loginuser(
-            userEmail: _emailController.text.toString(),
-            userPassword: _passwordController.text.toString(),
-            onesignalId: "onesignal_id"));
-
-        if (response.statusCode == 200 && mounted) {
-          User? user = User.fromJson(response.body.toString());
-          print(user.data.user.usersCustomersId.toString());
-          Navigator.popAndPushNamed(context, IntroPage.screenName,
-              arguments: user);
-        } else {
-          showDialog(
-            context: context,
-            builder: (context) {
-              return loginFailedAlertDialog(response.body.toString());
-            },
-          );
-        }
+      ontap: () {
+        setState(() {
+          isClicked = true;
+        });
+        Navigator.push(context, MaterialPageRoute(
+          builder: (context) {
+            isClicked = false;
+            return const IntroPage();
+          },
+        ));
       },
+      radius: size.width * 0.07,
+      color: ColorConstants.buttonColorLight,
+      height: size.height * 0.06,
       width: size.width * 0.6,
-      height: size.height * 0.1,
-      radius: size.height * 0.03,
-      spreadRadius: 2,
-      color: ColorConstants.buttonColor,
-      child: Text(
-        'Log In',
-        style: GoogleFonts.aBeeZee(
-          fontSize: 24,
-          fontWeight: FontWeight.bold,
-          color: Colors.white,
-        ),
+      spreadRadius: 0,
+      child: !isClicked
+          ? Text(
+              '''Let's Go!''',
+              style: GoogleFonts.adamina(
+                  fontSize: size.height * 0.02, color: Colors.white),
+            )
+          : const Loader(),
+    );
+  }
+
+  Widget _signInWith() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Flexible(child: SvgPicture.asset(r'assets/svgs/googlesvg.svg')),
+          Flexible(child: SvgPicture.asset(r'assets/svgs/fbsvg.svg')),
+        ],
       ),
     );
   }
 
-  Widget _addHorizontalSpace(double space) {
-    return SizedBox(
-      width: space,
-    );
-  }
-
-  Widget _policyText() {
+  _signInText() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(
-          'Creating an account means that\nyou’re okay with our Terms of\nService and Privacy Policy.',
-          style: TextStyle(fontSize: size.height * 0.017),
-        )
+        const Flexible(child: Text('Don’t Have an Account?')),
+        Flexible(
+            child: GestureDetector(
+          onTap: (() {
+            Navigator.pushNamed(context, SignUpPage.screenName);
+          }),
+          child: const Text(
+            'Register',
+            style: TextStyle(color: ColorConstants.buttonColorLight),
+          ),
+        )),
       ],
     );
   }
 
-  Widget loginFailedAlertDialog(String text) {
-    return AlertDialog(
-      content: Text(text),
-      actions: [
-        ElevatedButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: const Text('Try Again')),
-      ],
+  textStyle() {
+    return GoogleFonts.aBeeZee(
+      color: ColorConstants.introPageTextColor,
+      fontSize: size.height * 0.02,
     );
   }
 }
+
+
+
+
+
+
+
+
+// Widget _addHorizontalSpace(double space) {
+  //   return SizedBox(
+  //     width: space,
+  //   );
+  // }

@@ -27,7 +27,7 @@ class ApiServices {
 
   Future<Response> updateUSerWithApi(User? user, CreateUser updated) async {
     String id = user!.data.user.usersCustomersId.toString();
-    // print("${id}at api services");
+    //  debugPrint("${id}at api services");
     Response response = await put(
       Uri.parse(ApiUrls.endPointUpdate + id),
       body: jsonEncode(updated.toMap()),
@@ -37,7 +37,6 @@ class ApiServices {
   }
 
   Future<Response> getOtpWithApi(String email) async {
-    //  print(email);
     Response response = await post(Uri.parse(ApiUrls.endPointGetOtp),
         body: jsonEncode({"user_email": email}));
     return response;
