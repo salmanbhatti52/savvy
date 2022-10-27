@@ -1,3 +1,4 @@
+import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 
 import '../../common/widgets/custom_button.dart';
@@ -11,7 +12,8 @@ class PageViewScreenSix extends StatelessWidget {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
 
-    return SafeArea(
+    return ColorfulSafeArea(
+      color: Colors.white,
       child: Scaffold(
         body: Padding(
           padding: const EdgeInsets.symmetric(vertical: 20),

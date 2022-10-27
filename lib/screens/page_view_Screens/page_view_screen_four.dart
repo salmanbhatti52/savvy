@@ -1,3 +1,4 @@
+import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 import 'package:savvy/common/widgets/page_view_text.dart';
 import 'package:savvy/screens/page_view_Screens/page_view_screen_five.dart';
@@ -13,7 +14,8 @@ class PageViewScreenFour extends StatelessWidget {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
 
-    return SafeArea(
+    return ColorfulSafeArea(
+      color: Colors.white,
       child: Scaffold(
         body: Padding(
           padding: const EdgeInsets.symmetric(vertical: 20),

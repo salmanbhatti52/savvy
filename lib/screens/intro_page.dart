@@ -1,3 +1,4 @@
+import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -16,7 +17,8 @@ class IntroPage extends StatelessWidget {
     var size = MediaQuery.of(context).size;
     var user = ModalRoute.of(context)!.settings.arguments as User?;
 
-    return SafeArea(
+    return ColorfulSafeArea(
+      color: Colors.white,
       child: Scaffold(
         drawer: _buildDrawer(context, user),
         appBar: _buldAppBar(),
