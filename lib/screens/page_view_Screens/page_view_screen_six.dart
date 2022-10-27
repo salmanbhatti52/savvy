@@ -125,17 +125,17 @@ class PageViewScreenSix extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Card(
-                  elevation: elevation,
-                  child: Flexible(
+              Flexible(
+                  child: Card(
+                      elevation: elevation,
                       child: Image.asset(r'assets/images/pgsixcompnent1.png'))),
-              Card(
-                  elevation: elevation,
-                  child: Flexible(
+              Flexible(
+                  child: Card(
+                      elevation: elevation,
                       child: Image.asset(r'assets/images/pgsixcompnent2.png'))),
-              Card(
-                  elevation: elevation,
-                  child: Flexible(
+              Flexible(
+                  child: Card(
+                      elevation: elevation,
                       child: Image.asset(r'assets/images/pgsixcompnent3.png'))),
             ],
           ),
@@ -147,17 +147,17 @@ class PageViewScreenSix extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Card(
-                  elevation: elevation,
-                  child: Flexible(
+              Flexible(
+                  child: Card(
+                      elevation: elevation,
                       child: Image.asset(r'assets/images/pgsixcompnent4.png'))),
-              Card(
-                  elevation: elevation,
-                  child: Flexible(
+              Flexible(
+                  child: Card(
+                      elevation: elevation,
                       child: Image.asset(r'assets/images/pgsixcompnent5.png'))),
-              Card(
-                  elevation: elevation,
-                  child: Flexible(
+              Flexible(
+                  child: Card(
+                      elevation: elevation,
                       child: Image.asset(r'assets/images/pgsixcompnent6.png'))),
             ],
           ),
@@ -171,16 +171,15 @@ class PageViewScreenSix extends StatelessWidget {
             children: [
               Flexible(
                   child: Card(
-                elevation: elevation,
-                child: Image.asset(r'assets/images/pgcomponent7.png'),
-              )),
-              Card(
-                  elevation: elevation,
-                  child: Flexible(
+                      elevation: elevation,
+                      child: Image.asset(r'assets/images/pgcomponent7.png'))),
+              Flexible(
+                  child: Card(
+                      elevation: elevation,
                       child: Image.asset(r'assets/images/pgcomponent8.png'))),
-              Card(
-                  elevation: elevation,
-                  child: Flexible(
+              Flexible(
+                  child: Card(
+                      elevation: elevation,
                       child: Image.asset(r'assets/images/pgcomponent9.png'))),
             ],
           ),
@@ -192,17 +191,17 @@ class PageViewScreenSix extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Card(
-                  elevation: elevation,
-                  child: Flexible(
+              Flexible(
+                  child: Card(
+                      elevation: elevation,
                       child: Image.asset(r'assets/images/pgcomponent10.png'))),
-              Card(
-                  elevation: elevation,
-                  child: Flexible(
+              Flexible(
+                  child: Card(
+                      elevation: elevation,
                       child: Image.asset(r'assets/images/pgcomponent11.png'))),
-              Card(
-                  elevation: elevation,
-                  child: Flexible(
+              Flexible(
+                  child: Card(
+                      elevation: elevation,
                       child: Image.asset(r'assets/images/pgcomponent12.png'))),
             ],
           ),
@@ -214,17 +213,17 @@ class PageViewScreenSix extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Card(
-                  elevation: elevation,
-                  child: Flexible(
+              Flexible(
+                  child: Card(
+                      elevation: elevation,
                       child: Image.asset(r'assets/images/pgcomponent13.png'))),
-              Card(
-                  elevation: elevation,
-                  child: Flexible(
+              Flexible(
+                  child: Card(
+                      elevation: elevation,
                       child: Image.asset(r'assets/images/pgcomponent14.png'))),
-              Card(
-                  elevation: elevation,
-                  child: Flexible(
+              Flexible(
+                  child: Card(
+                      elevation: elevation,
                       child: Image.asset(r'assets/images/pgcomponent15.png'))),
             ],
           ),
@@ -236,13 +235,13 @@ class PageViewScreenSix extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Card(
-                  elevation: elevation,
-                  child: Flexible(
+              Flexible(
+                  child: Card(
+                      elevation: elevation,
                       child: Image.asset(r'assets/images/pgcomponent16.png'))),
-              Card(
-                  elevation: elevation,
-                  child: Flexible(
+              Flexible(
+                  child: Card(
+                      elevation: elevation,
                       child: Image.asset(r'assets/images/pgcomponent17.png'))),
               //  Flexible(child: Image.asset(r'assets/images/pgsixcompnent1.png')),
             ],

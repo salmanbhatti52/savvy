@@ -114,28 +114,3 @@ class LandingPage extends StatelessWidget {
     );
   }
 }
-
-// // Flexible(
-//             //   flex: 1,
-//             //   child: SizedBox(
-//             //     height: size.height * 0.01,
-//             //   ),
-//             // ),
-//             Flexible(flex: 5, child: title(size)),
-//             SizedBox(
-//               height: size.height * 0.02,
-//             ),
-//             Flexible(flex: 9, child: svgImage()),
-//             Flexible(
-//               flex: 1,
-//               child: SizedBox(
-//                 height: size.height * 0.03,
-//               ),
-//             ),
-//             Flexible(flex: 1, child: actionButtons(size, context)),
-//             Flexible(
-//               flex: 1,
-//               child: SizedBox(
-//                 height: size.height * 0.03,
-//               ),
-//             ),

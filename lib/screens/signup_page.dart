@@ -1,8 +1,12 @@
 import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart';
 import 'package:savvy/common/widgets/loader.dart';
+import 'package:savvy/models/create_user.dart';
+import 'package:savvy/screens/intro_page.dart';
 import 'package:savvy/screens/login_page.dart';
 import 'package:savvy/services/api_services.dart';
 
@@ -23,7 +27,7 @@ class _SignUpPageState extends State<SignUpPage> {
   late TextEditingController _emailController;
   late TextEditingController _passwordController;
   final ApiServices _apiServices = ApiServices();
-  final formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
   bool isClicked = true;
 
   @override
@@ -90,123 +94,144 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   Widget _textFeilds() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        Flexible(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Flexible(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Flexible(
-                      child: Text(
-                        'First Name',
-                        style: textStyle(),
+    return Form(
+      key: _formKey,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Flexible(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Flexible(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Flexible(
+                        child: Text(
+                          'First Name',
+                          style: textStyle(),
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      height: size.height * 0.007,
-                    ),
-                    Flexible(
-                      child: SignUpPageTextFeild(
-                          controller: TextEditingController(),
-                          hintText: '',
-                          autofocus: false,
-                          labelText: '',
-                          obscureText: true),
-                    )
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-        Flexible(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Flexible(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Flexible(
-                      child: Text(
-                        'Email',
-                        style: textStyle(),
+                      SizedBox(
+                        height: size.height * 0.007,
                       ),
-                    ),
-                    SizedBox(
-                      height: size.height * 0.007,
-                    ),
-                    Flexible(
-                      child: SignUpPageTextFeild(
-                          controller: TextEditingController(),
-                          hintText: '',
-                          autofocus: false,
-                          labelText: '',
-                          obscureText: true),
-                    )
-                  ],
+                      Flexible(
+                        child: SignUpPageTextFeild(
+                            controller: _nameController,
+                            hintText: '',
+                            autofocus: false,
+                            labelText: '',
+                            obscureText: false),
+                      )
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-        Flexible(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Flexible(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Flexible(
-                      child: Text(
-                        'Password',
-                        style: textStyle(),
+          Flexible(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Flexible(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Flexible(
+                        child: Text(
+                          'Email',
+                          style: textStyle(),
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      height: size.height * 0.007,
-                    ),
-                    Flexible(
-                      child: SignUpPageTextFeild(
-                          controller: TextEditingController(),
-                          hintText: '',
-                          autofocus: false,
-                          labelText: '',
-                          obscureText: true),
-                    )
-                  ],
+                      SizedBox(
+                        height: size.height * 0.007,
+                      ),
+                      Flexible(
+                        child: SignUpPageTextFeild(
+                            controller: _emailController,
+                            hintText: '',
+                            autofocus: false,
+                            labelText: '',
+                            obscureText: false),
+                      )
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-      ],
+          Flexible(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Flexible(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Flexible(
+                        child: Text(
+                          'Password',
+                          style: textStyle(),
+                        ),
+                      ),
+                      SizedBox(
+                        height: size.height * 0.007,
+                      ),
+                      Flexible(
+                        child: SignUpPageTextFeild(
+                            controller: _passwordController,
+                            hintText: '',
+                            autofocus: false,
+                            labelText: '',
+                            obscureText: true),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 
   Widget _loginButton() {
     return MyButton(
-        ontap: (() => setState(() {
-              isClicked = false;
-            })),
+        ontap: () async {
+          setState(() {
+            isClicked = false;
+          });
+          Response response = await _apiServices.signUpWithApi(CreateUser(
+              onesignalId: "",
+              fullName: _nameController.text,
+              userEmail: _emailController.text,
+              userPassword: _passwordController.text,
+              notificationSwitch: "yes"));
+
+          if (response.statusCode == 200 && mounted) {
+            Navigator.pushNamed(context, IntroPage.screenName);
+            showToast('User Created Successfully');
+          } else {
+            setState(() {
+              isClicked = true;
+            });
+            showToast('Something went Wrong');
+          }
+        },
         radius: size.width * 0.07,
         color: ColorConstants.buttonColorLight,
         height: size.height * 0.06,
         width: size.width * 0.6,
         spreadRadius: 0,
-        child: !isClicked
-            ? const Loader()
-            : Text(
+        child: isClicked
+            ? Text(
                 '''Let's Go!''',
                 style: GoogleFonts.adamina(
                     fontSize: size.height * 0.02, color: Colors.white),
-              ));
+              )
+            : const Loader());
   }
 
   Widget _signInWith() {
@@ -261,5 +286,10 @@ class _SignUpPageState extends State<SignUpPage> {
       color: ColorConstants.introPageTextColor,
       fontSize: size.height * 0.02,
     );
+  }
+
+  showToast(String msg) {
+    Fluttertoast.showToast(
+        msg: msg, toastLength: Toast.LENGTH_LONG, gravity: ToastGravity.CENTER);
   }
 }

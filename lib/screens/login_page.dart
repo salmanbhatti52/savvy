@@ -1,13 +1,17 @@
 import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart';
 import 'package:savvy/common/widgets/custom_button.dart';
 import 'package:savvy/common/widgets/loader.dart';
 import 'package:savvy/common/widgets/text_feilds.dart';
+import 'package:savvy/models/login_user.dart';
 import 'package:savvy/screens/features/otp_screen.dart';
 import 'package:savvy/screens/intro_page.dart';
 import 'package:savvy/screens/signup_page.dart';
+import 'package:savvy/services/api_services.dart';
 import 'package:savvy/utils/color_constants.dart';
 
 class LoginPage extends StatefulWidget {
@@ -19,7 +23,25 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  bool isClicked = false;
+  late TextEditingController _emailController;
+  late TextEditingController _passwordController;
+  final ApiServices _apiServices = ApiServices();
+
+  @override
+  void initState() {
+    super.initState();
+    _emailController = TextEditingController();
+    _passwordController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  bool isClicked = true;
   late Size size;
   @override
   Widget build(BuildContext context) {
@@ -89,11 +111,11 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     Flexible(
                       child: SignUpPageTextFeild(
-                          controller: TextEditingController(),
+                          controller: _emailController,
                           hintText: '',
                           autofocus: false,
                           labelText: '',
-                          obscureText: true),
+                          obscureText: false),
                     )
                   ],
                 ),
@@ -120,7 +142,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     Flexible(
                       child: SignUpPageTextFeild(
-                          controller: TextEditingController(),
+                          controller: _passwordController,
                           hintText: '',
                           autofocus: false,
                           labelText: '',
@@ -176,23 +198,34 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _loginButton() {
     return MyButton(
-      ontap: () {
+      ontap: () async {
         setState(() {
-          isClicked = true;
+          isClicked = false;
         });
-        Navigator.push(context, MaterialPageRoute(
-          builder: (context) {
-            isClicked = false;
-            return const IntroPage();
-          },
-        ));
+
+        Response response = await _apiServices.loginWithApi(Loginuser(
+            userEmail: _emailController.text,
+            userPassword: _passwordController.text,
+            onesignalId: ""));
+        debugPrint(_emailController.text);
+        debugPrint(_passwordController.text);
+
+        if (response.statusCode == 200 && mounted) {
+          Navigator.popAndPushNamed(context, IntroPage.screenName);
+          showToast('Login Successfull');
+        } else {
+          setState(() {
+            isClicked = true;
+          });
+          showToast('Login Failed');
+        }
       },
       radius: size.width * 0.07,
       color: ColorConstants.buttonColorLight,
       height: size.height * 0.06,
       width: size.width * 0.6,
       spreadRadius: 0,
-      child: !isClicked
+      child: isClicked
           ? Text(
               '''Let's Go!''',
               style: GoogleFonts.adamina(
@@ -240,17 +273,11 @@ class _LoginPageState extends State<LoginPage> {
       fontSize: size.height * 0.02,
     );
   }
+
+  showToast(String msg) {
+    Fluttertoast.showToast(
+        msg: msg,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER);
+  }
 }
-
-
-
-
-
-
-
-
-// Widget _addHorizontalSpace(double space) {
-  //   return SizedBox(
-  //     width: space,
-  //   );
-  // }
