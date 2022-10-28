@@ -2,7 +2,6 @@ import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:savvy/common/widgets/otp_screen_textfeild.dart';
-import 'package:savvy/services/api_services.dart';
 
 import '../../common/widgets/custom_button.dart';
 import '../../common/widgets/loader.dart';
@@ -21,7 +20,7 @@ class _ResetScreenState extends State<ResetScreen> {
   final _otpController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
-  final ApiServices _apiServices = ApiServices();
+//final ApiServices _apiServices = ApiServices();
   bool isClicked = false;
 
   @override

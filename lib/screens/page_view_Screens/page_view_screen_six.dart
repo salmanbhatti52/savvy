@@ -1,5 +1,6 @@
 import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../common/widgets/custom_button.dart';
 import '../../utils/color_constants.dart';
@@ -16,7 +17,7 @@ class PageViewScreenSix extends StatelessWidget {
       color: Colors.white,
       child: Scaffold(
         body: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20),
+          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -61,11 +62,11 @@ class PageViewScreenSix extends StatelessWidget {
                   },
                   radius: size.height * 0.04,
                   color: ColorConstants.introPageTextColor,
-                  height: size.height * 0.05,
+                  height: size.height * 0.06,
                   width: size.width * 0.4,
                   spreadRadius: 2,
                   child: Text(
-                    'Back',
+                    'BACK',
                     style: TextStyle(
                         color: Colors.white, fontSize: size.height * 0.020),
                   )),
@@ -83,12 +84,12 @@ class PageViewScreenSix extends StatelessWidget {
                   },
                   radius: size.height * 0.04,
                   color: ColorConstants.buttonColor,
-                  height: size.height * 0.05,
+                  height: size.height * 0.06,
                   width: size.width * 0.4,
                   spreadRadius: 2,
                   child: Text(
-                    'Next',
-                    style: TextStyle(
+                    'NEXT',
+                    style: GoogleFonts.poppins(
                         color: Colors.white, fontSize: size.height * 0.020),
                   )),
             ),
@@ -108,8 +109,8 @@ class PageViewScreenSix extends StatelessWidget {
             'Click on the cards below to read through the Sustainable development goals. Then drop your\ntop 5 goals into the basket below!',
             textAlign: TextAlign.center,
             maxLines: 3,
-            style:
-                TextStyle(color: Colors.black, fontSize: size.height * 0.020),
+            style: GoogleFonts.poppins(
+                color: Colors.black, fontSize: size.height * 0.017),
           ),
         ),
       ],
@@ -243,7 +244,7 @@ class PageViewScreenSix extends StatelessWidget {
                   child: Card(
                       elevation: elevation,
                       child: Image.asset(r'assets/images/pgcomponent17.png'))),
-              //  Flexible(child: Image.asset(r'assets/images/pgsixcompnent1.png')),
+              Flexible(child: Image.asset(r'assets/images/pgviewbasket.png')),
             ],
           ),
         ),

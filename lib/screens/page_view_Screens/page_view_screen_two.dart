@@ -1,5 +1,6 @@
 import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:savvy/screens/page_view_Screens/page_view_screen_three.dart';
 import 'package:savvy/utils/color_constants.dart';
 
@@ -37,10 +38,10 @@ class PageViewScreenTwo extends StatelessWidget {
     return Text(
       'We might have some\nquestions like..',
       textAlign: TextAlign.center,
-      style: TextStyle(
-          fontWeight: FontWeight.bold,
+      style: GoogleFonts.poppins(
+          fontWeight: FontWeight.w700,
           color: ColorConstants.introPageTextColor,
-          fontSize: size.height * 0.04),
+          fontSize: size.height * 0.030),
     );
   }
 
@@ -76,7 +77,7 @@ class PageViewScreenTwo extends StatelessWidget {
                 Navigator.pop(context);
               },
               icon: const Icon(
-                Icons.arrow_back,
+                Icons.arrow_back_ios_sharp,
                 color: Colors.white,
               ))
         ],

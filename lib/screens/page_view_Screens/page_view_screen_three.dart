@@ -1,5 +1,6 @@
 import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:savvy/common/widgets/custom_button.dart';
 import 'package:savvy/common/widgets/page_view_text.dart';
 import 'package:savvy/screens/page_view_Screens/page_view_screen_four.dart';
@@ -39,10 +40,10 @@ class PageViewScreenThree extends StatelessWidget {
     return Text(
       'We need a plan.',
       textAlign: TextAlign.center,
-      style: TextStyle(
-          fontWeight: FontWeight.bold,
+      style: GoogleFonts.poppins(
+          fontWeight: FontWeight.w700,
           color: ColorConstants.introPageTextColor,
-          fontSize: size.height * 0.04),
+          fontSize: size.height * 0.030),
     );
   }
 
@@ -77,9 +78,9 @@ class PageViewScreenThree extends StatelessWidget {
           child: Text(
             textAlign: TextAlign.center,
             MyConstantStrings.descriptionPgViewPgThree,
-            style: TextStyle(
+            style: GoogleFonts.poppins(
                 color: ColorConstants.introPageTextColor,
-                fontSize: size.height * 0.025),
+                fontSize: size.height * 0.020),
           ),
         ),
       ],
@@ -96,7 +97,7 @@ class PageViewScreenThree extends StatelessWidget {
                 Navigator.pop(context);
               },
               icon: const Icon(
-                Icons.arrow_back,
+                Icons.arrow_back_ios_sharp,
                 color: Colors.white,
               ))
         ],

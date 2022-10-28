@@ -54,28 +54,37 @@ class _SignUpPageState extends State<SignUpPage> {
       color: Colors.white,
       child: Scaffold(
         backgroundColor: Colors.white,
-        body: _builBody(),
+        body: SingleChildScrollView(child: _builBody()),
       ),
     );
   }
 
   Widget _builBody() {
-    return Column(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-      const Flexible(flex: 1, child: SizedBox()),
-      Flexible(flex: 2, child: _title()),
-      Flexible(flex: 7, child: _textFeilds()),
-      Flexible(flex: 2, child: _loginButton()),
-      Flexible(
-          flex: 1,
-          child: Text(
-            'OR',
-            style: GoogleFonts.aBeeZee(
-                color: const Color(0xFF5D407B), fontSize: size.height * 0.017),
-          )),
-      Flexible(flex: 1, child: _signInWith()),
-      Flexible(flex: 1, child: _policyText()),
-      Flexible(flex: 1, child: _signInText()),
-    ]);
+    return SizedBox(
+      height: size.height,
+      width: size.width,
+      child: Padding(
+        padding: EdgeInsets.symmetric(vertical: size.height * 0.030),
+        child:
+            Column(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+          const Flexible(flex: 1, child: SizedBox()),
+          Flexible(flex: 2, child: _title()),
+          Flexible(flex: 7, child: _textFeilds()),
+          Flexible(flex: 2, child: _loginButton()),
+          Flexible(
+              flex: 1,
+              child: Text(
+                'OR',
+                style: GoogleFonts.poppins(
+                    color: const Color(0xFF5D407B),
+                    fontSize: size.height * 0.017),
+              )),
+          Flexible(flex: 1, child: _signInWith()),
+          Flexible(flex: 1, child: _policyText()),
+          Flexible(flex: 1, child: _signInText()),
+        ]),
+      ),
+    );
   }
 
   Widget _title() {
@@ -84,7 +93,7 @@ class _SignUpPageState extends State<SignUpPage> {
       children: [
         Text(
           'Sign up',
-          style: GoogleFonts.aBeeZee(
+          style: GoogleFonts.lato(
               fontSize: size.height * 0.05,
               color: ColorConstants.introPageTextColor,
               fontWeight: FontWeight.bold),
@@ -119,8 +128,9 @@ class _SignUpPageState extends State<SignUpPage> {
                       Flexible(
                         child: SignUpPageTextFeild(
                             controller: _nameController,
-                            hintText: '',
+                            hintText: 'Ellen',
                             autofocus: false,
+                            validator: _nameValidate,
                             labelText: '',
                             obscureText: false),
                       )
@@ -150,7 +160,8 @@ class _SignUpPageState extends State<SignUpPage> {
                       Flexible(
                         child: SignUpPageTextFeild(
                             controller: _emailController,
-                            hintText: '',
+                            hintText: 'email@example.com',
+                            validator: _emailValidate,
                             autofocus: false,
                             labelText: '',
                             obscureText: false),
@@ -181,7 +192,8 @@ class _SignUpPageState extends State<SignUpPage> {
                       Flexible(
                         child: SignUpPageTextFeild(
                             controller: _passwordController,
-                            hintText: '',
+                            hintText: 'Enter Passwored',
+                            validator: _passwordValidate,
                             autofocus: false,
                             labelText: '',
                             obscureText: true),
@@ -203,21 +215,27 @@ class _SignUpPageState extends State<SignUpPage> {
           setState(() {
             isClicked = false;
           });
-          Response response = await _apiServices.signUpWithApi(CreateUser(
-              onesignalId: "",
-              fullName: _nameController.text,
-              userEmail: _emailController.text,
-              userPassword: _passwordController.text,
-              notificationSwitch: "yes"));
+          if (_formKey.currentState!.validate()) {
+            Response response = await _apiServices.signUpWithApi(CreateUser(
+                onesignalId: "",
+                fullName: _nameController.text,
+                userEmail: _emailController.text,
+                userPassword: _passwordController.text,
+                notificationSwitch: "yes"));
 
-          if (response.statusCode == 200 && mounted) {
-            Navigator.pushNamed(context, IntroPage.screenName);
-            showToast('User Created Successfully');
+            if (response.statusCode == 200 && mounted) {
+              Navigator.popAndPushNamed(context, IntroPage.screenName);
+              showToast('User Created Successfully');
+            } else {
+              setState(() {
+                isClicked = true;
+              });
+              showToast('Something went Wrong');
+            }
           } else {
             setState(() {
               isClicked = true;
             });
-            showToast('Something went Wrong');
           }
         },
         radius: size.width * 0.07,
@@ -227,8 +245,8 @@ class _SignUpPageState extends State<SignUpPage> {
         spreadRadius: 0,
         child: isClicked
             ? Text(
-                '''Let's Go!''',
-                style: GoogleFonts.adamina(
+                '''LET'S GO''',
+                style: GoogleFonts.poppins(
                     fontSize: size.height * 0.02, color: Colors.white),
               )
             : const Loader());
@@ -266,15 +284,27 @@ class _SignUpPageState extends State<SignUpPage> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Flexible(child: Text('Have an Account?')),
+        Flexible(
+            child: Text(
+          'Have an Account?',
+          style: GoogleFonts.lato(fontSize: 15),
+        )),
+        const SizedBox(
+          width: 2,
+        ),
         Flexible(
             child: GestureDetector(
           onTap: () {
             Navigator.pushNamed(context, LoginPage.screenName);
           },
-          child: const Text(
+          child: Text(
             'Sign In',
-            style: TextStyle(color: ColorConstants.buttonColorLight),
+            style: GoogleFonts.lato(
+                color: const Color(
+                  0xFF38B68C,
+                ),
+                fontWeight: FontWeight.bold,
+                fontSize: 15),
           ),
         )),
       ],
@@ -282,7 +312,7 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   textStyle() {
-    return GoogleFonts.aBeeZee(
+    return GoogleFonts.poppins(
       color: ColorConstants.introPageTextColor,
       fontSize: size.height * 0.02,
     );
@@ -291,5 +321,26 @@ class _SignUpPageState extends State<SignUpPage> {
   showToast(String msg) {
     Fluttertoast.showToast(
         msg: msg, toastLength: Toast.LENGTH_LONG, gravity: ToastGravity.CENTER);
+  }
+
+  String? _nameValidate(String? value) {
+    if (value!.isEmpty) {
+      return 'please enter name';
+    }
+    return null;
+  }
+
+  String? _emailValidate(String? value) {
+    if (value!.isEmpty) {
+      return 'please enter email';
+    }
+    return null;
+  }
+
+  String? _passwordValidate(String? value) {
+    if (value!.isEmpty) {
+      return 'please enter password';
+    }
+    return null;
   }
 }

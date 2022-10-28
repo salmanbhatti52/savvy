@@ -1,5 +1,6 @@
 import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:savvy/screens/signup_page.dart';
 import 'package:savvy/utils/color_constants.dart';
@@ -41,10 +42,7 @@ class LandingPage extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        Text('Savvy',
-            style: GoogleFonts.acme(
-                fontSize: size.height * 0.07,
-                color: ColorConstants.landingPageTitleColor)),
+        Flexible(child: SvgPicture.asset(r'assets/svgs/appnamelandingpg.svg')),
       ],
     );
   }
@@ -75,9 +73,9 @@ class LandingPage extends StatelessWidget {
               spreadRadius: 2,
               color: ColorConstants.buttonColorLight,
               child: Text(
-                'Log In',
-                style: GoogleFonts.aBeeZee(
-                  fontSize: 24,
+                'LOGIN',
+                style: GoogleFonts.poppins(
+                  fontSize: 20,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
                 ),
@@ -100,11 +98,11 @@ class LandingPage extends StatelessWidget {
               width: size.width * 0.4,
               height: size.height * 0.1,
               radius: size.height * 0.05,
-              color: ColorConstants.buttonColor,
+              color: ColorConstants.introPageTextColor,
               child: Text(
-                'Sign Up',
+                'SIGN UP',
                 style: GoogleFonts.aBeeZee(
-                  fontSize: 24,
+                  fontSize: 20,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
                 ),

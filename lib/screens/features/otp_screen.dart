@@ -90,7 +90,7 @@ class _OtpScreenState extends State<OtpScreen> {
     return Text(
       'Enter your email address to reset\npassowrd.',
       textAlign: TextAlign.center,
-      style: TextStyle(
+      style: GoogleFonts.poppins(
           color: const Color(0xFF606367), fontSize: size.height * 0.015),
     );
   }
@@ -111,7 +111,7 @@ class _OtpScreenState extends State<OtpScreen> {
         spreadRadius: 0,
         child: Text(
           'Done',
-          style: GoogleFonts.adamina(
+          style: GoogleFonts.poppins(
               fontSize: size.height * 0.02, color: Colors.white),
         ));
   }
@@ -154,7 +154,7 @@ class _OtpScreenState extends State<OtpScreen> {
   }
 
   textStyle() {
-    return GoogleFonts.aBeeZee(
+    return GoogleFonts.poppins(
       color: ColorConstants.introPageTextColor,
       fontSize: size.height * 0.02,
     );

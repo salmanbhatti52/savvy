@@ -21,80 +21,86 @@ class IntroPage extends StatelessWidget {
       color: Colors.white,
       child: Scaffold(
         drawer: _buildDrawer(context, user),
-        appBar: _buldAppBar(),
+        //   appBar: _buldAppBar(),
         body: Center(child: introPageBody(size, context)),
       ),
     );
   }
 
   Widget introPageBody(Size size, BuildContext context) {
-    return Stack(
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        Positioned(
-            bottom: 0,
-            right: size.width * 0.71,
-            child: SizedBox(
-              height: size.height * 0.19,
-              child: SvgPicture.asset(r'assets/svgs/intropageleaf.svg'),
+        Flexible(
+            flex: 6,
+            child: SvgPicture.asset(
+              r'assets/svgs/intropagesvg.svg',
+              fit: BoxFit.fitWidth,
             )),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Expanded(
-                flex: 6,
-                child: SvgPicture.asset(r'assets/svgs/intropagesvg.svg')),
-            Expanded(
-              flex: 5,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Expanded(flex: 1, child: welcomeText(size)),
-                  Expanded(flex: 3, child: descriptionText(size)),
-                  Expanded(flex: 1, child: introText(size)),
-                  SizedBox(
-                    height: size.height * 0.03,
-                  ),
-                  Expanded(
-                    child: buttonNext(size, context),
-                  ),
-                  const Expanded(
-                    flex: 1,
-                    child: SizedBox(),
-                  ),
-                ],
+        Flexible(
+          flex: 6,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Flexible(flex: 1, child: welcomeText(size)),
+              Flexible(flex: 3, child: descriptionText(size)),
+              Flexible(flex: 2, child: introText(size)),
+              SizedBox(
+                height: size.height * 0.03,
               ),
-            ),
-          ],
+              Flexible(
+                child: buttonNext(size, context),
+              ),
+              // const Flexible(
+              //   flex: 1,
+              //   child: SizedBox(),
+              // ),
+            ],
+          ),
         ),
       ],
     );
+
+    // return Stack(
+    //   children: [
+    //     Positioned(
+    //         bottom: 0,
+    //         right: size.width * 0.71,
+    //         child: SizedBox(
+    //           height: size.height * 0.19,
+    //           //   child: SvgPicture.asset(r'assets/svgs/intropageleaf.svg'),
+    //         )),
+
+    //   ],
+    // );
   }
 
   Widget welcomeText(Size size) {
     return Text(
       'Welcome to Savvy.',
-      style: TextStyle(
-          fontWeight: FontWeight.bold,
-          fontSize: size.height * 0.030,
+      style: GoogleFonts.poppins(
+          fontWeight: FontWeight.w500,
+          fontSize: size.height * 0.040,
           color: ColorConstants.introPageTextColor),
     );
   }
 
   Widget descriptionText(Size size) {
     return Text(
-      'We want you to feel cool, calm\nand collected about sustainable\ninvesting and your finances in\ngeneral.',
-      style: TextStyle(
-          fontSize: size.height * 0.025,
-          color: ColorConstants.introPageTextColor),
+      maxLines: 4,
+      textAlign: TextAlign.center,
+      'We want you to feel cool,\ncalm and collected about\nsustainable investing and\nyour finances in general. ',
+      style: GoogleFonts.poppins(
+          fontSize: size.height * 0.020, color: Colors.grey),
     );
   }
 
   Widget introText(Size size) {
     return Text(
-      'That’s what we call being\nSavvy.',
+      'That’s what we call\nbeing Savvy.',
       style: TextStyle(
-          fontSize: size.height * 0.025,
+          fontSize: size.height * 0.030,
           color: ColorConstants.introPageTextColor),
       textAlign: TextAlign.center,
     );
@@ -102,26 +108,27 @@ class IntroPage extends StatelessWidget {
 
   Widget buttonNext(Size size, BuildContext context) {
     return MyButton(
-        ontap: () {
-          Navigator.push(context, MaterialPageRoute(
-            builder: (context) {
-              return const PageViewScreenOne();
-            },
-          ));
-        },
-        radius: size.height * 0.02,
-        color: ColorConstants.buttonColor,
-        height: size.height * 0.1,
-        width: size.width * 0.4,
-        spreadRadius: 2,
-        child: Text(
-          'Start Intro',
-          style: GoogleFonts.raleway(
-              fontSize: size.height * 0.02, fontWeight: FontWeight.bold),
+      ontap: () {
+        Navigator.push(context, MaterialPageRoute(
+          builder: (context) {
+            return const PageViewScreenOne();
+          },
         ));
+      },
+      radius: size.width * 0.07,
+      color: ColorConstants.buttonColorLight,
+      height: size.height * 0.06,
+      width: size.width * 0.6,
+      spreadRadius: 0,
+      child: Text(
+        'START INTRO',
+        style: GoogleFonts.lato(
+            fontWeight: FontWeight.bold, color: Colors.white, fontSize: 20),
+      ),
+    );
   }
 
-  _buldAppBar() {
+  AppBar _buldAppBar() {
     return AppBar(
       elevation: 0,
       leading: Builder(

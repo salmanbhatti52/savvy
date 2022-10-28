@@ -26,7 +26,7 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
       child: Scaffold(
         //  backgroundColor: ColorConstants.slectedPlanBg,
         drawerEnableOpenDragGesture: false,
-        //endDrawer: myEndDrawer(),
+        endDrawer: myEndDrawer(),
         appBar: _buildAppBar(),
         body: selectedPlanBody(),
       ),
@@ -40,16 +40,16 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
       centerTitle: true,
       title: Text(
         'Savvy',
-        style: GoogleFonts.acme(
-            fontSize: size.height * 0.050,
+        style: GoogleFonts.poppins(
+            fontSize: size.height * 0.040,
             color: ColorConstants.introPageTextColor),
       ),
       actions: [
         Builder(builder: (context) {
           return InkWell(
-            // onTap: () {
-            //   Scaffold.of(context).openEndDrawer();
-            // },
+            onTap: () {
+              Scaffold.of(context).openEndDrawer();
+            },
             child: Icon(
               Icons.menu,
               size: size.height * 0.050,
@@ -243,67 +243,94 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
   }
 
   Widget myEndDrawer() {
-    return Container(
-      color: ColorConstants.slectedPlanBg,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8),
-        child: ListView(
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 5),
+      child: Container(
+        width: size.width,
+        color: const Color(0xFFCBF6E8),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const SizedBox(
-              height: 5,
-            ),
+            Flexible(
+                flex: 1,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Flexible(child: Builder(builder: (context) {
+                      return IconButton(
+                        icon: const Icon(Icons.close),
+                        onPressed: () {
+                          Scaffold.of(context).closeEndDrawer();
+                        },
+                      );
+                    })),
+                    SizedBox(
+                      width: size.width * 0.020,
+                    )
+                  ],
+                )),
+            Flexible(
+                flex: 2,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Flexible(
+                        child: Text(
+                      textAlign: TextAlign.center,
+                      'Savvy',
+                      style: _textStyleTwo(),
+                    )),
+                  ],
+                )),
             SizedBox(
-                height: 100,
-                width: 100,
-                child: Image.asset(r'assets/images/app_icon.png')),
-            const SizedBox(
-              height: 5,
+              height: size.height * 0.070,
             ),
-            Container(
-              color: ColorConstants.buttonColor,
-              child: const ListTile(
-                title: Text('End Drawer'),
-              ),
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            Container(
-              color: ColorConstants.buttonColor,
-              child: const ListTile(
-                title: Text('End Drawer'),
-              ),
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            Container(
-              color: ColorConstants.buttonColor,
-              child: const ListTile(
-                title: Text('End Drawer'),
-              ),
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            Container(
-              color: ColorConstants.buttonColor,
-              child: const ListTile(
-                title: Text('End Drawer'),
-              ),
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            Container(
-              color: ColorConstants.buttonColor,
-              child: const ListTile(
-                title: Text('End Drawer'),
-              ),
-            ),
+            Flexible(
+                flex: 6,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Flexible(
+                        child: Text(
+                      'MY IMPACT',
+                      style: _textStyle(),
+                    )),
+                    Flexible(
+                        child: Text(
+                      'PORTFOLIO',
+                      style: _textStyle(),
+                    )),
+                    Flexible(
+                        child: Text(
+                      'LEARN',
+                      style: _textStyle(),
+                    )),
+                  ],
+                )),
+            Flexible(
+                flex: 6,
+                child: Image.asset(
+                  r'assets/images/drawerpng.png',
+                  fit: BoxFit.fitWidth,
+                )),
           ],
         ),
       ),
+    );
+  }
+
+  _textStyle() {
+    return GoogleFonts.firaSans(
+      color: ColorConstants.introPageTextColor,
+      fontSize: size.height * 0.030,
+    );
+  }
+
+  _textStyleTwo() {
+    return GoogleFonts.firaSans(
+      color: ColorConstants.introPageTextColor,
+      fontWeight: FontWeight.w600,
+      fontSize: size.height * 0.030,
     );
   }
 

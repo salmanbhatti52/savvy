@@ -25,10 +25,11 @@ class _SelectedScreenState extends State<SelectedScreen> {
         centerTitle: true,
         title: Text(
           'Savvy',
-          style: GoogleFonts.abel(
-              fontSize: size.height * 0.050,
-              color: ColorConstants.introPageTextColor,
-              fontWeight: FontWeight.bold),
+          style: GoogleFonts.lato(
+            fontSize: size.height * 0.035,
+            fontWeight: FontWeight.w600,
+            color: ColorConstants.introPageTextColor,
+          ),
         ),
       ),
       body: selectScreenBody(),
@@ -55,9 +56,11 @@ class _SelectedScreenState extends State<SelectedScreen> {
         Color(0xFF02E0A3),
       ],
       chartValuesOptions: const ChartValuesOptions(
-        chartValueBackgroundColor: Colors.green,
-        showChartValuesOutside: false,
+        // chartValueBackgroundColor: Colors.white,
+        showChartValuesOutside: true,
         showChartValueBackground: false,
+        chartValueStyle:
+            TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
       ),
       legendOptions: const LegendOptions(showLegends: false),
       dataMap: const {
@@ -69,7 +72,12 @@ class _SelectedScreenState extends State<SelectedScreen> {
       },
       chartRadius: size.height * 0.20,
       chartType: ChartType.ring,
-      ringStrokeWidth: size.height * 0.08,
+      ringStrokeWidth: size.height * 0.085,
+      centerText: 'Savvy',
+      centerTextStyle: GoogleFonts.lato(
+          color: const Color(0xFF325698),
+          fontWeight: FontWeight.w700,
+          fontSize: size.height * 0.028),
     );
   }
 
@@ -88,9 +96,11 @@ class _SelectedScreenState extends State<SelectedScreen> {
         width: size.width * 0.6,
         spreadRadius: size.height * 0.002,
         child: Text(
-          '''Let's Go''',
-          style: GoogleFonts.raleway(
-              fontSize: size.height * 0.025, fontWeight: FontWeight.bold),
+          '''LET'S GO!''',
+          style: GoogleFonts.poppins(
+            color: Colors.white,
+            fontSize: size.height * 0.025,
+          ),
         ));
   }
 
@@ -99,9 +109,9 @@ class _SelectedScreenState extends State<SelectedScreen> {
       textAlign: TextAlign.center,
       // maxLines: 2,
       'Savvy suggests you follow the below breakdown:',
-      style: TextStyle(
+      style: GoogleFonts.poppins(
         color: Colors.black,
-        fontSize: size.height * 0.020,
+        fontSize: size.height * 0.018,
       ),
     );
   }
@@ -115,12 +125,9 @@ class _SelectedScreenState extends State<SelectedScreen> {
           flex: flex,
           child: ReuseableRow(
               listTile: ListTile(
-                title: const Text(
+                title: Text(
                   'No Poverty',
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: ColorConstants.introPageTextColor,
-                  ),
+                  style: _textStyle(),
                 ),
                 tileColor: Colors.grey.withOpacity(0.2),
                 leading: Image.asset(
@@ -141,10 +148,9 @@ class _SelectedScreenState extends State<SelectedScreen> {
             flex: flex,
             child: ReuseableRow(
                 listTile: ListTile(
-                  title: const Text(
+                  title: Text(
                     'Zero Hunger',
-                    style: TextStyle(
-                        color: ColorConstants.introPageTextColor, fontSize: 20),
+                    style: _textStyle(),
                   ),
                   leading: Image.asset(
                     r'assets/images/selecteditem2.png',
@@ -163,10 +169,9 @@ class _SelectedScreenState extends State<SelectedScreen> {
             flex: flex,
             child: ReuseableRow(
                 listTile: ListTile(
-                  title: const Text(
+                  title: Text(
                     'Health & Well-Being',
-                    style: TextStyle(
-                        color: ColorConstants.introPageTextColor, fontSize: 20),
+                    style: _textStyle(),
                   ),
                   leading: Image.asset(
                     r'assets/images/selecteditem3.png',
@@ -186,10 +191,9 @@ class _SelectedScreenState extends State<SelectedScreen> {
             flex: flex,
             child: ReuseableRow(
                 listTile: ListTile(
-                  title: const Text(
+                  title: Text(
                     'Quality Education',
-                    style: TextStyle(
-                        color: ColorConstants.introPageTextColor, fontSize: 20),
+                    style: _textStyle(),
                   ),
                   leading: Image.asset(
                     r'assets/images/selecteditem4.png',
@@ -208,10 +212,9 @@ class _SelectedScreenState extends State<SelectedScreen> {
             flex: flex,
             child: ReuseableRow(
                 listTile: ListTile(
-                  title: const Text(
+                  title: Text(
                     'Gender Equality',
-                    style: TextStyle(
-                        color: ColorConstants.introPageTextColor, fontSize: 20),
+                    style: _textStyle(),
                   ),
                   leading: Image.asset(
                     r'assets/images/selecteditem5.png',
@@ -233,6 +236,13 @@ class _SelectedScreenState extends State<SelectedScreen> {
   Widget _verticalSpace() {
     return SizedBox(
       height: size.height * 0.009,
+    );
+  }
+
+  _textStyle() {
+    return GoogleFonts.poppins(
+      fontSize: size.height * 0.022,
+      color: ColorConstants.introPageTextColor,
     );
   }
 }

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:savvy/common/widgets/otp_screen_textfeild.dart';
 import 'package:savvy/models/user.dart';
-import 'package:savvy/services/api_services.dart';
 
 import '../../common/widgets/custom_button.dart';
 import '../../utils/color_constants.dart';
@@ -20,7 +19,7 @@ class _UpdateScreenState extends State<UpdateScreen> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final ApiServices _apiServices = ApiServices();
+  //final ApiServices _apiServices = ApiServices();
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -67,10 +66,10 @@ class _UpdateScreenState extends State<UpdateScreen> {
                 spreadRadius: 0,
                 child: Text(
                   'Update',
-                  style: GoogleFonts.abel(
-                      fontSize: size.height * 0.02,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold),
+                  style: GoogleFonts.poppins(
+                    fontSize: size.height * 0.02,
+                    color: Colors.white,
+                  ),
                 ),
               )),
             ],

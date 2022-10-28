@@ -26,6 +26,7 @@ class _LoginPageState extends State<LoginPage> {
   late TextEditingController _emailController;
   late TextEditingController _passwordController;
   final ApiServices _apiServices = ApiServices();
+  final _loginFormKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -49,28 +50,37 @@ class _LoginPageState extends State<LoginPage> {
     return ColorfulSafeArea(
       color: Colors.white,
       child: Scaffold(
-        body: _builBody(),
+        body: SingleChildScrollView(child: _builBody()),
       ),
     );
   }
 
   Widget _builBody() {
-    return Column(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-      const Flexible(flex: 1, child: SizedBox()),
-      Flexible(flex: 4, child: _title()),
-      Flexible(flex: 7, child: _textFeilds()),
-      Flexible(flex: 2, child: _loginButton()),
-      Flexible(
-          flex: 1,
-          child: Text(
-            'OR',
-            style: GoogleFonts.aBeeZee(
-                color: const Color(0xFF5D407B), fontSize: size.height * 0.017),
-          )),
-      Flexible(flex: 1, child: _signInWith()),
-      const Flexible(flex: 2, child: SizedBox()),
-      Flexible(flex: 1, child: _signInText()),
-    ]);
+    return SizedBox(
+      height: size.height,
+      width: size.width,
+      child: Padding(
+        padding: EdgeInsets.symmetric(vertical: size.height * 0.020),
+        child:
+            Column(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+          const Flexible(flex: 1, child: SizedBox()),
+          Flexible(flex: 4, child: _title()),
+          Flexible(flex: 7, child: _textFeilds()),
+          Flexible(flex: 2, child: _loginButton()),
+          Flexible(
+              flex: 1,
+              child: Text(
+                'OR',
+                style: GoogleFonts.aBeeZee(
+                    color: const Color(0xFF5D407B),
+                    fontSize: size.height * 0.017),
+              )),
+          Flexible(flex: 1, child: _signInWith()),
+          const Flexible(flex: 2, child: SizedBox()),
+          Flexible(flex: 1, child: _signInText()),
+        ]),
+      ),
+    );
   }
 
   Widget _title() {
@@ -79,8 +89,8 @@ class _LoginPageState extends State<LoginPage> {
       children: [
         Text(
           'Login',
-          style: GoogleFonts.aBeeZee(
-              fontSize: size.height * 0.05,
+          style: GoogleFonts.lato(
+              fontSize: size.height * 0.045,
               color: ColorConstants.introPageTextColor,
               fontWeight: FontWeight.bold),
         ),
@@ -89,110 +99,115 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget _textFeilds() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        Flexible(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Flexible(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Flexible(
-                      child: Text(
-                        'Email',
-                        style: textStyle(),
-                      ),
-                    ),
-                    SizedBox(
-                      height: size.height * 0.007,
-                    ),
-                    Flexible(
-                      child: SignUpPageTextFeild(
-                          controller: _emailController,
-                          hintText: '',
-                          autofocus: false,
-                          labelText: '',
-                          obscureText: false),
-                    )
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-        Flexible(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Flexible(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Flexible(
-                      child: Text(
-                        'Password',
-                        style: textStyle(),
-                      ),
-                    ),
-                    SizedBox(
-                      height: size.height * 0.007,
-                    ),
-                    Flexible(
-                      child: SignUpPageTextFeild(
-                          controller: _passwordController,
-                          hintText: '',
-                          autofocus: false,
-                          labelText: '',
-                          obscureText: true),
-                    )
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-        Flexible(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Flexible(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Flexible(
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.push(context, MaterialPageRoute(
-                            builder: (context) {
-                              return const OtpScreen();
-                            },
-                          ));
-                        },
+    return Form(
+      key: _loginFormKey,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Flexible(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Flexible(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Flexible(
                         child: Text(
-                          'Forgot Password?',
+                          'Email',
                           style: textStyle(),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      height: size.height * 0.007,
-                    ),
-                    Flexible(
-                      child: Container(
-                        width: size.width * 0.8,
-                        color: Colors.transparent,
+                      SizedBox(
+                        height: size.height * 0.007,
                       ),
-                    )
-                  ],
+                      Flexible(
+                        child: SignUpPageTextFeild(
+                            controller: _emailController,
+                            hintText: 'email@example.com',
+                            validator: _emailValidate,
+                            autofocus: false,
+                            labelText: '',
+                            obscureText: false),
+                      )
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-      ],
+          Flexible(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Flexible(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Flexible(
+                        child: Text(
+                          'Password',
+                          style: textStyle(),
+                        ),
+                      ),
+                      SizedBox(
+                        height: size.height * 0.007,
+                      ),
+                      Flexible(
+                        child: SignUpPageTextFeild(
+                            controller: _passwordController,
+                            hintText: '8 characters',
+                            validator: _passwordValidate,
+                            autofocus: false,
+                            labelText: '',
+                            obscureText: true),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Flexible(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Flexible(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Flexible(
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.push(context, MaterialPageRoute(
+                              builder: (context) {
+                                return const OtpScreen();
+                              },
+                            ));
+                          },
+                          child: Text(
+                            'Forgot Password?',
+                            style: textStyle(),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: size.height * 0.007,
+                      ),
+                      Flexible(
+                        child: Container(
+                          width: size.width * 0.8,
+                          color: Colors.transparent,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -203,21 +218,27 @@ class _LoginPageState extends State<LoginPage> {
           isClicked = false;
         });
 
-        Response response = await _apiServices.loginWithApi(Loginuser(
-            userEmail: _emailController.text,
-            userPassword: _passwordController.text,
-            onesignalId: ""));
-        debugPrint(_emailController.text);
-        debugPrint(_passwordController.text);
+        if (_loginFormKey.currentState!.validate()) {
+          Response response = await _apiServices.loginWithApi(Loginuser(
+              userEmail: _emailController.text,
+              userPassword: _passwordController.text,
+              onesignalId: ""));
+          debugPrint(_emailController.text);
+          debugPrint(_passwordController.text);
 
-        if (response.statusCode == 200 && mounted) {
-          Navigator.popAndPushNamed(context, IntroPage.screenName);
-          showToast('Login Successfull');
+          if (response.statusCode == 200 && mounted) {
+            Navigator.popAndPushNamed(context, IntroPage.screenName);
+            showToast('Login Successfull');
+          } else {
+            setState(() {
+              isClicked = true;
+            });
+            showToast('Login Failed');
+          }
         } else {
           setState(() {
             isClicked = true;
           });
-          showToast('Login Failed');
         }
       },
       radius: size.width * 0.07,
@@ -227,8 +248,8 @@ class _LoginPageState extends State<LoginPage> {
       spreadRadius: 0,
       child: isClicked
           ? Text(
-              '''Let's Go!''',
-              style: GoogleFonts.adamina(
+              '''LET'S GO!''',
+              style: GoogleFonts.poppins(
                   fontSize: size.height * 0.02, color: Colors.white),
             )
           : const Loader(),
@@ -252,15 +273,27 @@ class _LoginPageState extends State<LoginPage> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Flexible(child: Text('Don’t Have an Account?')),
+        Flexible(
+            child: Text(
+          'Don’t Have an Account?',
+          style: GoogleFonts.lato(fontSize: 15),
+        )),
+        const SizedBox(
+          width: 3,
+        ),
         Flexible(
             child: GestureDetector(
           onTap: (() {
             Navigator.pushNamed(context, SignUpPage.screenName);
           }),
-          child: const Text(
+          child: Text(
             'Register',
-            style: TextStyle(color: ColorConstants.buttonColorLight),
+            style: GoogleFonts.lato(
+                color: const Color(
+                  0xFF38B68C,
+                ),
+                fontWeight: FontWeight.bold,
+                fontSize: 15),
           ),
         )),
       ],
@@ -268,7 +301,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   textStyle() {
-    return GoogleFonts.aBeeZee(
+    return GoogleFonts.lato(
       color: ColorConstants.introPageTextColor,
       fontSize: size.height * 0.02,
     );
@@ -279,5 +312,19 @@ class _LoginPageState extends State<LoginPage> {
         msg: msg,
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.CENTER);
+  }
+
+  String? _emailValidate(String? value) {
+    if (value!.isEmpty) {
+      return 'please enter email';
+    }
+    return null;
+  }
+
+  String? _passwordValidate(String? value) {
+    if (value!.isEmpty) {
+      return 'please enter password';
+    }
+    return null;
   }
 }

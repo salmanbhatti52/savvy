@@ -1,5 +1,6 @@
 import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:savvy/common/widgets/page_view_text.dart';
 import 'package:savvy/common/widgets/round_icon_button.dart';
 import 'package:savvy/screens/page_view_Screens/page_view_screen_two.dart';
@@ -26,7 +27,7 @@ class PageViewScreenOne extends StatelessWidget {
               Flexible(flex: 1, child: _iconButton(context)),
               Flexible(flex: 1, child: headingText(size)),
               Flexible(flex: 1, child: descriptonText(size)),
-              Flexible(flex: 4, child: svgImage(size)),
+              Flexible(flex: 5, child: svgImage(size)),
               Flexible(flex: 1, child: actionButtons(size, context)),
             ],
           ),
@@ -39,8 +40,8 @@ class PageViewScreenOne extends StatelessWidget {
     return Text(
       MyConstantStrings.headingPgViewPgOne,
       textAlign: TextAlign.center,
-      style: TextStyle(
-          fontWeight: FontWeight.bold,
+      style: GoogleFonts.poppins(
+          fontWeight: FontWeight.w500,
           color: ColorConstants.introPageTextColor,
           fontSize: size.height * 0.04),
     );
@@ -65,16 +66,19 @@ class PageViewScreenOne extends StatelessWidget {
   }
 
   Widget svgImage(Size size) {
-    return Image.asset(r'assets/images/pgview1png.png');
+    return Image.asset(
+      r'assets/images/pgview1png.png',
+      fit: BoxFit.fitWidth,
+    );
   }
 
   descriptonText(Size size) {
     return Text(
       textAlign: TextAlign.center,
       MyConstantStrings.descriptionPgViewPgOne,
-      style: TextStyle(
+      style: GoogleFonts.poppins(
           color: ColorConstants.introPageTextColor,
-          fontSize: size.height * 0.03),
+          fontSize: size.height * 0.023),
     );
   }
 
@@ -88,7 +92,7 @@ class PageViewScreenOne extends StatelessWidget {
                 Navigator.pop(context);
               },
               icon: const Icon(
-                Icons.arrow_back,
+                Icons.arrow_back_ios_sharp,
                 color: Colors.white,
               ))
         ],

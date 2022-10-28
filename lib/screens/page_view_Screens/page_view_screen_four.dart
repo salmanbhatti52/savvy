@@ -1,7 +1,8 @@
 import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:savvy/common/widgets/page_view_text.dart';
-import 'package:savvy/screens/page_view_Screens/page_view_screen_five.dart';
+import 'package:savvy/screens/page_view_Screens/page_view_screen_six.dart';
 
 import '../../common/widgets/custom_button.dart';
 import '../../common/widgets/round_icon_button.dart';
@@ -45,7 +46,7 @@ class PageViewScreenFour extends StatelessWidget {
     return Text(
       'We need a plan.',
       textAlign: TextAlign.center,
-      style: TextStyle(
+      style: GoogleFonts.poppins(
           fontWeight: FontWeight.bold,
           color: ColorConstants.introPageTextColor,
           fontSize: size.height * 0.04),
@@ -57,7 +58,7 @@ class PageViewScreenFour extends StatelessWidget {
         ontap: () {
           Navigator.push(context, MaterialPageRoute(
             builder: (context) {
-              return const PageViewScreenFive();
+              return const PageViewScreenSix();
             },
           ));
         },
@@ -80,12 +81,13 @@ class PageViewScreenFour extends StatelessWidget {
       children: [
         Flexible(
           child: Text(
-            'The UN has 17 Goals\n for Sustainable Development\n by 2030',
+            'The UN has 17 Goals\nfor Sustainable\n Developmentby 2030',
             textAlign: TextAlign.center,
             //  MyConstantStrings.descriptionPgViewPgThree,
-            style: TextStyle(
+            style: GoogleFonts.poppins(
                 color: ColorConstants.introPageTextColor,
-                fontSize: size.height * 0.025),
+                fontWeight: FontWeight.w500,
+                fontSize: size.height * 0.030),
           ),
         ),
       ],
@@ -102,7 +104,7 @@ class PageViewScreenFour extends StatelessWidget {
                 Navigator.pop(context);
               },
               icon: const Icon(
-                Icons.arrow_back,
+                Icons.arrow_back_ios_sharp,
                 color: Colors.white,
               ))
         ],
