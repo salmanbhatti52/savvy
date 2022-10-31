@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:savvy/screens/blogscreens/blog_screen_one.dart';
 import 'package:savvy/screens/intro_page.dart';
 import 'package:savvy/screens/landing_page.dart';
 import 'package:savvy/screens/login_page.dart';
 import 'package:savvy/screens/signup_page.dart';
+import 'package:savvy/screens/splash_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: Colors.white,
         ),
         debugShowCheckedModeBanner: false,
-        home: const BlogScreen(),
+        home: const SplashScreen(),
         routes: {
           LandingPage.screenName: (context) {
             return const LandingPage();
