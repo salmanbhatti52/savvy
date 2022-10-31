@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:savvy/screens/blogscreens/blog_screen_one.dart';
 import 'package:savvy/screens/intro_page.dart';
 import 'package:savvy/screens/landing_page.dart';
 import 'package:savvy/screens/login_page.dart';
-import 'package:savvy/screens/post_page_view_screens/chosed_goals_Screen.dart';
 import 'package:savvy/screens/signup_page.dart';
 
 void main() {
@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: Colors.white,
         ),
         debugShowCheckedModeBanner: false,
-        home: const ChoosedGoalsScreen(),
+        home: const BlogScreen(),
         routes: {
           LandingPage.screenName: (context) {
             return const LandingPage();

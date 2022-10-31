@@ -94,44 +94,40 @@ class _BlogScreenState extends State<BlogScreen> {
   }
 
   Widget _itemBuilder(BuildContext context, int index) {
-    return Container(
-      width: size.width * 0.5,
-      decoration: BoxDecoration(
-        color: Colors.green,
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          Image.asset(r'assets/images/earth.png'),
-          Positioned(
-              bottom: size.height * 0.010,
-              left: size.width * 0.020,
-              child: Container(
-                height: size.height * 0.12,
-                width: size.width * 0.45,
-                decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.8),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          textAlign: TextAlign.justify,
-                          'Protecting our\nOceans',
-                          maxLines: 2,
-                          style: _textStyle(),
-                        ),
-                        const Text('29th Aug  10 mins'),
-                      ]),
-                ),
-              ))
-        ],
-      ),
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        SvgPicture.asset(
+          r'assets/svgs/Mask group_01.svg',
+          fit: BoxFit.cover,
+        ),
+        Positioned(
+            bottom: size.height * 0.010,
+            left: size.width * 0.020,
+            child: Container(
+              height: size.height * 0.12,
+              width: size.width * 0.45,
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.8),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        textAlign: TextAlign.justify,
+                        'Protecting our\nOceans',
+                        maxLines: 2,
+                        style: _textStyle(),
+                      ),
+                      const Text('29th Aug  10 mins'),
+                    ]),
+              ),
+            ))
+      ],
     );
   }
 
@@ -158,7 +154,10 @@ class _BlogScreenState extends State<BlogScreen> {
       child: Stack(
         alignment: Alignment.center,
         children: [
-          Image.asset(r'assets/images/earth.png'),
+          Image.asset(
+            r'assets/images/pgtwopng.png',
+            fit: BoxFit.fill,
+          ),
           Positioned(
               bottom: size.height * 0.010,
               left: size.width * 0.040,

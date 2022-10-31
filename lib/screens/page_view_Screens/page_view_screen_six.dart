@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../common/widgets/custom_button.dart';
 import '../../utils/color_constants.dart';
+import '../post_page_view_screens/chosed_goals_Screen.dart';
 import '../post_page_view_screens/selected_screen.dart';
 
 class PageViewScreenSix extends StatelessWidget {
@@ -34,7 +35,7 @@ class PageViewScreenSix extends StatelessWidget {
                   children: [
                     Expanded(
                       flex: 14,
-                      child: imageColunm(size),
+                      child: imageColunm(size, context),
                     ),
                     Expanded(flex: 2, child: actionButtons(size, context)),
                   ],
@@ -117,7 +118,7 @@ class PageViewScreenSix extends StatelessWidget {
     );
   }
 
-  Widget imageColunm(Size size) {
+  Widget imageColunm(Size size, BuildContext context) {
     var space = size.height * 0.009;
     var elevation = 1.0;
     return Column(
@@ -127,9 +128,18 @@ class PageViewScreenSix extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Flexible(
-                  child: Card(
-                      elevation: elevation,
-                      child: Image.asset(r'assets/images/pgsixcompnent1.png'))),
+                  child: InkWell(
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(
+                    builder: (context) {
+                      return const ChoosedGoalsScreen();
+                    },
+                  ));
+                },
+                child: Card(
+                    elevation: elevation,
+                    child: Image.asset(r'assets/images/pgsixcompnent1.png')),
+              )),
               Flexible(
                   child: Card(
                       elevation: elevation,
