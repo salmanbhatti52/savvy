@@ -24,7 +24,6 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
     return ColorfulSafeArea(
       color: Colors.white,
       child: Scaffold(
-        //  backgroundColor: ColorConstants.slectedPlanBg,
         drawerEnableOpenDragGesture: false,
         endDrawer: myEndDrawer(),
         appBar: _buildAppBar(),
@@ -39,10 +38,11 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
       backgroundColor: Colors.transparent,
       centerTitle: true,
       title: Text(
-        'Savvy',
-        style: GoogleFonts.poppins(
-            fontSize: size.height * 0.040,
-            color: ColorConstants.introPageTextColor),
+        'savvy',
+        style: GoogleFonts.lato(
+            fontSize: size.height * 0.030,
+            color: ColorConstants.introPageTextColor,
+            fontWeight: FontWeight.bold),
       ),
       actions: [
         Builder(builder: (context) {
@@ -124,7 +124,7 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
                       Flexible(
                         flex: 1,
                         child: Text(
-                          'Your 1st payment',
+                          'YOUR 1ST PAYMENT',
                           style: myTextStyle(),
                         ),
                       ),
@@ -134,6 +134,27 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
                         child: Text(
                           '€50',
                           style: myTextStyle(),
+                        ),
+                      ),
+                      Flexible(
+                        flex: 1,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            const Flexible(
+                              //  flex: 2,
+                              child: SizedBox(
+                                width: 5,
+                              ),
+                            ),
+                            Flexible(
+                              flex: 10,
+                              child: Text(
+                                'YOUR MONTHLY PAYMENTS',
+                                style: myTextStyle(),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       Flexible(flex: 1, child: mySliderTwo()),
@@ -160,12 +181,13 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Flexible(
                         flex: 2,
                         child: Text(
                           'Your investments after 10 years',
-                          style: GoogleFonts.raleway(
+                          style: GoogleFonts.poppins(
                               color: Colors.black,
                               fontSize: size.height * 0.020),
                         )),
@@ -184,8 +206,9 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
                             Flexible(
                               flex: 1,
                               child: Text(
-                                '''3128.61''',
-                                style: TextStyle(
+                                '''3128.6133333''',
+                                softWrap: false,
+                                style: GoogleFonts.lato(
                                   fontSize: size.height * 0.030,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black,
@@ -236,10 +259,10 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
   }
 
   myTextStyle() {
-    return GoogleFonts.raleway(
-        color: ColorConstants.introPageTextColor,
-        fontSize: size.height * 0.020,
-        fontWeight: FontWeight.bold);
+    return GoogleFonts.poppins(
+      color: ColorConstants.introPageTextColor,
+      fontSize: size.height * 0.020,
+    );
   }
 
   Widget myEndDrawer() {
@@ -249,12 +272,13 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
         width: size.width,
         color: const Color(0xFFCBF6E8),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Flexible(
-                flex: 1,
+                flex: 2,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Flexible(child: Builder(builder: (context) {
                       return IconButton(
@@ -277,16 +301,19 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
                     Flexible(
                         child: Text(
                       textAlign: TextAlign.center,
-                      'Savvy',
-                      style: _textStyleTwo(),
+                      'savvy',
+                      style: GoogleFonts.lato(
+                          fontSize: size.height * 0.030,
+                          color: ColorConstants.introPageTextColor,
+                          fontWeight: FontWeight.bold),
                     )),
                   ],
                 )),
             SizedBox(
-              height: size.height * 0.070,
+              height: size.height * 0.060,
             ),
             Flexible(
-                flex: 6,
+                flex: 10,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -305,10 +332,20 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
                       'LEARN',
                       style: _textStyle(),
                     )),
+                    Flexible(
+                        child: Text(
+                      'My Profile',
+                      style: _textStyle(),
+                    )),
+                    Flexible(
+                        child: Text(
+                      'Logout',
+                      style: _textStyle(),
+                    )),
                   ],
                 )),
-            Flexible(
-                flex: 6,
+            Expanded(
+                flex: 8,
                 child: Image.asset(
                   r'assets/images/drawerpng.png',
                   fit: BoxFit.fitWidth,
@@ -321,9 +358,9 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
 
   _textStyle() {
     return GoogleFonts.firaSans(
-      color: ColorConstants.introPageTextColor,
-      fontSize: size.height * 0.030,
-    );
+        color: ColorConstants.introPageTextColor,
+        fontSize: size.height * 0.040,
+        fontWeight: FontWeight.w300);
   }
 
   _textStyleTwo() {

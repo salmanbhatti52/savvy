@@ -1,4 +1,3 @@
-import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:savvy/common/widgets/custom_button.dart';
@@ -16,23 +15,14 @@ class PageViewScreenThree extends StatelessWidget {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
 
-    return ColorfulSafeArea(
-      color: Colors.white,
-      child: Scaffold(
-        body: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Flexible(flex: 1, child: _iconButton(context)),
-              Flexible(flex: 1, child: headingText(size)),
-              Flexible(flex: 12, child: svgImage(size)),
-              Flexible(flex: 2, child: descriptonText(size)),
-              Flexible(flex: 2, child: actionButtons(size, context)),
-            ],
-          ),
-        ),
-      ),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        Flexible(flex: 1, child: headingText(size)),
+        Flexible(flex: 12, child: svgImage(size)),
+        Flexible(flex: 2, child: descriptonText(size)),
+        Flexible(flex: 1, child: _paginatinPng()),
+      ],
     );
   }
 
@@ -85,6 +75,10 @@ class PageViewScreenThree extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  Widget _paginatinPng() {
+    return Image.asset(r'assets/images/pgnation3.png');
   }
 
   Widget _iconButton(BuildContext context) {

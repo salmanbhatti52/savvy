@@ -26,9 +26,18 @@ class LandingPage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
+                const Flexible(flex: 1, child: SizedBox()),
                 Flexible(flex: 3, child: title(size)),
                 Flexible(flex: 10, child: svgImage()),
-                Flexible(flex: 1, child: actionButtons(size, context)),
+                Flexible(
+                  flex: 2,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Flexible(child: actionButtons(size, context)),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
@@ -49,7 +58,7 @@ class LandingPage extends StatelessWidget {
 
   Widget svgImage() {
     return SizedBox(
-      child: Image.asset(r'assets/images/landigpgpng.png'),
+      child: SvgPicture.asset(r'assets/svgs/landingpgsvg.svg'),
     );
   }
 
@@ -68,7 +77,7 @@ class LandingPage extends StatelessWidget {
                 ));
               },
               width: size.width * 0.4,
-              height: size.height * 0.1,
+              height: size.height * 0.07,
               radius: size.height * 0.05,
               spreadRadius: 2,
               color: ColorConstants.buttonColorLight,
@@ -96,12 +105,12 @@ class LandingPage extends StatelessWidget {
               },
               spreadRadius: 2,
               width: size.width * 0.4,
-              height: size.height * 0.1,
+              height: size.height * 0.07,
               radius: size.height * 0.05,
               color: ColorConstants.introPageTextColor,
               child: Text(
                 'SIGN UP',
-                style: GoogleFonts.aBeeZee(
+                style: GoogleFonts.poppins(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,

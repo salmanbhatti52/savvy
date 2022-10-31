@@ -47,6 +47,8 @@ dependencies:
   fluttertoast: ^8.1.1
   fl_chart: ^0.55.2
   colorful_safe_area: ^0.3.0
+  infinite_scroll_pagination: ^3.2.0
+  card_swiper: ^2.0.4
 
 dev_dependencies:
   change_app_package_name: ^0.1.3

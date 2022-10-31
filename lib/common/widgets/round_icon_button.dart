@@ -18,6 +18,7 @@ class RoundButton extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
+        alignment: Alignment.center,
         height: 30,
         width: 40,
         // alignment: Alignment.centerRight,

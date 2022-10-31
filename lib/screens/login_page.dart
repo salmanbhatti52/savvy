@@ -50,7 +50,8 @@ class _LoginPageState extends State<LoginPage> {
     return ColorfulSafeArea(
       color: Colors.white,
       child: Scaffold(
-        body: SingleChildScrollView(child: _builBody()),
+        body: SingleChildScrollView(
+            physics: const NeverScrollableScrollPhysics(), child: _builBody()),
       ),
     );
   }
@@ -62,21 +63,22 @@ class _LoginPageState extends State<LoginPage> {
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: size.height * 0.020),
         child:
-            Column(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+            Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
           const Flexible(flex: 1, child: SizedBox()),
           Flexible(flex: 4, child: _title()),
           Flexible(flex: 7, child: _textFeilds()),
           Flexible(flex: 2, child: _loginButton()),
+          const Flexible(flex: 1, child: SizedBox()),
           Flexible(
               flex: 1,
               child: Text(
                 'OR',
-                style: GoogleFonts.aBeeZee(
+                style: GoogleFonts.lato(
                     color: const Color(0xFF5D407B),
                     fontSize: size.height * 0.017),
               )),
           Flexible(flex: 1, child: _signInWith()),
-          const Flexible(flex: 2, child: SizedBox()),
+          const Flexible(flex: 1, child: SizedBox()),
           Flexible(flex: 1, child: _signInText()),
         ]),
       ),
@@ -249,7 +251,7 @@ class _LoginPageState extends State<LoginPage> {
       child: isClicked
           ? Text(
               '''LET'S GO!''',
-              style: GoogleFonts.poppins(
+              style: GoogleFonts.lato(
                   fontSize: size.height * 0.02, color: Colors.white),
             )
           : const Loader(),

@@ -1,4 +1,3 @@
-import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:savvy/common/widgets/page_view_text.dart';
@@ -15,31 +14,29 @@ class PageViewScreenFour extends StatelessWidget {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
 
-    return ColorfulSafeArea(
-      color: Colors.white,
-      child: Scaffold(
-        body: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Flexible(flex: 2, child: svgImage(size)),
+        Expanded(flex: 1, child: descriptonText(size)),
+        Flexible(
+          flex: 1,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Flexible(flex: 1, child: _iconButton(context)),
-              Flexible(flex: 2, child: svgImage(size)),
-              Flexible(
-                flex: 2,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Expanded(flex: 2, child: descriptonText(size)),
-                    Flexible(flex: 2, child: actionButtons(size, context)),
-                  ],
-                ),
-              ),
+              _paginatinPng(),
+              SizedBox(
+                height: size.height * 0.032,
+              )
             ],
           ),
         ),
-      ),
+      ],
     );
+  }
+
+  Widget _paginatinPng() {
+    return Image.asset(r'assets/images/pgnation3.png');
   }
 
   Widget headingText(Size size) {

@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:savvy/common/widgets/custom_button.dart';
 import 'package:savvy/models/user.dart';
 import 'package:savvy/screens/features/updateuser_screen.dart';
-import 'package:savvy/screens/page_view_Screens/page_view_screen_one.dart';
+import 'package:savvy/screens/page_view_Screens/page_view.dart';
 import 'package:savvy/utils/color_constants.dart';
 
 class IntroPage extends StatelessWidget {
@@ -61,19 +61,6 @@ class IntroPage extends StatelessWidget {
         ),
       ],
     );
-
-    // return Stack(
-    //   children: [
-    //     Positioned(
-    //         bottom: 0,
-    //         right: size.width * 0.71,
-    //         child: SizedBox(
-    //           height: size.height * 0.19,
-    //           //   child: SvgPicture.asset(r'assets/svgs/intropageleaf.svg'),
-    //         )),
-
-    //   ],
-    // );
   }
 
   Widget welcomeText(Size size) {
@@ -111,7 +98,7 @@ class IntroPage extends StatelessWidget {
       ontap: () {
         Navigator.push(context, MaterialPageRoute(
           builder: (context) {
-            return const PageViewScreenOne();
+            return const MyPageView();
           },
         ));
       },

@@ -54,7 +54,8 @@ class _SignUpPageState extends State<SignUpPage> {
       color: Colors.white,
       child: Scaffold(
         backgroundColor: Colors.white,
-        body: SingleChildScrollView(child: _builBody()),
+        body: SingleChildScrollView(
+            physics: const NeverScrollableScrollPhysics(), child: _builBody()),
       ),
     );
   }
@@ -64,13 +65,14 @@ class _SignUpPageState extends State<SignUpPage> {
       height: size.height,
       width: size.width,
       child: Padding(
-        padding: EdgeInsets.symmetric(vertical: size.height * 0.030),
+        padding: EdgeInsets.symmetric(vertical: size.height * 0.025),
         child:
-            Column(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+            Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
           const Flexible(flex: 1, child: SizedBox()),
-          Flexible(flex: 2, child: _title()),
-          Flexible(flex: 7, child: _textFeilds()),
+          Flexible(flex: 1, child: _title()),
+          Flexible(flex: 6, child: _textFeilds()),
           Flexible(flex: 2, child: _loginButton()),
+          const Flexible(flex: 1, child: SizedBox()),
           Flexible(
               flex: 1,
               child: Text(
@@ -246,7 +248,7 @@ class _SignUpPageState extends State<SignUpPage> {
         child: isClicked
             ? Text(
                 '''LET'S GO''',
-                style: GoogleFonts.poppins(
+                style: GoogleFonts.lato(
                     fontSize: size.height * 0.02, color: Colors.white),
               )
             : const Loader());
@@ -267,13 +269,16 @@ class _SignUpPageState extends State<SignUpPage> {
 
   Widget _policyText() {
     return Column(
-      children: const [
+      children: [
         Flexible(
-            child: Text('Creating an account means that you’re okay with our')),
+            child: Text(
+          'Creating an account means that you’re okay with our',
+          style: GoogleFonts.lato(),
+        )),
         Flexible(
           child: Text(
             ' Terms of Service and  Privacy Policy.',
-            style: TextStyle(color: ColorConstants.introPageTextColor),
+            style: GoogleFonts.lato(color: ColorConstants.introPageTextColor),
           ),
         ),
       ],
@@ -312,7 +317,7 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   textStyle() {
-    return GoogleFonts.poppins(
+    return GoogleFonts.lato(
       color: ColorConstants.introPageTextColor,
       fontSize: size.height * 0.02,
     );
