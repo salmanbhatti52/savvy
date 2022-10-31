@@ -1,7 +1,7 @@
-import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:savvy/screens/login_page.dart';
 
 import '../../utils/color_constants.dart';
 
@@ -21,14 +21,11 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
   @override
   Widget build(BuildContext context) {
     size = MediaQuery.of(context).size;
-    return ColorfulSafeArea(
-      color: Colors.white,
-      child: Scaffold(
-        drawerEnableOpenDragGesture: false,
-        endDrawer: myEndDrawer(),
-        appBar: _buildAppBar(),
-        body: selectedPlanBody(),
-      ),
+    return Scaffold(
+      drawerEnableOpenDragGesture: false,
+      endDrawer: myEndDrawer(),
+      appBar: _buildAppBar(),
+      body: selectedPlanBody(),
     );
   }
 
@@ -338,9 +335,18 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
                       style: _textStyle(),
                     )),
                     Flexible(
-                        child: Text(
-                      'Logout',
-                      style: _textStyle(),
+                        child: InkWell(
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(
+                          builder: (context) {
+                            return const LoginPage();
+                          },
+                        ));
+                      },
+                      child: Text(
+                        'Logout',
+                        style: _textStyle(),
+                      ),
                     )),
                   ],
                 )),

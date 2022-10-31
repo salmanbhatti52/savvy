@@ -50,12 +50,17 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     size = MediaQuery.of(context).size;
+    var viewinset = MediaQuery.of(context).viewInsets.bottom;
+
     return ColorfulSafeArea(
       color: Colors.white,
       child: Scaffold(
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
-            physics: const NeverScrollableScrollPhysics(), child: _builBody()),
+            physics: viewinset > 0
+                ? const BouncingScrollPhysics()
+                : const NeverScrollableScrollPhysics(),
+            child: _builBody()),
       ),
     );
   }
@@ -65,7 +70,7 @@ class _SignUpPageState extends State<SignUpPage> {
       height: size.height,
       width: size.width,
       child: Padding(
-        padding: EdgeInsets.symmetric(vertical: size.height * 0.025),
+        padding: EdgeInsets.symmetric(vertical: size.height * 0.030),
         child:
             Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
           const Flexible(flex: 1, child: SizedBox()),
@@ -84,6 +89,7 @@ class _SignUpPageState extends State<SignUpPage> {
           Flexible(flex: 1, child: _signInWith()),
           Flexible(flex: 1, child: _policyText()),
           Flexible(flex: 1, child: _signInText()),
+          const Flexible(flex: 1, child: SizedBox()),
         ]),
       ),
     );

@@ -47,11 +47,15 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     size = MediaQuery.of(context).size;
+    var viewinset = MediaQuery.of(context).viewInsets.bottom;
     return ColorfulSafeArea(
       color: Colors.white,
       child: Scaffold(
         body: SingleChildScrollView(
-            physics: const NeverScrollableScrollPhysics(), child: _builBody()),
+            physics: viewinset > 0
+                ? const BouncingScrollPhysics()
+                : const NeverScrollableScrollPhysics(),
+            child: _builBody()),
       ),
     );
   }
@@ -63,7 +67,7 @@ class _LoginPageState extends State<LoginPage> {
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: size.height * 0.020),
         child:
-            Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+            Column(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
           const Flexible(flex: 1, child: SizedBox()),
           Flexible(flex: 4, child: _title()),
           Flexible(flex: 7, child: _textFeilds()),
@@ -80,6 +84,7 @@ class _LoginPageState extends State<LoginPage> {
           Flexible(flex: 1, child: _signInWith()),
           const Flexible(flex: 1, child: SizedBox()),
           Flexible(flex: 1, child: _signInText()),
+          const Flexible(flex: 1, child: SizedBox()),
         ]),
       ),
     );

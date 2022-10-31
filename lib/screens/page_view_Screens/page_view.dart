@@ -28,6 +28,7 @@ class _MyPageViewState extends State<MyPageView> {
   Widget build(BuildContext context) {
     size = MediaQuery.of(context).size;
     return ColorfulSafeArea(
+      color: Colors.white,
       child: Scaffold(
         body: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,

@@ -19,11 +19,16 @@ class _OtpScreenState extends State<OtpScreen> {
   @override
   Widget build(BuildContext context) {
     size = MediaQuery.of(context).size;
+    var viewinset = MediaQuery.of(context).viewInsets.bottom;
     return ColorfulSafeArea(
       color: Colors.white,
       child: Scaffold(
         // backgroundColor: Colors.black,
-        body: _buildBody(),
+        body: SingleChildScrollView(
+            physics: viewinset > 0
+                ? const BouncingScrollPhysics()
+                : const NeverScrollableScrollPhysics(),
+            child: _buildBody()),
       ),
     );
   }
@@ -31,24 +36,27 @@ class _OtpScreenState extends State<OtpScreen> {
   Widget _buildBody() {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Column(
-        children: [
-          Flexible(
-            flex: 7,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Flexible(flex: 1, child: _iconButton()),
-                Flexible(flex: 4, child: _lockImage()),
-                Flexible(flex: 1, child: _forgotPasswordText()),
-                Flexible(flex: 1, child: _descriptionText()),
-                Flexible(flex: 2, child: _textFeild()),
-                Flexible(flex: 1, child: _actionButton()),
-              ],
+      child: SizedBox(
+        height: size.height,
+        child: Column(
+          children: [
+            Flexible(
+              flex: 7,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Flexible(flex: 1, child: _iconButton()),
+                  Flexible(flex: 4, child: _lockImage()),
+                  Flexible(flex: 1, child: _forgotPasswordText()),
+                  Flexible(flex: 1, child: _descriptionText()),
+                  Flexible(flex: 2, child: _textFeild()),
+                  Flexible(flex: 1, child: _actionButton()),
+                ],
+              ),
             ),
-          ),
-          Flexible(child: Column()),
-        ],
+            Flexible(child: Column()),
+          ],
+        ),
       ),
     );
   }

@@ -122,10 +122,15 @@ class MyDialogs {
             )),
         Flexible(
             flex: 3,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [Icon(Icons.close)],
+            child: InkWell(
+              onTap: () {
+                //  Navigator.pop(context);
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: const [Icon(Icons.close)],
+              ),
             )),
       ],
     );
