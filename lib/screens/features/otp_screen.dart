@@ -15,6 +15,14 @@ class OtpScreen extends StatefulWidget {
 }
 
 class _OtpScreenState extends State<OtpScreen> {
+  late TextEditingController _emailController;
+
+  @override
+  void initState() {
+    super.initState();
+    _emailController = TextEditingController();
+  }
+
   late Size size;
   @override
   Widget build(BuildContext context) {
@@ -87,7 +95,7 @@ class _OtpScreenState extends State<OtpScreen> {
   Widget _forgotPasswordText() {
     return Text(
       'Forgot Password?',
-      style: GoogleFonts.abel(
+      style: GoogleFonts.lato(
           fontSize: size.height * 0.03,
           color: ColorConstants.introPageTextColor,
           fontWeight: FontWeight.bold),
@@ -118,7 +126,7 @@ class _OtpScreenState extends State<OtpScreen> {
         width: size.width * 0.6,
         spreadRadius: 0,
         child: Text(
-          'Done',
+          'RESET PASSWORD',
           style: GoogleFonts.poppins(
               fontSize: size.height * 0.02, color: Colors.white),
         ));
@@ -137,7 +145,7 @@ class _OtpScreenState extends State<OtpScreen> {
                   children: [
                     Flexible(
                       child: Text(
-                        'Enter Email',
+                        'Email',
                         style: textStyle(),
                       ),
                     ),
@@ -146,8 +154,8 @@ class _OtpScreenState extends State<OtpScreen> {
                     ),
                     Flexible(
                       child: OtpTextFeild(
-                        controller: TextEditingController(),
-                        hintText: '',
+                        controller: _emailController,
+                        hintText: 'Enter Email',
                         autofocus: false,
                       ),
                     )
@@ -163,7 +171,7 @@ class _OtpScreenState extends State<OtpScreen> {
 
   textStyle() {
     return GoogleFonts.poppins(
-      color: ColorConstants.introPageTextColor,
+      color: ColorConstants.buttonColorLight,
       fontSize: size.height * 0.02,
     );
   }

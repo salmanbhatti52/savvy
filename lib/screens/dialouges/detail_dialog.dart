@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:savvy/utils/color_constants.dart';
 
-class MyDialogs {
+class DetailDialog {
   String description =
       'A development bank is a supranational institution that has a positive social and economic impact, with a focus on emerging countries. Funds raised from the issuance of development bank bonds are usually used to support projects that are in line with the United Nations 2030 Agenda for Sustainable Development.These range from the development of core infrastructure to environmental protection. Since eradication of poverty is one of the most important SDGs, we believe that this ETF can help investors address this issue.';
 
-  Widget myDialogs(Size size) {
+  Widget detailDialog(Size size, BuildContext context) {
     var textFlex = 1;
     var containerFlex = 3;
     return Dialog(
@@ -21,7 +21,7 @@ class MyDialogs {
                 flex: 2,
                 child: Column(
                   children: [
-                    Flexible(child: _title()),
+                    Flexible(child: _title(context)),
                     Flexible(
                         child: Text(
                       'Info',
@@ -104,7 +104,7 @@ class MyDialogs {
     );
   }
 
-  Widget _title() {
+  Widget _title(BuildContext context) {
     return Row(
       children: [
         Flexible(
@@ -129,7 +129,13 @@ class MyDialogs {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [Icon(Icons.close)],
+                children: [
+                  InkWell(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Icon(Icons.close))
+                ],
               ),
             )),
       ],

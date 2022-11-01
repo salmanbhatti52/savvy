@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 
 class MyButton extends StatelessWidget {
@@ -10,6 +11,7 @@ class MyButton extends StatelessWidget {
     required this.width,
     this.ontap,
     required this.spreadRadius,
+    this.border,
   }) : super(key: key);
 
   final double radius;
@@ -19,32 +21,25 @@ class MyButton extends StatelessWidget {
   final double width;
   final VoidCallback? ontap;
   final double? spreadRadius;
+  final BoxBorder? border;
 
   @override
   Widget build(BuildContext context) {
     //var size = MediaQuery.of(context).size;
-    return Container(
-      alignment: Alignment.center,
-      height: height,
-      width: width,
-      decoration: BoxDecoration(
-        color: color,
-        shape: BoxShape.rectangle,
-        borderRadius: BorderRadius.circular(radius),
-        // boxShadow: [
-        //   BoxShadow(
-        //       offset: Offset(size.width, 0),
-        //       blurRadius: 5,
-        //       blurStyle: BlurStyle.inner),
-        //   BoxShadow(
-        //       offset: const Offset(4, 4),
-        //       blurRadius: 2,
-        //       spreadRadius: spreadRadius,
-        //       color: Colors.grey.shade400,
-        //       blurStyle: BlurStyle.normal),
-        // ],
+    return InkWell(
+      onTap: ontap,
+      child: Container(
+        alignment: Alignment.center,
+        height: height,
+        width: width,
+        decoration: BoxDecoration(
+          color: color,
+          shape: BoxShape.rectangle,
+          border: border,
+          borderRadius: BorderRadius.circular(radius),
+        ),
+        child: child,
       ),
-      child: InkWell(onTap: ontap, child: child),
     );
   }
 }

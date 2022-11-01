@@ -97,12 +97,20 @@ class _BlogScreenState extends State<BlogScreen> {
     return Stack(
       alignment: Alignment.center,
       children: [
-        SvgPicture.asset(
-          r'assets/svgs/Mask group_01.svg',
-          fit: BoxFit.cover,
+        Container(
+          clipBehavior: Clip.hardEdge,
+          width: size.width - size.width * 0.5,
+          height: size.height * 0.3,
+          decoration: BoxDecoration(
+              color: Colors.grey.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(15)),
+          child: Image.asset(
+            r'assets/images/Mask group_01.png',
+            fit: BoxFit.cover,
+          ),
         ),
         Positioned(
-            bottom: size.height * 0.010,
+            bottom: size.height * 0.020,
             left: size.width * 0.020,
             child: Container(
               height: size.height * 0.12,
@@ -145,46 +153,47 @@ class _BlogScreenState extends State<BlogScreen> {
   }
 
   Widget _favoriteItemBuilder(BuildContext context, int index) {
-    return Container(
-      width: size.width - 30,
-      decoration: BoxDecoration(
-        color: Colors.green,
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          Image.asset(
-            r'assets/images/pgtwopng.png',
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        Container(
+          width: size.width - size.width * 0.10 + 10,
+          height: size.height * 0.5,
+          clipBehavior: Clip.hardEdge,
+          decoration: BoxDecoration(
+              color: Colors.grey.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(15)),
+          child: Image.asset(
+            r'assets/images/Mask group 1.png',
             fit: BoxFit.fill,
           ),
-          Positioned(
-              bottom: size.height * 0.010,
-              left: size.width * 0.040,
-              child: Container(
-                height: size.height * 0.12,
-                width: size.width * 0.7,
-                decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.7),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'What are ETF’s?',
-                          maxLines: 2,
-                          style: _textStyle(),
-                        ),
-                        const Text('29th Aug  10 mins'),
-                      ]),
-                ),
-              ))
-        ],
-      ),
+        ),
+        Positioned(
+            bottom: size.height * 0.010,
+            left: size.width * 0.040,
+            child: Container(
+              height: size.height * 0.12,
+              width: size.width * 0.7,
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.7),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'What are ETF’s?',
+                        maxLines: 2,
+                        style: _textStyle(),
+                      ),
+                      const Text('29th Aug  10 mins'),
+                    ]),
+              ),
+            ))
+      ],
     );
   }
 

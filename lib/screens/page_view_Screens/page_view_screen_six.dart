@@ -136,9 +136,18 @@ class PageViewScreenSix extends StatelessWidget {
                     },
                   ));
                 },
-                child: Card(
-                    elevation: elevation,
-                    child: Image.asset(r'assets/images/pgsixcompnent1.png')),
+                child: InkWell(
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(
+                      builder: (context) {
+                        return const ChoosedGoalsScreen();
+                      },
+                    ));
+                  },
+                  child: Card(
+                      elevation: elevation,
+                      child: Image.asset(r'assets/images/pgsixcompnent1.png')),
+                ),
               )),
               Flexible(
                   child: Card(

@@ -23,17 +23,10 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  late TextEditingController _emailController;
-  late TextEditingController _passwordController;
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   final ApiServices _apiServices = ApiServices();
   final _loginFormKey = GlobalKey<FormState>();
-
-  @override
-  void initState() {
-    super.initState();
-    _emailController = TextEditingController();
-    _passwordController = TextEditingController();
-  }
 
   @override
   void dispose() {
@@ -194,7 +187,7 @@ class _LoginPageState extends State<LoginPage> {
                           },
                           child: Text(
                             'Forgot Password?',
-                            style: textStyle(),
+                            style: forgotTextStyle(),
                           ),
                         ),
                       ),
@@ -310,6 +303,13 @@ class _LoginPageState extends State<LoginPage> {
   textStyle() {
     return GoogleFonts.lato(
       color: ColorConstants.introPageTextColor,
+      fontSize: size.height * 0.02,
+    );
+  }
+
+  forgotTextStyle() {
+    return GoogleFonts.lato(
+      color: const Color(0xFF606367),
       fontSize: size.height * 0.02,
     );
   }

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:savvy/screens/blogscreens/blog_screen_one.dart';
 import 'package:savvy/screens/login_page.dart';
+import 'package:savvy/screens/post_page_view_screens/selected_screen.dart';
 
 import '../../utils/color_constants.dart';
 
@@ -202,13 +204,15 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
                                     r'assets/svgs/poundsvg.svg')),
                             Flexible(
                               flex: 1,
-                              child: Text(
-                                '''3128.6133333''',
-                                softWrap: false,
-                                style: GoogleFonts.lato(
-                                  fontSize: size.height * 0.030,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black,
+                              child: FittedBox(
+                                child: Text(
+                                  '''3128.6188''',
+                                  softWrap: false,
+                                  style: GoogleFonts.lato(
+                                    fontSize: size.height * 0.030,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
                                 ),
                               ),
                             ),
@@ -263,101 +267,116 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
   }
 
   Widget myEndDrawer() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 5),
-      child: Container(
-        width: size.width,
-        color: const Color(0xFFCBF6E8),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Flexible(
-                flex: 2,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Flexible(child: Builder(builder: (context) {
-                      return IconButton(
-                        icon: const Icon(Icons.close),
-                        onPressed: () {
-                          Scaffold.of(context).closeEndDrawer();
-                        },
-                      );
-                    })),
-                    SizedBox(
-                      width: size.width * 0.020,
-                    )
-                  ],
-                )),
-            Flexible(
-                flex: 2,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Flexible(
-                        child: Text(
-                      textAlign: TextAlign.center,
-                      'savvy',
-                      style: GoogleFonts.lato(
-                          fontSize: size.height * 0.030,
-                          color: ColorConstants.introPageTextColor,
-                          fontWeight: FontWeight.bold),
-                    )),
-                  ],
-                )),
-            SizedBox(
-              height: size.height * 0.060,
-            ),
-            Flexible(
-                flex: 10,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Flexible(
-                        child: Text(
-                      'MY IMPACT',
-                      style: _textStyle(),
-                    )),
-                    Flexible(
-                        child: Text(
-                      'PORTFOLIO',
-                      style: _textStyle(),
-                    )),
-                    Flexible(
-                        child: Text(
-                      'LEARN',
-                      style: _textStyle(),
-                    )),
-                    Flexible(
-                        child: Text(
-                      'My Profile',
-                      style: _textStyle(),
-                    )),
-                    Flexible(
-                        child: InkWell(
-                      onTap: () {
-                        Navigator.push(context, MaterialPageRoute(
-                          builder: (context) {
-                            return const LoginPage();
+    return Container(
+      width: size.width,
+      color: const Color(0xFFCBF6E8),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          const Flexible(flex: 1, child: SizedBox()),
+          Flexible(
+              flex: 3,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Flexible(
+                      flex: 2,
+                      child: Builder(builder: (context) {
+                        return IconButton(
+                          icon: const Icon(Icons.close),
+                          onPressed: () {
+                            Scaffold.of(context).closeEndDrawer();
                           },
-                        ));
+                        );
+                      })),
+                  SizedBox(
+                    width: size.width * 0.020,
+                  )
+                ],
+              )),
+          Flexible(
+              flex: 1,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Flexible(
+                    child: SvgPicture.asset('assets/svgs/appnamelandingpg.svg'),
+                  ),
+                ],
+              )),
+          SizedBox(
+            height: size.height * 0.060,
+          ),
+          Flexible(
+              flex: 10,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Flexible(child: Builder(builder: (context) {
+                    return InkWell(
+                      onTap: () {
+                        Scaffold.of(context).closeEndDrawer();
                       },
                       child: Text(
-                        'Logout',
+                        'MY IMPACT',
                         style: _textStyle(),
                       ),
-                    )),
-                  ],
-                )),
-            Expanded(
-                flex: 8,
+                    );
+                  })),
+                  Flexible(
+                      child: InkWell(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(
+                        builder: (context) {
+                          return const SelectedScreen();
+                        },
+                      ));
+                    },
+                    child: Text(
+                      'PORTFOLIO',
+                      style: _textStyle(),
+                    ),
+                  )),
+                  Flexible(
+                      child: InkWell(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(
+                        builder: (context) {
+                          return const BlogScreen();
+                        },
+                      ));
+                    },
+                    child: Text(
+                      'LEARN',
+                      style: _textStyle(),
+                    ),
+                  )),
+                  Flexible(
+                      child: InkWell(
+                    onTap: () {
+                      Navigator.popAndPushNamed(context, LoginPage.screenName);
+                    },
+                    child: Text(
+                      'Logout',
+                      style: _textStyle(),
+                    ),
+                  )),
+                  const Flexible(
+                    child: SizedBox(),
+                  ),
+                ],
+              )),
+          Expanded(
+              flex: 8,
+              child: FittedBox(
+                fit: BoxFit.fill,
                 child: Image.asset(
                   r'assets/images/drawerpng.png',
                   fit: BoxFit.fitWidth,
-                )),
-          ],
-        ),
+                ),
+              )),
+        ],
       ),
     );
   }
@@ -391,3 +410,11 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
     );
   }
 }
+//  Text(
+//                     textAlign: TextAlign.center,
+//                     'savvy',
+//                     style: GoogleFonts.lato(
+//                         fontSize: size.height * 0.030,
+//                         color: ColorConstants.introPageTextColor,
+//                         fontWeight: FontWeight.bold),
+//                   )

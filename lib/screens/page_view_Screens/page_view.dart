@@ -58,6 +58,7 @@ class _MyPageViewState extends State<MyPageView> {
         PageViewScreenFour(),
       ],
       options: CarouselOptions(
+          scrollPhysics: const NeverScrollableScrollPhysics(),
           initialPage: 0,
           onPageChanged: (index, reason) {
             currentPageIndex = index;

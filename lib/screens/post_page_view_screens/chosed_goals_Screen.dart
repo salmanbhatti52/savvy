@@ -2,7 +2,8 @@ import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:savvy/common/widgets/resuable_row_chosed.dart';
-import 'package:savvy/screens/dialouges/dialogue.dart';
+import 'package:savvy/screens/dialouges/detail_dialog.dart';
+import 'package:savvy/screens/dialouges/info_dialog.dart';
 import 'package:savvy/screens/post_page_view_screens/selected_screen.dart';
 
 import '../../common/widgets/custom_button.dart';
@@ -17,7 +18,8 @@ class ChoosedGoalsScreen extends StatefulWidget {
 
 class _ChoosedGoalsScreenState extends State<ChoosedGoalsScreen> {
   late Size size;
-  MyDialogs myDialog = MyDialogs();
+  DetailDialog myDialog = DetailDialog();
+  InfoDialog infoDialog = InfoDialog();
   @override
   Widget build(BuildContext context) {
     size = MediaQuery.of(context).size;
@@ -59,7 +61,7 @@ class _ChoosedGoalsScreenState extends State<ChoosedGoalsScreen> {
                     showDialog(
                       context: context,
                       builder: (context) {
-                        return myDialog.myDialogs(size);
+                        return infoDialog.infoDialog(size, context);
                       },
                     );
                   },
@@ -69,6 +71,7 @@ class _ChoosedGoalsScreenState extends State<ChoosedGoalsScreen> {
           Flexible(
               flex: 1,
               child: ChoosedRow(
+                  ontap: () {},
                   title: '2. Zero Hunger',
                   subtitle: 'Fund: UBS ETF Sustainable Development Bank Bond..',
                   leading: Image.asset(r'assets/images/chosenpng2.png'))),

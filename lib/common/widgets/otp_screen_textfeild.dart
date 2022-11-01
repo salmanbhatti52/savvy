@@ -37,7 +37,7 @@ class OtpTextFeild extends StatelessWidget {
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.all(8),
         filled: true,
-        fillColor: Colors.grey.withOpacity(0.3),
+        fillColor: Colors.grey.withOpacity(0.2),
         //label: Text(labelText),
         disabledBorder: OutlineInputBorder(
           borderSide:

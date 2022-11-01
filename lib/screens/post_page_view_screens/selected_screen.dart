@@ -1,4 +1,6 @@
+import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'package:savvy/common/widgets/custom_button.dart';
@@ -20,30 +22,45 @@ class _SelectedScreenState extends State<SelectedScreen> {
   @override
   Widget build(BuildContext context) {
     size = MediaQuery.of(context).size;
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        centerTitle: true,
-        title: Text(
-          'Savvy',
-          style: GoogleFonts.lato(
-            fontSize: size.height * 0.035,
-            fontWeight: FontWeight.w600,
-            color: ColorConstants.introPageTextColor,
-          ),
-        ),
+    return ColorfulSafeArea(
+      color: Colors.white,
+      child: Scaffold(
+        // appBar: AppBar(
+        //   elevation: 0,
+        //   backgroundColor: Colors.transparent,
+        //   centerTitle: true,
+        //   title: Text(
+        //     'Savvy',
+        //     style: GoogleFonts.lato(
+        //       fontSize: size.height * 0.035,
+        //       fontWeight: FontWeight.w600,
+        //       color: ColorConstants.introPageTextColor,
+        //     ),
+        //   ),
+        // ),
+        body: selectScreenBody(),
       ),
-      body: selectScreenBody(),
     );
   }
 
   Widget selectScreenBody() {
     return Column(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-      Flexible(flex: 1, child: textDescription()),
-      Flexible(flex: 3, child: pieChart()),
-      Flexible(flex: 4, child: selectedList()),
-      Flexible(flex: 1, child: acitionButton()),
+      Flexible(
+          flex: 1,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Flexible(
+                  child: SizedBox(
+                      width: size.width * 0.2,
+                      child: SvgPicture.asset(
+                          'assets/svgs/appnamelandingpg.svg'))),
+            ],
+          )),
+      Flexible(flex: 3, child: textDescription()),
+      Flexible(flex: 7, child: pieChart()),
+      Flexible(flex: 9, child: selectedList()),
+      Flexible(flex: 3, child: acitionButton()),
     ]);
   }
 
