@@ -58,9 +58,9 @@ class _LoginPageState extends State<LoginPage> {
       height: size.height,
       width: size.width,
       child: Padding(
-        padding: EdgeInsets.symmetric(vertical: size.height * 0.020),
+        padding: EdgeInsets.symmetric(vertical: size.height * 0.040),
         child:
-            Column(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+            Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
           const Flexible(flex: 1, child: SizedBox()),
           Flexible(flex: 4, child: _title()),
           Flexible(flex: 7, child: _textFeilds()),
@@ -77,7 +77,7 @@ class _LoginPageState extends State<LoginPage> {
           Flexible(flex: 1, child: _signInWith()),
           const Flexible(flex: 1, child: SizedBox()),
           Flexible(flex: 1, child: _signInText()),
-          const Flexible(flex: 1, child: SizedBox()),
+          const Flexible(flex: 2, child: SizedBox()),
         ]),
       ),
     );

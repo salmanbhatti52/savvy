@@ -70,14 +70,14 @@ class _SignUpPageState extends State<SignUpPage> {
       height: size.height,
       width: size.width,
       child: Padding(
-        padding: EdgeInsets.symmetric(vertical: size.height * 0.030),
+        padding: EdgeInsets.symmetric(vertical: size.height * 0.060),
         child:
             Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-          const Flexible(flex: 1, child: SizedBox()),
+          //const Flexible(flex: 1, child: SizedBox()),
           Flexible(flex: 1, child: _title()),
           Flexible(flex: 6, child: _textFeilds()),
           Flexible(flex: 2, child: _loginButton()),
-          const Flexible(flex: 1, child: SizedBox()),
+          //const Flexible(flex: 1, child: SizedBox()),
           Flexible(
               flex: 1,
               child: Text(
@@ -89,7 +89,7 @@ class _SignUpPageState extends State<SignUpPage> {
           Flexible(flex: 1, child: _signInWith()),
           Flexible(flex: 1, child: _policyText()),
           Flexible(flex: 1, child: _signInText()),
-          const Flexible(flex: 1, child: SizedBox()),
+          const Flexible(flex: 2, child: SizedBox()),
         ]),
       ),
     );
