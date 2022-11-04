@@ -53,6 +53,7 @@ dependencies:
   ticketview: ^1.0.0
   ticket_widget: ^0.0.1
   syncfusion_flutter_sliders: ^20.3.52
+  expansion_tile_card: ^2.0.0
 
 dev_dependencies:
   change_app_package_name: ^0.1.3

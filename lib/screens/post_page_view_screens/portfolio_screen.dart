@@ -3,7 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'package:savvy/screens/post_page_view_screens/select_plan_screen.dart';
-
+import 'package:expansion_tile_card/expansion_tile_card.dart';
 import '../../common/widgets/custom_button.dart';
 import '../../utils/color_constants.dart';
 
@@ -20,7 +20,42 @@ class _PortFolioScreenState extends State<PortFolioScreen> {
   Widget build(BuildContext context) {
     size = MediaQuery.of(context).size;
     return Scaffold(
+      appBar: _buildAppBar(),
       body: _portfolioBody(),
+    );
+  }
+
+  AppBar _buildAppBar() {
+    return AppBar(
+      elevation: 0,
+      backgroundColor: Colors.transparent,
+      centerTitle: true,
+      title: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          SizedBox(
+              height: size.height * 0.0257,
+              child: SvgPicture.asset('assets/svgs/appnamelandingpg.svg')),
+        ],
+      ),
+      actions: [
+        Builder(builder: (context) {
+          return InkWell(
+            onTap: () {
+              Scaffold.of(context).openEndDrawer();
+            },
+            child: Icon(
+              Icons.menu,
+              size: size.height * 0.030,
+              color: ColorConstants.introPageTextColor,
+            ),
+          );
+        }),
+        SizedBox(
+          width: size.width * 0.040,
+        )
+      ],
     );
   }
 
@@ -28,54 +63,11 @@ class _PortFolioScreenState extends State<PortFolioScreen> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        Flexible(child: _title()),
         Flexible(flex: 3, child: textDescription()),
         Flexible(flex: 7, child: pieChart()),
-        // Flexible(flex: 9, child: selectedList()),
+        Flexible(flex: 1, child: selectedList()),
         Flexible(flex: 3, child: acitionButton()),
       ],
-    );
-  }
-
-  Widget _title() {
-    return Container(
-      color: Colors.green,
-      child: Row(
-        children: [
-          Flexible(
-              flex: 3,
-              child: Container(
-                color: Colors.orange,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Flexible(
-                        child: SizedBox(
-                            height: 27,
-                            width: 60,
-                            child: SvgPicture.asset(
-                                'assets/svgs/appnamelandingpg.svg')))
-                  ],
-                ),
-              )),
-          Flexible(
-              flex: 1,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Icon(Icons.read_more),
-                      SizedBox(
-                        height: 5,
-                      )
-                    ],
-                  )
-                ],
-              )),
-        ],
-      ),
     );
   }
 
@@ -169,4 +161,87 @@ class _PortFolioScreenState extends State<PortFolioScreen> {
       ),
     );
   }
+
+  selectedList() {
+    return SingleChildScrollView(
+      child: SizedBox(
+        child: Row(
+          children: [
+            Flexible(
+                flex: 1,
+                child: Container(
+                  color: Colors.red,
+                  width: 6,
+                  height: 100,
+                )),
+            Flexible(
+              flex: 60,
+              child: ExpansionTileCard(
+                title: const Text('No Poverty'),
+                leading: SizedBox(
+                    height: 150,
+                    width: 45,
+                    child: Align(
+                        alignment: Alignment.topCenter,
+                        child:
+                            Image.asset(r'assets/images/selecteditem2.png'))),
+                children: [
+                  Container(
+                    height: 50,
+                    width: size.width,
+                    color: Colors.red,
+                  )
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
+
+// Widget _title() {
+//   return Container(
+//     color: Colors.transparent,
+//     child: Row(
+//       children: [
+//         Flexible(
+//             flex: 4,
+//             child: Container(
+//               //  color: Colors.orange,
+//               child: Row(
+//                 mainAxisAlignment: MainAxisAlignment.end,
+//                 children: [
+//                   Flexible(
+//                       child: SizedBox(
+//                           height: 27,
+//                           width: 60,
+//                           child: SvgPicture.asset(
+//                               'assets/svgs/appnamelandingpg.svg')))
+//                 ],
+//               ),
+//             )),
+//         Flexible(
+//             flex: 3,
+//             child: Row(
+//               mainAxisAlignment: MainAxisAlignment.end,
+//               children: [
+//                 Column(
+//                   mainAxisAlignment: MainAxisAlignment.center,
+//                   children: [
+//                     const Icon(Icons.read_more),
+//                     SizedBox(
+//                       height: size.height * 0.010,
+//                     )
+//                   ],
+//                 ),
+//                 const SizedBox(
+//                   width: 5,
+//                 )
+//               ],
+//             )),
+//       ],
+//     ),
+//   );
+// }

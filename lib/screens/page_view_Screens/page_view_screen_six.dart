@@ -535,59 +535,58 @@ biodiversity loss.''',
           height: space,
         ),
         Expanded(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Flexible(
-                  child: InkWell(
-                onTap: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return const ReuseableDialog(
-                        bgColor: DilogConst.sixtenthColor,
-                        goalDescription: '''Promote peaceful and 
+          child:
+              Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+            Flexible(
+                child: InkWell(
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return const ReuseableDialog(
+                      bgColor: DilogConst.sixtenthColor,
+                      goalDescription: '''Promote peaceful and 
 inclusive societies for 
 sustainable development,
 provide access to justice for 
 all and build effective, 
 accountable and inclusive
 institutions at all levels.''',
-                        goalDetail: '',
-                        goalNumber: '16',
-                        goalTitle: 'Goal 16',
-                      );
-                    },
-                  );
-                },
-                child: Card(
-                    elevation: elevation,
-                    child: Image.asset(r'assets/images/pgcomponent16.png')),
-              )),
-              Flexible(
-                  child: InkWell(
-                onTap: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return const ReuseableDialog(
-                        bgColor: DilogConst.seventhColor,
-                        goalDescription: '''Strengthen the means of 
+                      goalDetail: '',
+                      goalNumber: '16',
+                      goalTitle: 'Goal 16',
+                    );
+                  },
+                );
+              },
+              child: Card(
+                  elevation: elevation,
+                  child: Image.asset(r'assets/images/pgcomponent16.png')),
+            )),
+            Flexible(
+                child: InkWell(
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return const ReuseableDialog(
+                      bgColor: DilogConst.seventeenthColor,
+                      goalDescription: '''Strengthen the means of 
 implementation and revitalize
 the Global Partnership for
 Sustainable Development.''',
-                        goalDetail: '',
-                        goalNumber: '17',
-                        goalTitle: 'Goal 17',
-                      );
-                    },
-                  );
-                },
-                child: Card(
-                    elevation: elevation,
-                    child: Image.asset(r'assets/images/pgcomponent17.png')),
-              )),
-              InkWell(
+                      goalDetail: '',
+                      goalNumber: '17',
+                      goalTitle: 'Goal 17',
+                    );
+                  },
+                );
+              },
+              child: Card(
+                  elevation: elevation,
+                  child: Image.asset(r'assets/images/pgcomponent17.png')),
+            )),
+            InkWell(
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(
                     builder: (context) {
@@ -596,23 +595,20 @@ Sustainable Development.''',
                   ));
                 },
                 child: Flexible(
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      Image.asset(r'assets/images/pgviewbasket.png'),
-                      // Container(
-                      //   width: 20,
-                      //   height: 20,
-                      //   color: Colors.green,
-                      //   child: Text(
-                      //       textAlign: TextAlign.center, itemsAdded.toString()),
-                      // ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
+                    child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Image.asset(r'assets/images/pgviewbasket.png'),
+                    // Container(
+                    //   width: 20,
+                    //   height: 20,
+                    //   color: Colors.green,
+                    //   child: Text(
+                    //       textAlign: TextAlign.center, itemsAdded.toString()),
+                    // ),
+                  ],
+                ))),
+          ]),
         ),
       ],
     );

@@ -17,4 +17,5 @@ class DilogConst {
   static const Color fourtenthColor = Color(0xFF0099D2);
   static const Color fifteenthColor = Color(0xFF56BA51);
   static const Color sixtenthColor = Color(0xFF006B9D);
+  static const Color seventeenthColor = Color(0xFF004A6A);
 }
