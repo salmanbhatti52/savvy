@@ -26,10 +26,10 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
   double initialInvestment = 0.0;
   double permonthInvestment = 0.0;
   double yearsPlan = 0;
-  List<Investment> planList = [];
+  List<Years> planList = [];
 
   final ApiServices _apiServices = ApiServices();
-  String savvyValue = '';
+  // String savvyValue = '';
   @override
   Widget build(BuildContext context) {
     size = MediaQuery.of(context).size;
@@ -198,7 +198,7 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
                       Flexible(
                         flex: 1,
                         child: Text(
-                          '€200',
+                          '$permonthInvestment',
                           style: myTextStyle(),
                         ),
                       ),
@@ -215,7 +215,7 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
             child: SizedBox(
               width: size.width * 0.9,
               child: ListView.separated(
-                itemCount: 15,
+                itemCount: planList.length,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: _itemBuilder,
                 separatorBuilder: (context, index) {
@@ -230,12 +230,11 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
   }
 
   planValue(Response response) {
-    // print('plan value body');
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
-      setState(() {
-        savvyValue = data['data']['year_1']['with_savvy'];
-      });
+      Investment investment = Investment.fromMap(data);
+      planList = investment.data.toList();
+      setState(() {});
     }
   }
 
@@ -292,7 +291,7 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
             permonthInvestment = 0;
             initialInvestment = 0;
             yearsPlan = 0;
-            savvyValue = '';
+            planList = [];
           });
         }
       },
@@ -472,7 +471,8 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
   }
 
   Widget _itemBuilder(BuildContext context, int index) {
-    var plan = yearsPlan.toInt();
+    String? plan = planList[index].year;
+
     return Container(
       width: size.width * 0.8,
       decoration: myBoxDecorationn(),
@@ -518,7 +518,7 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
                     Flexible(
                       flex: 2,
                       child: Text(
-                        savvyValue,
+                        planList[index].withSavvy.toString(),
                         softWrap: false,
                         overflow: TextOverflow.ellipsis,
                         style: GoogleFonts.lato(

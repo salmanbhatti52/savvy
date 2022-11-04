@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pie_chart/pie_chart.dart';
+import 'package:savvy/common/widgets/reuseabel_expansion_tile.dart';
 import 'package:savvy/screens/post_page_view_screens/select_plan_screen.dart';
-import 'package:expansion_tile_card/expansion_tile_card.dart';
 import '../../common/widgets/custom_button.dart';
 import '../../utils/color_constants.dart';
 
@@ -65,7 +65,7 @@ class _PortFolioScreenState extends State<PortFolioScreen> {
       children: [
         Flexible(flex: 3, child: textDescription()),
         Flexible(flex: 7, child: pieChart()),
-        Flexible(flex: 1, child: selectedList()),
+        Flexible(flex: 8, child: selectedList()),
         Flexible(flex: 3, child: acitionButton()),
       ],
     );
@@ -162,36 +162,65 @@ class _PortFolioScreenState extends State<PortFolioScreen> {
     );
   }
 
-  selectedList() {
+  Widget selectedList() {
     return SingleChildScrollView(
       child: SizedBox(
-        child: Row(
+        height: size.height * 0.5,
+        width: size.width,
+        child: Column(
           children: [
             Flexible(
-                flex: 1,
-                child: Container(
-                  color: Colors.red,
-                  width: 6,
-                  height: 100,
-                )),
+              child: MyExpansionTile(
+                sideContainer: Container(color: Colors.red),
+                image: Image.asset(r'assets/images/selecteditem2.png'),
+                tileText: const Text('Savvy App'),
+                color: Colors.grey[300],
+              ),
+            ),
             Flexible(
-              flex: 60,
-              child: ExpansionTileCard(
-                title: const Text('No Poverty'),
-                leading: SizedBox(
-                    height: 150,
-                    width: 45,
-                    child: Align(
-                        alignment: Alignment.topCenter,
-                        child:
-                            Image.asset(r'assets/images/selecteditem2.png'))),
-                children: [
-                  Container(
-                    height: 50,
-                    width: size.width,
-                    color: Colors.red,
-                  )
-                ],
+              child: MyExpansionTile(
+                sideContainer: Container(
+                  color: Colors.red,
+                  height: 60,
+                ),
+                image: Image.asset(r'assets/images/selecteditem2.png'),
+                tileText: const Text('Savvy App'),
+                color: Colors.grey[300],
+              ),
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            Flexible(
+              child: MyExpansionTile(
+                sideContainer: Container(color: Colors.red),
+                image: Image.asset(r'assets/images/selecteditem2.png'),
+                tileText: const Text('Savvy App'),
+                color: Colors.grey[300],
+              ),
+            ),
+            Flexible(
+              child: MyExpansionTile(
+                sideContainer: Container(color: Colors.red),
+                image: Image.asset(r'assets/images/selecteditem2.png'),
+                tileText: const Text('Savvy App'),
+                color: Colors.grey[300],
+              ),
+            ),
+            Flexible(
+              child: MyExpansionTile(
+                sideContainer: Container(color: Colors.red),
+                image: Image.asset(r'assets/images/selecteditem2.png'),
+                tileText: const Text('Savvy App'),
+                color: Colors.grey[300],
+              ),
+            ),
+            Flexible(
+              child: MyExpansionTile(
+                sideContainer: Container(color: Colors.red),
+                image: Image.asset(r'assets/images/selecteditem2.png'),
+                tileText: const Text('Savvy App'),
+                color: Colors.grey[300],
               ),
             ),
           ],
@@ -245,3 +274,40 @@ class _PortFolioScreenState extends State<PortFolioScreen> {
 //     ),
 //   );
 // }
+
+
+// return SingleChildScrollView(
+//       child: SizedBox(
+//         child: Row(
+//           children: [
+//             Flexible(
+//                 flex: 1,
+//                 child: Container(
+//                   color: Colors.red,
+//                   width: 6,
+//                   height: 100,
+//                 )),
+//             Flexible(
+//               flex: 60,
+//               child: ExpansionTileCard(
+//                 title: const Text('No Poverty'),
+//                 leading: SizedBox(
+//                     height: 150,
+//                     width: 45,
+//                     child: Align(
+//                         alignment: Alignment.topCenter,
+//                         child:
+//                             Image.asset(r'assets/images/selecteditem2.png'))),
+//                 children: [
+//                   Container(
+//                     height: 50,
+//                     width: size.width,
+//                     color: Colors.red,
+//                   )
+//                 ],
+//               ),
+//             ),
+//           ],
+//         ),
+//       ),
+//     );

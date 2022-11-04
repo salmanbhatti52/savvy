@@ -64,9 +64,11 @@ class ApiServices {
           "permonth_investment": permonthInvestment
         }));
     debugPrint('create Plan Body APi');
-    var data = jsonDecode(response.body);
-    String withSavy = data['data']['year_1']['with_savvy'];
-    debugPrint(withSavy);
+    // var data = jsonDecode(response.body);
+    // Investment investment = Investment.fromMap(data);
+    // var withSavy = investment.data[1].co2;
+
+    // debugPrint(withSavy);
 
     return response;
   }
