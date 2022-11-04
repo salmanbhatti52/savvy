@@ -102,18 +102,16 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
           Flexible(
             flex: 7,
             child: Container(
-              width: size.width * 0.7,
+              width: size.width * 0.9,
               height: size.height * 0.4,
               color: Colors.transparent,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(
-                      child: Image.asset(
-                    r'assets/images/earth.png',
-                    fit: BoxFit.fill,
-                  ))
+                  FittedBox(
+                      child: Image.asset(r'assets/images/earth.png',
+                          fit: BoxFit.fill))
                 ],
               ),
             ),
@@ -196,7 +194,7 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
                       Flexible(
                         flex: 1,
                         child: Text(
-                          '€' '$permonthInvestment',
+                          '€200',
                           style: myTextStyle(),
                         ),
                       ),

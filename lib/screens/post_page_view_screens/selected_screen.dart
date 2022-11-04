@@ -58,7 +58,7 @@ class _SelectedScreenState extends State<SelectedScreen> {
             ],
           )),
       Flexible(flex: 3, child: textDescription()),
-      Flexible(flex: 7, child: pieChart()),
+      Flexible(flex: 8, child: pieChart()),
       Flexible(flex: 9, child: selectedList()),
       Flexible(flex: 3, child: acitionButton()),
     ]);
@@ -69,15 +69,15 @@ class _SelectedScreenState extends State<SelectedScreen> {
       alignment: Alignment.center,
       children: [
         Material(
-          // clipBehavior: Clip.hardEdge,
-          borderRadius: BorderRadius.circular(size.height * 0.16),
+          clipBehavior: Clip.hardEdge,
+          borderRadius: BorderRadius.circular(size.height * 0.40),
           elevation: 5,
           child: Container(
             //     clipBehavior: Clip.hardEdge,
-            height: size.height * 0.46,
+            height: size.height * 0.65,
             width: size.width * 0.65,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(size.height * 0.16),
+              borderRadius: BorderRadius.circular(size.height * 0.40),
               color: Colors.white10,
             ),
           ),
@@ -91,13 +91,15 @@ class _SelectedScreenState extends State<SelectedScreen> {
             Color(0xFF202445),
             Color(0xFF02E0A3),
           ],
-          chartValuesOptions: const ChartValuesOptions(
+          chartValuesOptions: ChartValuesOptions(
             showChartValuesInPercentage: true,
             // chartValueBackgroundColor: Colors.white,
             showChartValuesOutside: true,
             showChartValueBackground: false,
-            chartValueStyle:
-                TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            chartValueStyle: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.w900,
+                fontSize: size.height * 0.013),
           ),
           legendOptions: const LegendOptions(showLegends: false),
           dataMap: const {
@@ -114,7 +116,7 @@ class _SelectedScreenState extends State<SelectedScreen> {
           centerTextStyle: GoogleFonts.lato(
               color: const Color(0xFF325698),
               fontWeight: FontWeight.w700,
-              fontSize: size.height * 0.028),
+              fontSize: size.height * 0.030),
         ),
       ],
     );
