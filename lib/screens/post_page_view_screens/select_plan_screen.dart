@@ -79,6 +79,7 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
   Widget selectedPlanBody() {
     return Center(
       child: Column(
+        mainAxisSize: MainAxisSize.max,
         children: [
           Flexible(
             flex: 10,
@@ -331,6 +332,7 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
   Widget myEndDrawer() {
     return Container(
       width: size.width,
+      height: size.height,
       color: const Color(0xFFCBF6E8),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
