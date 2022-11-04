@@ -539,13 +539,54 @@ biodiversity loss.''',
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Flexible(
-                  child: Card(
-                      elevation: elevation,
-                      child: Image.asset(r'assets/images/pgcomponent16.png'))),
+                  child: InkWell(
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return const ReuseableDialog(
+                        bgColor: DilogConst.sixthColor,
+                        goalDescription: '''Promote peaceful and 
+inclusive societies for 
+sustainable development,
+provide access to justice for 
+all and build effective, 
+accountable and inclusive
+institutions at all levels.''',
+                        goalDetail: '',
+                        goalNumber: '16',
+                        goalTitle: 'Goal 16',
+                      );
+                    },
+                  );
+                },
+                child: Card(
+                    elevation: elevation,
+                    child: Image.asset(r'assets/images/pgcomponent16.png')),
+              )),
               Flexible(
-                  child: Card(
-                      elevation: elevation,
-                      child: Image.asset(r'assets/images/pgcomponent17.png'))),
+                  child: InkWell(
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return const ReuseableDialog(
+                        bgColor: DilogConst.sixthColor,
+                        goalDescription: '''Strengthen the means of 
+implementation and revitalize
+the Global Partnership for
+Sustainable Development.''',
+                        goalDetail: '',
+                        goalNumber: '17',
+                        goalTitle: 'Goal 17',
+                      );
+                    },
+                  );
+                },
+                child: Card(
+                    elevation: elevation,
+                    child: Image.asset(r'assets/images/pgcomponent17.png')),
+              )),
               Flexible(
                   child: InkWell(
                       onTap: () {
