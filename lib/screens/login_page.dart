@@ -42,7 +42,7 @@ class _LoginPageState extends State<LoginPage> {
     size = MediaQuery.of(context).size;
     var viewinset = MediaQuery.of(context).viewInsets.bottom;
     return ColorfulSafeArea(
-      color: Colors.white,
+      //  color: Colors.orange,
       child: Scaffold(
         body: SingleChildScrollView(
             physics: viewinset > 0

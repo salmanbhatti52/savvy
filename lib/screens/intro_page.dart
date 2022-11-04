@@ -115,24 +115,24 @@ class IntroPage extends StatelessWidget {
     );
   }
 
-  AppBar _buldAppBar() {
-    return AppBar(
-      elevation: 0,
-      leading: Builder(
-        builder: (context) {
-          return IconButton(
-              onPressed: () {
-                Scaffold.of(context).openDrawer();
-              },
-              icon: const Icon(
-                Icons.menu_open,
-                color: Colors.green,
-              ));
-        },
-      ),
-      backgroundColor: Colors.transparent,
-    );
-  }
+  // AppBar _buldAppBar() {
+  //   return AppBar(
+  //     elevation: 0,
+  //     leading: Builder(
+  //       builder: (context) {
+  //         return IconButton(
+  //             onPressed: () {
+  //               Scaffold.of(context).openDrawer();
+  //             },
+  //             icon: const Icon(
+  //               Icons.menu_open,
+  //               color: Colors.green,
+  //             ));
+  //       },
+  //     ),
+  //     backgroundColor: Colors.transparent,
+  //   );
+  // }
 
   _buildDrawer(BuildContext context, User? user) {
     return Drawer(

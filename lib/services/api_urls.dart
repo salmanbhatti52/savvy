@@ -12,4 +12,7 @@ class ApiUrls {
       'https://savvy.eigix.net/webservices/reset_password/';
   static const String endPointChangePassword =
       'https://savvy.eigix.net/webservices/reset_password_set/';
+
+  static const String endPointCalculator =
+      'https://savvy.eigix.net/webservices/investment_calculator/';
 }

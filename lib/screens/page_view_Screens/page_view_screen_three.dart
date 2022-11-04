@@ -5,7 +5,6 @@ import 'package:savvy/common/widgets/page_view_text.dart';
 import 'package:savvy/screens/page_view_Screens/page_view_screen_four.dart';
 import 'package:savvy/utils/color_constants.dart';
 
-import '../../common/widgets/round_icon_button.dart';
 import '../../utils/strings.dart';
 
 class PageViewScreenThree extends StatelessWidget {
@@ -78,24 +77,24 @@ class PageViewScreenThree extends StatelessWidget {
   }
 
   Widget _paginatinPng() {
-    return Image.asset(r'assets/images/pgnation3.png');
+    return Image.asset(r'assets/images/pgnation4.png');
   }
 
-  Widget _iconButton(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
-      child: Row(
-        children: [
-          RoundButton(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              icon: const Icon(
-                Icons.arrow_back_ios_sharp,
-                color: Colors.white,
-              ))
-        ],
-      ),
-    );
-  }
+  // Widget _iconButton(BuildContext context) {
+  //   return Padding(
+  //     padding: const EdgeInsets.symmetric(horizontal: 10),
+  //     child: Row(
+  //       children: [
+  //         RoundButton(
+  //             onTap: () {
+  //               Navigator.pop(context);
+  //             },
+  //             icon: const Icon(
+  //               Icons.arrow_back_ios_sharp,
+  //               color: Colors.white,
+  //             ))
+  //       ],
+  //     ),
+  //   );
+  // }
 }

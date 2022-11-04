@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:savvy/screens/intro_page.dart';
 import 'package:savvy/screens/landing_page.dart';
 import 'package:savvy/screens/login_page.dart';
+import 'package:savvy/screens/page_view_Screens/page_view_screen_six.dart';
 import 'package:savvy/screens/signup_page.dart';
-import 'package:savvy/screens/splash_screen.dart';
 
 void main() {
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    statusBarColor: Colors.white,
+    statusBarIconBrightness: Brightness.dark,
+    //  statusBarBrightness: Brightness.dark,
+  ));
   runApp(const MyApp());
 }
 
@@ -19,7 +25,7 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: Colors.white,
         ),
         debugShowCheckedModeBanner: false,
-        home: const SplashScreen(),
+        home: const PageViewScreenSix(),
         routes: {
           LandingPage.screenName: (context) {
             return const LandingPage();

@@ -156,7 +156,7 @@ class _SelectedScreenState extends State<SelectedScreen> {
   }
 
   Widget selectedList() {
-    var flex = 1;
+    //  var flex = 1;
     return Column(
       children: [
         Flexible(
@@ -248,11 +248,11 @@ class _SelectedScreenState extends State<SelectedScreen> {
     );
   }
 
-  Widget _verticalSpace() {
-    return SizedBox(
-      height: size.height * 0.009,
-    );
-  }
+  // Widget _verticalSpace() {
+  //   return SizedBox(
+  //     height: size.height * 0.009,
+  //   );
+  // }
 
   _textStyle() {
     return GoogleFonts.poppins(

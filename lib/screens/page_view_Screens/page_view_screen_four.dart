@@ -4,7 +4,6 @@ import 'package:savvy/common/widgets/page_view_text.dart';
 import 'package:savvy/screens/page_view_Screens/page_view_screen_six.dart';
 
 import '../../common/widgets/custom_button.dart';
-import '../../common/widgets/round_icon_button.dart';
 import '../../utils/color_constants.dart';
 
 class PageViewScreenFour extends StatelessWidget {
@@ -78,7 +77,7 @@ class PageViewScreenFour extends StatelessWidget {
       children: [
         Flexible(
           child: Text(
-            'The UN has 17 Goals\nfor Sustainable\n Developmentby 2030',
+            'The UN has 17 Goals\nfor Sustainable\n Development by 2030',
             textAlign: TextAlign.center,
             //  MyConstantStrings.descriptionPgViewPgThree,
             style: GoogleFonts.poppins(
@@ -91,21 +90,21 @@ class PageViewScreenFour extends StatelessWidget {
     );
   }
 
-  Widget _iconButton(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
-      child: Row(
-        children: [
-          RoundButton(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              icon: const Icon(
-                Icons.arrow_back_ios_sharp,
-                color: Colors.white,
-              ))
-        ],
-      ),
-    );
-  }
+  // Widget _iconButton(BuildContext context) {
+  //   return Padding(
+  //     padding: const EdgeInsets.symmetric(horizontal: 10),
+  //     child: Row(
+  //       children: [
+  //         RoundButton(
+  //             onTap: () {
+  //               Navigator.pop(context);
+  //             },
+  //             icon: const Icon(
+  //               Icons.arrow_back_ios_sharp,
+  //               color: Colors.white,
+  //             ))
+  //       ],
+  //     ),
+  //   );
+  // }
 }

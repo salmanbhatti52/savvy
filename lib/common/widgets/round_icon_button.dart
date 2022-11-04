@@ -21,6 +21,7 @@ class RoundButton extends StatelessWidget {
         alignment: Alignment.center,
         height: 30,
         width: 40,
+
         // alignment: Alignment.centerRight,
         decoration: const BoxDecoration(
           //  borderRadius: BorderRadius.circular(size.width * 0.3),

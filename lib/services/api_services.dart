@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart';
 import 'package:savvy/models/create_user.dart';
 import 'package:savvy/models/login_user.dart';
@@ -51,6 +52,22 @@ class ApiServices {
           "new_password": newpassword,
           "confirm_password": confirmpassword
         }));
+    return response;
+  }
+
+  Future<Response> calculatePlan(
+      String years, initialInvestmet, permonthInvestment) async {
+    Response response = await post(Uri.parse(ApiUrls.endPointCalculator),
+        body: jsonEncode({
+          "years": years,
+          "initial_investment": initialInvestmet,
+          "permonth_investment": permonthInvestment
+        }));
+    debugPrint('create Plan Body APi');
+    var data = jsonDecode(response.body);
+    String withSavy = data['data']['year_1']['with_savvy'];
+    debugPrint(withSavy);
+
     return response;
   }
 }
