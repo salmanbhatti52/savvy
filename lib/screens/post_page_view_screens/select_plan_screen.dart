@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -32,8 +33,10 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
   @override
   Widget build(BuildContext context) {
     size = MediaQuery.of(context).size;
-    return SafeArea(
+    return ColorfulSafeArea(
+      color: Colors.white,
       child: Scaffold(
+        backgroundColor: Colors.white,
         drawerEnableOpenDragGesture: false,
         endDrawer: myEndDrawer(),
         appBar: _buildAppBar(),
@@ -109,9 +112,10 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  FittedBox(
-                      child: Image.asset(r'assets/images/earth.png',
-                          fit: BoxFit.fill))
+                  Flexible(
+                    child: Image.asset(r'assets/images/earth.png',
+                        fit: BoxFit.fill),
+                  )
                 ],
               ),
             ),
