@@ -21,7 +21,8 @@ class _PortFolioScreenState extends State<PortFolioScreen> {
     size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: _buildAppBar(),
-      body: _portfolioBody(),
+      body: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(), child: _portfolioBody()),
     );
   }
 
@@ -59,15 +60,56 @@ class _PortFolioScreenState extends State<PortFolioScreen> {
     );
   }
 
-  _portfolioBody() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        Flexible(flex: 3, child: textDescription()),
-        Flexible(flex: 7, child: pieChart()),
-        Flexible(flex: 8, child: selectedList()),
-        Flexible(flex: 3, child: acitionButton()),
-      ],
+  Widget _portfolioBody() {
+    var tileFlex = 1;
+    return SizedBox(
+      height: size.height,
+      width: size.width,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          Flexible(flex: 3, child: textDescription()),
+          Flexible(flex: 7, child: pieChart()),
+          Flexible(
+            flex: tileFlex,
+            child: SingleChildScrollView(
+              child: MyExpansionTile(
+                sideContainer: Container(color: Colors.red),
+                image: Image.asset(r'assets/images/selecteditem2.png'),
+                tileText: const Text('Savvy App'),
+                color: Colors.grey[300],
+                child: Container(
+                  color: Colors.orange,
+                  height: 20,
+                  width: 100,
+                ),
+              ),
+            ),
+          ),
+          Flexible(
+            flex: tileFlex,
+            child: SingleChildScrollView(
+              child: MyExpansionTile(
+                sideContainer: Container(color: Colors.red),
+                image: Image.asset(r'assets/images/selecteditem2.png'),
+                tileText: const Text('Savvy App'),
+                color: Colors.grey[300],
+                child: Container(
+                  color: Colors.orange,
+                  height: 20,
+                  width: 100,
+                ),
+              ),
+            ),
+          ),
+          Flexible(
+              flex: tileFlex,
+              child: const ExpansionTile(
+                title: Text('Okay'),
+              )),
+          Flexible(flex: 8, child: acitionButton()),
+        ],
+      ),
     );
   }
 
@@ -163,69 +205,105 @@ class _PortFolioScreenState extends State<PortFolioScreen> {
   }
 
   Widget selectedList() {
-    return SingleChildScrollView(
-      child: SizedBox(
-        height: size.height * 0.5,
-        width: size.width,
-        child: Column(
-          children: [
-            Flexible(
-              child: MyExpansionTile(
-                sideContainer: Container(color: Colors.red),
-                image: Image.asset(r'assets/images/selecteditem2.png'),
-                tileText: const Text('Savvy App'),
-                color: Colors.grey[300],
+    return Column(
+      children: [
+        Flexible(
+          child: SingleChildScrollView(
+            child: MyExpansionTile(
+              sideContainer: Container(color: Colors.red),
+              image: Image.asset(r'assets/images/selecteditem2.png'),
+              tileText: const Text('Savvy App'),
+              color: Colors.grey[300],
+              child: Container(
+                color: Colors.orange,
+                height: 20,
+                width: 100,
               ),
             ),
-            Flexible(
-              child: MyExpansionTile(
-                sideContainer: Container(
-                  color: Colors.red,
-                  height: 60,
-                ),
-                image: Image.asset(r'assets/images/selecteditem2.png'),
-                tileText: const Text('Savvy App'),
-                color: Colors.grey[300],
-              ),
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            Flexible(
-              child: MyExpansionTile(
-                sideContainer: Container(color: Colors.red),
-                image: Image.asset(r'assets/images/selecteditem2.png'),
-                tileText: const Text('Savvy App'),
-                color: Colors.grey[300],
-              ),
-            ),
-            Flexible(
-              child: MyExpansionTile(
-                sideContainer: Container(color: Colors.red),
-                image: Image.asset(r'assets/images/selecteditem2.png'),
-                tileText: const Text('Savvy App'),
-                color: Colors.grey[300],
-              ),
-            ),
-            Flexible(
-              child: MyExpansionTile(
-                sideContainer: Container(color: Colors.red),
-                image: Image.asset(r'assets/images/selecteditem2.png'),
-                tileText: const Text('Savvy App'),
-                color: Colors.grey[300],
-              ),
-            ),
-            Flexible(
-              child: MyExpansionTile(
-                sideContainer: Container(color: Colors.red),
-                image: Image.asset(r'assets/images/selecteditem2.png'),
-                tileText: const Text('Savvy App'),
-                color: Colors.grey[300],
-              ),
-            ),
-          ],
+          ),
         ),
-      ),
+        Flexible(
+          child: SingleChildScrollView(
+            child: MyExpansionTile(
+              sideContainer: Container(
+                color: Colors.red,
+                height: 60,
+              ),
+              image: Image.asset(r'assets/images/selecteditem2.png'),
+              tileText: const Text('Savvy App'),
+              color: Colors.grey[300],
+              child: Container(
+                color: Colors.orange,
+                height: 20,
+                width: 100,
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(
+          height: 5,
+        ),
+        Flexible(
+          child: SingleChildScrollView(
+            child: MyExpansionTile(
+              sideContainer: Container(color: Colors.red),
+              image: Image.asset(r'assets/images/selecteditem2.png'),
+              tileText: const Text('Savvy App'),
+              color: Colors.grey[300],
+              child: Container(
+                color: Colors.orange,
+                height: 20,
+                width: 100,
+              ),
+            ),
+          ),
+        ),
+        Flexible(
+          child: SingleChildScrollView(
+            child: MyExpansionTile(
+              sideContainer: Container(color: Colors.red),
+              image: Image.asset(r'assets/images/selecteditem2.png'),
+              tileText: const Text('Savvy App'),
+              color: Colors.grey[300],
+              child: Container(
+                color: Colors.orange,
+                height: 20,
+                width: 100,
+              ),
+            ),
+          ),
+        ),
+        Flexible(
+          child: SingleChildScrollView(
+            child: MyExpansionTile(
+              sideContainer: Container(color: Colors.red),
+              image: Image.asset(r'assets/images/selecteditem2.png'),
+              tileText: const Text('Savvy App'),
+              color: Colors.grey[300],
+              child: Container(
+                color: Colors.orange,
+                height: 20,
+                width: 100,
+              ),
+            ),
+          ),
+        ),
+        Flexible(
+          child: SingleChildScrollView(
+            child: MyExpansionTile(
+              sideContainer: Container(color: Colors.red),
+              image: Image.asset(r'assets/images/selecteditem2.png'),
+              tileText: const Text('Savvy App'),
+              color: Colors.grey[300],
+              child: Container(
+                color: Colors.orange,
+                height: 20,
+                width: 100,
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

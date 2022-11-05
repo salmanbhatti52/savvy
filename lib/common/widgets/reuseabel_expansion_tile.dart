@@ -10,6 +10,7 @@ class MyExpansionTile extends StatelessWidget {
     required this.tileText,
     this.dropDownButton,
     this.color,
+    required this.child,
   }) : super(key: key);
 
   final Widget sideContainer;
@@ -17,6 +18,7 @@ class MyExpansionTile extends StatelessWidget {
   final Widget tileText;
   final Widget? dropDownButton;
   final Color? color;
+  final Widget child;
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +32,9 @@ class MyExpansionTile extends StatelessWidget {
               title: tileText,
               leading: image,
               baseColor: color,
+              children: [
+                child,
+              ],
             )),
       ],
     );

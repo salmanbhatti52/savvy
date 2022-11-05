@@ -25,6 +25,7 @@ class _SelectedScreenState extends State<SelectedScreen> {
     return ColorfulSafeArea(
       color: Colors.white,
       child: Scaffold(
+        backgroundColor: Colors.white,
         // appBar: AppBar(
         //   elevation: 0,
         //   backgroundColor: Colors.transparent,
@@ -59,7 +60,7 @@ class _SelectedScreenState extends State<SelectedScreen> {
           )),
       Flexible(flex: 3, child: textDescription()),
       Flexible(flex: 8, child: pieChart()),
-      Flexible(flex: 9, child: selectedList()),
+      Flexible(flex: 10, child: selectedList()),
       Flexible(flex: 3, child: acitionButton()),
     ]);
   }

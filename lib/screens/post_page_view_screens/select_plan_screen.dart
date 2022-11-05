@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -27,9 +28,9 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
   double permonthInvestment = 0.0;
   double yearsPlan = 0;
   List<Years> planList = [];
-
+  List<String> otherItems = [];
   final ApiServices _apiServices = ApiServices();
-  // String savvyValue = '';
+
   @override
   Widget build(BuildContext context) {
     size = MediaQuery.of(context).size;
@@ -47,6 +48,10 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
 
   AppBar _buildAppBar() {
     return AppBar(
+      systemOverlayStyle: const SystemUiOverlayStyle(
+        statusBarColor: Colors.white,
+        statusBarIconBrightness: Brightness.dark,
+      ),
       elevation: 0,
       backgroundColor: Colors.transparent,
       centerTitle: true,
@@ -113,8 +118,10 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Flexible(
-                    child: Image.asset(r'assets/images/earth.png',
-                        fit: BoxFit.fill),
+                    child: otherItems.isEmpty
+                        ? Image.asset(r'assets/images/earth.png',
+                            fit: BoxFit.fill)
+                        : pageSlider(),
                   )
                 ],
               ),
@@ -125,9 +132,64 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
     );
   }
 
+  Widget pageSlider() {
+    List<String> title = [
+      'C02 Emissions Avoided',
+      'Waste',
+      'Renewable Energy Generated',
+    ];
+    return ListView.builder(
+      itemCount: otherItems.length,
+      scrollDirection: Axis.horizontal,
+      itemBuilder: (context, index) {
+        return Card(
+          clipBehavior: Clip.hardEdge,
+          //  elevation: 2,
+          child: Container(
+            height: size.height * 0.3,
+            width: size.width * 0.5,
+            color: const Color(0xFFF6F6FE),
+            child: Stack(
+              children: [
+                Positioned(
+                  top: size.height * 0.005,
+                  left: size.width * 0.015,
+                  right: size.width * 0.070,
+                  child: Text(
+                    title[index],
+                    maxLines: 2,
+                    textAlign: TextAlign.start,
+                    overflow: TextOverflow.visible,
+                    style: myTextStyle(),
+                  ),
+                ),
+                Positioned(
+                  top: size.height * 0.070,
+                  left: size.width * 0.015,
+                  right: size.width * 0.070,
+                  child: Text(
+                    otherItems[index],
+                    style: _textStylee(),
+                  ),
+                ),
+                Positioned(
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    child: SvgPicture.asset(r'assets/svgs/planpagsvg.svg'))
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   Widget seekBarContainer() {
     // int years = 10;
     int yearssPlan = yearsPlan.toInt();
+    int initialInvestmentt = initialInvestment.toInt();
+    int permonthInvestmentt = permonthInvestment.toInt();
     return Column(
       children: [
         Flexible(
@@ -169,7 +231,7 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
                       Flexible(
                         flex: 1,
                         child: Text(
-                          '€' '$initialInvestment',
+                          '€' '$initialInvestmentt',
                           style: myTextStyle(),
                         ),
                       ),
@@ -198,7 +260,7 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
                       Flexible(
                         flex: 1,
                         child: Text(
-                          '$permonthInvestment',
+                          '€' '$permonthInvestmentt',
                           style: myTextStyle(),
                         ),
                       ),
@@ -240,6 +302,31 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
 
   Widget mySlider() {
     return Slider.adaptive(
+        onChangeEnd: (value) async {
+          if (yearsPlan > 0 && initialInvestment >= 0) {
+            if (permonthInvestment >= 0) {
+              Response response = await _apiServices.calculatePlan(
+                  yearsPlan.toString(), initialInvestment, permonthInvestment);
+
+              planValue(response);
+            } else {
+              Fluttertoast.showToast(
+                msg: 'Select Values',
+              );
+            }
+          } else {
+            Fluttertoast.showToast(
+              msg: 'Select Values',
+            );
+            setState(() {
+              permonthInvestment = 0;
+              initialInvestment = 0;
+              yearsPlan = 0;
+              planList = [];
+              otherItems = [];
+            });
+          }
+        },
         label: '$initialInvestment',
         inactiveColor: Colors.grey,
         activeColor: ColorConstants.buttonColorLight,
@@ -271,9 +358,8 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
         });
       },
       onChangeEnd: (value) async {
-        // print('onchanged Call');
-        if (yearsPlan > 0 && initialInvestment > 0) {
-          if (permonthInvestment > 0) {
+        if (yearsPlan > 0 && initialInvestment >= 0) {
+          if (permonthInvestment >= 0) {
             Response response = await _apiServices.calculatePlan(
                 yearsPlan.toString(), initialInvestment, permonthInvestment);
 
@@ -292,6 +378,7 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
             initialInvestment = 0;
             yearsPlan = 0;
             planList = [];
+            otherItems = [];
           });
         }
       },
@@ -300,12 +387,32 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
 
   Widget yearSlider() {
     return Slider.adaptive(
-      //    label: '$yearsPlan',
       inactiveColor: Colors.grey,
       activeColor: ColorConstants.buttonColorLight,
       thumbColor: ColorConstants.buttonColorLight,
       min: 0.0,
       max: 15.0,
+      onChangeEnd: (value) async {
+        if (yearsPlan > 0 && initialInvestment >= 0) {
+          if (permonthInvestment >= 0) {
+            Response response = await _apiServices.calculatePlan(
+                yearsPlan.toString(), initialInvestment, permonthInvestment);
+
+            planValue(response);
+          }
+        } else {
+          Fluttertoast.showToast(
+            msg: 'Years Must Be Selected',
+          );
+          setState(() {
+            permonthInvestment = 0;
+            initialInvestment = 0;
+            yearsPlan = 0;
+            planList = [];
+            otherItems = [];
+          });
+        }
+      },
       value: yearsPlan,
       divisions: 15,
       onChanged: (value) {
@@ -314,13 +421,6 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
         });
       },
     );
-    // onChangeEnd: (value) async {
-    //   print('onchanged Call');
-    //   Response response = await _apiServices.calculatePlan(
-    //       '2', initialInvestment, permonthInvestment);
-    //   print(response.statusCode);
-    //   planValue(response);
-    // },
   }
 
   myTextStyle() {
@@ -437,12 +537,9 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
               )),
           Expanded(
               flex: 8,
-              child: FittedBox(
-                fit: BoxFit.fill,
-                child: Image.asset(
-                  r'assets/images/drawerpng.png',
-                  //   fit: BoxFit.fitWidth,
-                ),
+              child: Image.asset(
+                r'assets/images/drawerpng.png',
+                fit: BoxFit.fitWidth,
               )),
         ],
       ),
@@ -470,67 +567,84 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
     );
   }
 
+  _textStylee() {
+    return GoogleFonts.poppins(
+        color: ColorConstants.introPageTextColor,
+        fontSize: size.height * 0.030,
+        fontWeight: FontWeight.bold);
+  }
+
   Widget _itemBuilder(BuildContext context, int index) {
     String? plan = planList[index].year;
 
-    return Container(
-      width: size.width * 0.8,
-      decoration: myBoxDecorationn(),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Flexible(
-                flex: 2,
-                child: RichText(
-                    text: TextSpan(
-                        style: GoogleFonts.poppins(
-                            color: Colors.black, fontSize: size.height * 0.020),
-                        children: [
-                      const TextSpan(text: 'Your investments after '),
-                      TextSpan(
-                          text: '$plan' ' Years',
+    return GestureDetector(
+      onTap: () {
+        otherItems = [];
+        otherItems.add(planList[index].co2);
+        otherItems.add(planList[index].waste);
+        otherItems.add(planList[index].electricity);
+        setState(() {});
+      },
+      child: Container(
+        width: size.width * 0.8,
+        decoration: myBoxDecorationn(),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Flexible(
+                  flex: 2,
+                  child: RichText(
+                      text: TextSpan(
                           style: GoogleFonts.poppins(
-                            fontWeight: FontWeight.bold,
-                            fontSize: size.height * 0.020,
-                            color: Colors.black,
+                              color: Colors.black,
+                              fontSize: size.height * 0.020),
+                          children: [
+                        const TextSpan(text: 'Your investments after '),
+                        TextSpan(
+                            text: '$plan' ' Years',
+                            style: GoogleFonts.poppins(
+                              fontWeight: FontWeight.bold,
+                              fontSize: size.height * 0.020,
+                              color: Colors.black,
+                            )),
+                      ]))),
+              SizedBox(
+                height: size.height * 0.0090,
+              ),
+              Flexible(
+                  flex: 2,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Flexible(
+                          flex: 1,
+                          child: SizedBox(
+                            height: size.height * 0.070,
+                            width: size.width * 0.14,
+                            child: SvgPicture.asset(
+                              r'assets/svgs/poundsvg.svg',
+                              fit: BoxFit.fitHeight,
+                            ),
                           )),
-                    ]))),
-            SizedBox(
-              height: size.height * 0.0090,
-            ),
-            Flexible(
-                flex: 2,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Flexible(
-                        flex: 1,
-                        child: SizedBox(
-                          height: size.height * 0.070,
-                          width: size.width * 0.14,
-                          child: SvgPicture.asset(
-                            r'assets/svgs/poundsvg.svg',
-                            fit: BoxFit.fitHeight,
+                      Flexible(
+                        flex: 2,
+                        child: Text(
+                          planList[index].withSavvy.toString(),
+                          softWrap: false,
+                          overflow: TextOverflow.ellipsis,
+                          style: GoogleFonts.lato(
+                            fontSize: size.height * 0.03,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
                           ),
-                        )),
-                    Flexible(
-                      flex: 2,
-                      child: Text(
-                        planList[index].withSavvy.toString(),
-                        softWrap: false,
-                        overflow: TextOverflow.ellipsis,
-                        style: GoogleFonts.lato(
-                          fontSize: size.height * 0.03,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
                         ),
                       ),
-                    ),
-                  ],
-                )),
-          ],
+                    ],
+                  )),
+            ],
+          ),
         ),
       ),
     );
@@ -664,3 +778,4 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
 //                 ),
 //               ),
 //             )
+ 
