@@ -14,6 +14,7 @@ import 'package:savvy/screens/post_page_view_screens/selected_screen.dart';
 import 'package:savvy/services/api_services.dart';
 
 import '../../utils/color_constants.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 
 class SelectPlanScreen extends StatefulWidget {
   const SelectPlanScreen({super.key});
@@ -26,10 +27,30 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
   late Size size;
   double initialInvestment = 0.0;
   double permonthInvestment = 0.0;
-  double yearsPlan = 0;
+  int yearsPlan = 0;
   List<Years> planList = [];
   List<String> otherItems = [];
   final ApiServices _apiServices = ApiServices();
+
+  List<String> years = [
+    '1 Year',
+    '2 Years',
+    '3 Years',
+    '4 Years',
+    '5 years',
+    '6 years',
+    '7 years',
+    '8 years',
+    '9 years',
+    '10 years',
+    '11 years',
+    '12 years',
+    '13 years',
+    '14 years',
+    '15 years',
+  ];
+  String? selectedYear;
+  int dropDownIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -118,7 +139,7 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Flexible(
-                    child: otherItems.isEmpty
+                    child: planList.isEmpty
                         ? Image.asset(r'assets/images/earth.png',
                             fit: BoxFit.fill)
                         : pageSlider(),
@@ -138,8 +159,15 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
       'Waste',
       'Renewable Energy Generated',
     ];
+
+    List<String> value = [
+      planList[dropDownIndex].co2,
+      planList[dropDownIndex].waste,
+      planList[dropDownIndex].electricity,
+    ];
+
     return ListView.builder(
-      itemCount: otherItems.length,
+      itemCount: title.length,
       scrollDirection: Axis.horizontal,
       itemBuilder: (context, index) {
         return Card(
@@ -168,7 +196,7 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
                   left: size.width * 0.015,
                   right: size.width * 0.070,
                   child: Text(
-                    otherItems[index],
+                    value[index],
                     style: _textStylee(),
                   ),
                 ),
@@ -187,7 +215,7 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
 
   Widget seekBarContainer() {
     // int years = 10;
-    int yearssPlan = yearsPlan.toInt();
+    //int yearssPlan = yearsPlan.toInt();
     int initialInvestmentt = initialInvestment.toInt();
     int permonthInvestmentt = permonthInvestment.toInt();
     return Column(
@@ -204,22 +232,23 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 25),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Flexible(
-                        flex: 1,
-                        child: Text(
-                          '''Your Plan(Years)''',
-                          style: myTextStyle(),
-                        ),
-                      ),
-                      Flexible(flex: 1, child: yearSlider()),
-                      Flexible(
-                        flex: 1,
-                        child: Text(
-                          '$yearssPlan' ' Years',
-                          style: myTextStyle(),
-                        ),
-                      ),
+                      // Flexible(
+                      //   flex: 1,
+                      //   child: Text(
+                      //     '''Your Plan(Years)''',
+                      //     style: myTextStyle(),
+                      //   ),
+                      // ),
+                      // Flexible(flex: 1, child: yearSlider()),
+                      // Flexible(
+                      //   flex: 1,
+                      //   child: Text(
+                      //     '$yearssPlan' ' Years',
+                      //     style: myTextStyle(),
+                      //   ),
+                      // ),
                       Flexible(
                         flex: 1,
                         child: Text(
@@ -273,20 +302,110 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
           height: 5,
         ),
         Flexible(
-            flex: 3,
-            child: SizedBox(
-              width: size.width * 0.9,
-              child: ListView.separated(
-                itemCount: planList.length,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: _itemBuilder,
-                separatorBuilder: (context, index) {
-                  return const SizedBox(
-                    width: 10,
-                  );
-                },
+          flex: 3,
+          child: Container(
+            width: size.width * 0.9,
+            decoration: myBoxDecorationn(),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // RichText(
+                  //         text: TextSpan(
+                  //             style: GoogleFonts.poppins(
+                  //                 color: Colors.black,
+                  //                 fontSize: size.height * 0.020),
+                  //             children: [
+                  //           const TextSpan(text: 'Your investments after '),
+                  //           TextSpan(
+                  //               text: ' Years',
+                  //               style: GoogleFonts.poppins(
+                  //                 fontWeight: FontWeight.bold,
+                  //                 fontSize: size.height * 0.020,
+                  //                 color: Colors.black,
+                  //               )),
+                  //         ]))
+
+                  Flexible(
+                    flex: 2,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Flexible(
+                          flex: 2,
+                          child: Text(
+                            'Your investments after',
+                            style: GoogleFonts.poppins(
+                                color: Colors.black,
+                                fontSize: size.height * 0.020),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        Flexible(
+                          flex: 1,
+                          child: _dropDownButton(),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  SizedBox(
+                    height: size.height * 0.0090,
+                  ),
+                  Flexible(
+                      flex: 2,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Flexible(
+                              flex: 1,
+                              child: SizedBox(
+                                height: size.height * 0.070,
+                                width: size.width * 0.14,
+                                child: SvgPicture.asset(
+                                  r'assets/svgs/poundsvg.svg',
+                                  fit: BoxFit.fitHeight,
+                                ),
+                              )),
+                          Flexible(
+                            flex: 2,
+                            child: planList.isEmpty
+                                ? const Text('Please Select Year')
+                                : Text(
+                                    planList[dropDownIndex].withSavvy,
+                                    softWrap: false,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: GoogleFonts.lato(
+                                      fontSize: size.height * 0.03,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                          ),
+                        ],
+                      )),
+                ],
               ),
-            ))
+            ),
+          ),
+        )
+        // child: SizedBox(
+        //   width: size.width * 0.9,
+        //   child: ListView.separated(
+        //     itemCount: planList.length,
+        //     scrollDirection: Axis.horizontal,
+        //     itemBuilder: _itemBuilder,
+        //     separatorBuilder: (context, index) {
+        //       return const SizedBox(
+        //         width: 10,
+        //       );
+        //     },
+        //   ),
+        // ))
       ],
     );
   }
@@ -385,43 +504,43 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
     );
   }
 
-  Widget yearSlider() {
-    return Slider.adaptive(
-      inactiveColor: Colors.grey,
-      activeColor: ColorConstants.buttonColorLight,
-      thumbColor: ColorConstants.buttonColorLight,
-      min: 0.0,
-      max: 15.0,
-      onChangeEnd: (value) async {
-        if (yearsPlan > 0 && initialInvestment >= 0) {
-          if (permonthInvestment >= 0) {
-            Response response = await _apiServices.calculatePlan(
-                yearsPlan.toString(), initialInvestment, permonthInvestment);
+  // Widget yearSlider() {
+  //   return Slider.adaptive(
+  //     inactiveColor: Colors.grey,
+  //     activeColor: ColorConstants.buttonColorLight,
+  //     thumbColor: ColorConstants.buttonColorLight,
+  //     min: 0.0,
+  //     max: 15.0,
+  //     onChangeEnd: (value) async {
+  //       if (yearsPlan > 0 && initialInvestment >= 0) {
+  //         if (permonthInvestment >= 0) {
+  //           Response response = await _apiServices.calculatePlan(
+  //               yearsPlan.toString(), initialInvestment, permonthInvestment);
 
-            planValue(response);
-          }
-        } else {
-          Fluttertoast.showToast(
-            msg: 'Years Must Be Selected',
-          );
-          setState(() {
-            permonthInvestment = 0;
-            initialInvestment = 0;
-            yearsPlan = 0;
-            planList = [];
-            otherItems = [];
-          });
-        }
-      },
-      value: yearsPlan,
-      divisions: 15,
-      onChanged: (value) {
-        setState(() {
-          yearsPlan = value;
-        });
-      },
-    );
-  }
+  //           planValue(response);
+  //         }
+  //       } else {
+  //         Fluttertoast.showToast(
+  //           msg: 'Years Must Be Selected',
+  //         );
+  //         setState(() {
+  //           permonthInvestment = 0;
+  //           initialInvestment = 0;
+  //           yearsPlan = 0;
+  //           planList = [];
+  //           otherItems = [];
+  //         });
+  //       }
+  //     },
+  //     value: yearsPlan .toDouble(),
+  //     divisions: 15,
+  //     onChanged: (value) {
+  //       setState(() {
+  //         yearsPlan = value;
+  //       });
+  //     },
+  //   );
+  // }
 
   myTextStyle() {
     return GoogleFonts.poppins(
@@ -574,78 +693,125 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
         fontWeight: FontWeight.bold);
   }
 
-  Widget _itemBuilder(BuildContext context, int index) {
-    String? plan = planList[index].year;
+  // Widget _itemBuilder(BuildContext context, int index) {
+  //   String? plan = planList[index].year;
 
-    return GestureDetector(
-      onTap: () {
-        otherItems = [];
-        otherItems.add(planList[index].co2);
-        otherItems.add(planList[index].waste);
-        otherItems.add(planList[index].electricity);
-        setState(() {});
+  //   return GestureDetector(
+  //     onTap: () {
+  //       otherItems = [];
+
+  //       setState(() {});
+  //     },
+  //     child: Container(
+  //       width: size.width * 0.8,
+  //       decoration: myBoxDecorationn(),
+  //       child: Padding(
+  //         padding: const EdgeInsets.all(8.0),
+  //         child: Column(
+  //           mainAxisAlignment: MainAxisAlignment.center,
+  //           children: [
+  //             Flexible(
+  //                 flex: 2,
+  //                 child: RichText(
+  //                     text: TextSpan(
+  //                         style: GoogleFonts.poppins(
+  //                             color: Colors.black,
+  //                             fontSize: size.height * 0.020),
+  //                         children: [
+  //                       const TextSpan(text: 'Your investments after '),
+  //                       TextSpan(
+  //                           text: '$plan' ' Years',
+  //                           style: GoogleFonts.poppins(
+  //                             fontWeight: FontWeight.bold,
+  //                             fontSize: size.height * 0.020,
+  //                             color: Colors.black,
+  //                           )),
+  //                     ]))),
+  //             SizedBox(
+  //               height: size.height * 0.0090,
+  //             ),
+  //             Flexible(
+  //                 flex: 2,
+  //                 child: Row(
+  //                   mainAxisAlignment: MainAxisAlignment.center,
+  //                   children: [
+  //                     Flexible(
+  //                         flex: 1,
+  //                         child: SizedBox(
+  //                           height: size.height * 0.070,
+  //                           width: size.width * 0.14,
+  //                           child: SvgPicture.asset(
+  //                             r'assets/svgs/poundsvg.svg',
+  //                             fit: BoxFit.fitHeight,
+  //                           ),
+  //                         )),
+  //                     Flexible(
+  //                       flex: 2,
+  //                       child: Text(
+  //                         planList[index].withSavvy.toString(),
+  //                         softWrap: false,
+  //                         overflow: TextOverflow.ellipsis,
+  //                         style: GoogleFonts.lato(
+  //                           fontSize: size.height * 0.03,
+  //                           fontWeight: FontWeight.bold,
+  //                           color: Colors.black,
+  //                         ),
+  //                       ),
+  //                     ),
+  //                   ],
+  //                 )),
+  //           ],
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
+
+  Widget _dropDownButton() {
+    return DropdownButton2(
+      dropdownMaxHeight: size.height * 0.3,
+      isExpanded: true,
+      dropdownWidth: size.width * 0.3,
+      dropdownDecoration: const BoxDecoration(color: Colors.white),
+      dropdownElevation: 2,
+      items: years
+          .map((year) => DropdownMenuItem<String>(
+                value: year,
+                child: Text(
+                  year.toString(),
+                  style: GoogleFonts.abel(
+                      fontSize: 18, fontWeight: FontWeight.bold),
+                  //overflow: TextOverflow.ellipsis,
+                ),
+              ))
+          .toList(),
+      value: selectedYear,
+      onChanged: (value) {
+        setState(() async {
+          selectedYear = value as String;
+          yearsPlan = years.indexOf(value).toInt() + 1;
+
+          print(yearsPlan.toString());
+          dropDownIndex = years.indexOf(value);
+          Response response = await _apiServices.calculatePlan(
+              yearsPlan.toString(), initialInvestment, permonthInvestment);
+          planValue(response);
+          otherItems.add(planList[dropDownIndex].co2);
+          otherItems.add(planList[dropDownIndex].waste);
+          otherItems.add(planList[dropDownIndex].electricity);
+        });
+        print(years.indexOf(value.toString()));
       },
-      child: Container(
-        width: size.width * 0.8,
-        decoration: myBoxDecorationn(),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Flexible(
-                  flex: 2,
-                  child: RichText(
-                      text: TextSpan(
-                          style: GoogleFonts.poppins(
-                              color: Colors.black,
-                              fontSize: size.height * 0.020),
-                          children: [
-                        const TextSpan(text: 'Your investments after '),
-                        TextSpan(
-                            text: '$plan' ' Years',
-                            style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.bold,
-                              fontSize: size.height * 0.020,
-                              color: Colors.black,
-                            )),
-                      ]))),
-              SizedBox(
-                height: size.height * 0.0090,
-              ),
-              Flexible(
-                  flex: 2,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Flexible(
-                          flex: 1,
-                          child: SizedBox(
-                            height: size.height * 0.070,
-                            width: size.width * 0.14,
-                            child: SvgPicture.asset(
-                              r'assets/svgs/poundsvg.svg',
-                              fit: BoxFit.fitHeight,
-                            ),
-                          )),
-                      Flexible(
-                        flex: 2,
-                        child: Text(
-                          planList[index].withSavvy.toString(),
-                          softWrap: false,
-                          overflow: TextOverflow.ellipsis,
-                          style: GoogleFonts.lato(
-                            fontSize: size.height * 0.03,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                    ],
-                  )),
-            ],
-          ),
-        ),
+      buttonDecoration: BoxDecoration(
+          color: Colors.transparent,
+          border: Border.all(color: Colors.transparent)),
+      buttonWidth: 100,
+      buttonHeight: 50,
+      iconDisabledColor: Colors.teal,
+      iconEnabledColor: Colors.teal,
+      buttonPadding: const EdgeInsets.all(5),
+      underline: Container(
+        color: Colors.transparent,
       ),
     );
   }
@@ -779,3 +945,21 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
 //               ),
 //             )
  
+ // final List<DropDownYears> years = [
+  //   DropDownYears(year: '1 Years'),
+  //   DropDownYears(year: '2 Years'),
+  //   DropDownYears(year: '3 Years'),
+  //   DropDownYears(year: '4 Years'),
+  //   DropDownYears(year: '5 Years'),
+  //   DropDownYears(year: '6 Years'),
+  //   DropDownYears(year: '7 Years'),
+  //   DropDownYears(year: '8 Years'),
+  //   DropDownYears(year: '9 Years'),
+  //   DropDownYears(year: '10 Years'),
+  //   DropDownYears(year: '11 Years'),
+  //   DropDownYears(year: '12 Years'),
+  //   DropDownYears(year: '13 Years'),
+  //   DropDownYears(year: '14 Years'),
+  //   DropDownYears(year: '15 Years'),
+  // ];
+  // var selectedYear = DropDownYears(year: 'years');

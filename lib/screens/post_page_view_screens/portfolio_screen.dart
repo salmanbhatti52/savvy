@@ -21,8 +21,7 @@ class _PortFolioScreenState extends State<PortFolioScreen> {
     size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: _buildAppBar(),
-      body: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(), child: _portfolioBody()),
+      body: SingleChildScrollView(child: _portfolioBody()),
     );
   }
 
@@ -61,53 +60,20 @@ class _PortFolioScreenState extends State<PortFolioScreen> {
   }
 
   Widget _portfolioBody() {
-    var tileFlex = 1;
+    //  var tileFlex = 1;
     return SizedBox(
       height: size.height,
       width: size.width,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Flexible(flex: 3, child: textDescription()),
-          Flexible(flex: 7, child: pieChart()),
-          Flexible(
-            flex: tileFlex,
-            child: SingleChildScrollView(
-              child: MyExpansionTile(
-                sideContainer: Container(color: Colors.red),
-                image: Image.asset(r'assets/images/selecteditem2.png'),
-                tileText: const Text('Savvy App'),
-                color: Colors.grey[300],
-                child: Container(
-                  color: Colors.orange,
-                  height: 20,
-                  width: 100,
-                ),
-              ),
-            ),
-          ),
-          Flexible(
-            flex: tileFlex,
-            child: SingleChildScrollView(
-              child: MyExpansionTile(
-                sideContainer: Container(color: Colors.red),
-                image: Image.asset(r'assets/images/selecteditem2.png'),
-                tileText: const Text('Savvy App'),
-                color: Colors.grey[300],
-                child: Container(
-                  color: Colors.orange,
-                  height: 20,
-                  width: 100,
-                ),
-              ),
-            ),
-          ),
-          Flexible(
-              flex: tileFlex,
-              child: const ExpansionTile(
-                title: Text('Okay'),
-              )),
-          Flexible(flex: 8, child: acitionButton()),
+          Flexible(flex: 1, child: textDescription()),
+          Flexible(flex: 3, child: pieChart()),
+          expansionTile(),
+          expansionTile(),
+          expansionTile(),
+          expansionTile(),
+          Flexible(flex: 1, child: acitionButton())
         ],
       ),
     );
@@ -308,6 +274,26 @@ class _PortFolioScreenState extends State<PortFolioScreen> {
   }
 }
 
+Widget expansionTile() {
+  return MyExpansionTile(
+      sideContainer: Container(color: Colors.white),
+      image: const Icon(Icons.add),
+      tileText: const Text('okay'),
+      child: SizedBox(
+        height: 40,
+        width: 300,
+      ));
+}
+
+//  MyExpansionTile(
+//             sideContainer: Container(color: Colors.white),
+//             image: const Icon(Icons.add),
+//             tileText: const Text('okay'),
+//             child: SizedBox(
+//               height: 40,
+//               width: size.width,
+//             )),
+
 // Widget _title() {
 //   return Container(
 //     color: Colors.transparent,
@@ -352,7 +338,6 @@ class _PortFolioScreenState extends State<PortFolioScreen> {
 //     ),
 //   );
 // }
-
 
 // return SingleChildScrollView(
 //       child: SizedBox(

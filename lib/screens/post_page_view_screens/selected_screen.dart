@@ -39,30 +39,38 @@ class _SelectedScreenState extends State<SelectedScreen> {
         //     ),
         //   ),
         // ),
-        body: selectScreenBody(),
+        body: SingleChildScrollView(child: selectScreenBody()),
       ),
     );
   }
 
   Widget selectScreenBody() {
-    return Column(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-      Flexible(
-          flex: 1,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Flexible(
-                  child: SizedBox(
-                      width: size.width * 0.2,
-                      child: SvgPicture.asset(
-                          'assets/svgs/appnamelandingpg.svg'))),
-            ],
-          )),
-      Flexible(flex: 3, child: textDescription()),
-      Flexible(flex: 8, child: pieChart()),
-      Flexible(flex: 10, child: selectedList()),
-      Flexible(flex: 3, child: acitionButton()),
-    ]);
+    return SizedBox(
+      height: size.height,
+      width: size.width,
+      child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+        Flexible(
+            flex: 1,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Flexible(
+                    child: SizedBox(
+                        width: size.width * 0.2,
+                        child: SvgPicture.asset(
+                            'assets/svgs/appnamelandingpg.svg'))),
+              ],
+            )),
+        _verticalSpace(size.height * 0.001),
+        Flexible(flex: 1, child: textDescription()),
+        _verticalSpace(size.height * 0.005),
+        Flexible(flex: 5, child: pieChart()),
+        _verticalSpace(size.height * 0.020),
+        Flexible(flex: 7, child: selectedList()),
+        _verticalSpace(size.height * 0.030),
+        Flexible(flex: 2, child: acitionButton()),
+      ]),
+    );
   }
 
   Widget pieChart() {
@@ -251,11 +259,11 @@ class _SelectedScreenState extends State<SelectedScreen> {
     );
   }
 
-  // Widget _verticalSpace() {
-  //   return SizedBox(
-  //     height: size.height * 0.009,
-  //   );
-  // }
+  Widget _verticalSpace(double height) {
+    return SizedBox(
+      height: height,
+    );
+  }
 
   _textStyle() {
     return GoogleFonts.poppins(

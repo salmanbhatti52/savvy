@@ -3,8 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:savvy/screens/intro_page.dart';
 import 'package:savvy/screens/landing_page.dart';
 import 'package:savvy/screens/login_page.dart';
+import 'package:savvy/screens/post_page_view_screens/select_plan_screen.dart';
 import 'package:savvy/screens/signup_page.dart';
-import 'package:savvy/screens/splash_screen.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: Colors.white,
         ),
         debugShowCheckedModeBanner: false,
-        home: const SplashScreen(),
+        home: const SelectPlanScreen(),
         routes: {
           LandingPage.screenName: (context) {
             return const LandingPage();
