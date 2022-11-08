@@ -1,5 +1,4 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:expansion_tile_card/expansion_tile_card.dart';
 import 'package:flutter/material.dart';
 
 class MyExpansionTile extends StatelessWidget {
@@ -11,6 +10,8 @@ class MyExpansionTile extends StatelessWidget {
     this.dropDownButton,
     this.color,
     required this.child,
+    this.onExpansionChanged,
+    this.initiallyExpanded = false,
   }) : super(key: key);
 
   final Widget sideContainer;
@@ -19,6 +20,8 @@ class MyExpansionTile extends StatelessWidget {
   final Widget? dropDownButton;
   final Color? color;
   final Widget child;
+  final void Function(bool)? onExpansionChanged;
+  final bool initiallyExpanded;
 
   @override
   Widget build(BuildContext context) {
@@ -28,10 +31,14 @@ class MyExpansionTile extends StatelessWidget {
         Expanded(flex: 1, child: sideContainer),
         Expanded(
             flex: 60,
-            child: ExpansionTileCard(
+            child: ExpansionTile(
+              initiallyExpanded: initiallyExpanded,
               title: tileText,
+              maintainState: false,
+              onExpansionChanged: onExpansionChanged,
               leading: image,
-              baseColor: color,
+              backgroundColor: color,
+              collapsedBackgroundColor: color,
               children: [
                 child,
               ],

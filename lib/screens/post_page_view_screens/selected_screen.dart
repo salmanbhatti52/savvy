@@ -10,6 +10,7 @@ import 'package:savvy/utils/color_constants.dart';
 
 class SelectedScreen extends StatefulWidget {
   const SelectedScreen({super.key});
+  static const screenName = 'Selected Screeen';
 
   @override
   State<SelectedScreen> createState() => _SelectedScreenState();
@@ -39,7 +40,7 @@ class _SelectedScreenState extends State<SelectedScreen> {
         //     ),
         //   ),
         // ),
-        body: SingleChildScrollView(child: selectScreenBody()),
+        body: selectScreenBody(),
       ),
     );
   }
@@ -48,28 +49,32 @@ class _SelectedScreenState extends State<SelectedScreen> {
     return SizedBox(
       height: size.height,
       width: size.width,
-      child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-        Flexible(
-            flex: 1,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Flexible(
-                    child: SizedBox(
-                        width: size.width * 0.2,
-                        child: SvgPicture.asset(
-                            'assets/svgs/appnamelandingpg.svg'))),
-              ],
-            )),
-        _verticalSpace(size.height * 0.001),
-        Flexible(flex: 1, child: textDescription()),
-        _verticalSpace(size.height * 0.005),
-        Flexible(flex: 5, child: pieChart()),
-        _verticalSpace(size.height * 0.020),
-        Flexible(flex: 7, child: selectedList()),
-        _verticalSpace(size.height * 0.030),
-        Flexible(flex: 2, child: acitionButton()),
-      ]),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8),
+        child:
+            Column(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+          Flexible(
+              flex: 1,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Flexible(
+                      child: SizedBox(
+                          width: size.width * 0.2,
+                          child: SvgPicture.asset(
+                              'assets/svgs/appnamelandingpg.svg'))),
+                ],
+              )),
+          // _verticalSpace(size.height * 0.001),
+          Flexible(flex: 1, child: textDescription()),
+          // _verticalSpace(size.height * 0.005),
+          Flexible(flex: 5, child: pieChart()),
+          //  _verticalSpace(size.height * 0.020),
+          Flexible(flex: 6, child: selectedList()),
+          // _verticalSpace(size.height * 0.030),
+          Flexible(flex: 3, child: acitionButton()),
+        ]),
+      ),
     );
   }
 
@@ -259,11 +264,11 @@ class _SelectedScreenState extends State<SelectedScreen> {
     );
   }
 
-  Widget _verticalSpace(double height) {
-    return SizedBox(
-      height: height,
-    );
-  }
+  // Widget _verticalSpace(double height) {
+  //   return SizedBox(
+  //     height: height,
+  //   );
+  // }
 
   _textStyle() {
     return GoogleFonts.poppins(

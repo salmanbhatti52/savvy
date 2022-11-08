@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:savvy/screens/blogscreens/blog_screen_one.dart';
 import 'package:savvy/screens/intro_page.dart';
 import 'package:savvy/screens/landing_page.dart';
 import 'package:savvy/screens/login_page.dart';
-import 'package:savvy/screens/post_page_view_screens/select_plan_screen.dart';
+import 'package:savvy/screens/page_view_Screens/page_view_screen_six.dart';
+import 'package:savvy/screens/post_page_view_screens/selected_screen.dart';
 import 'package:savvy/screens/signup_page.dart';
 
 void main() {
@@ -25,7 +27,7 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: Colors.white,
         ),
         debugShowCheckedModeBanner: false,
-        home: const SelectPlanScreen(),
+        home: const PageViewScreenSix(),
         routes: {
           LandingPage.screenName: (context) {
             return const LandingPage();
@@ -39,6 +41,12 @@ class MyApp extends StatelessWidget {
           SignUpPage.screenName: (context) {
             return const SignUpPage();
           },
+          SelectedScreen.screenName: (context) {
+            return const SelectedScreen();
+          },
+          BlogScreen.screenName: (context) {
+            return const BlogScreen();
+          }
         });
   }
 }

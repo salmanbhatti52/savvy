@@ -146,7 +146,10 @@ class _PageViewScreenSixState extends State<PageViewScreenSix> {
                         showDialog(
                           context: context,
                           builder: (context) {
-                            return const ReuseableDialog(
+                            return ReuseableDialog(
+                                onTapClose: () {
+                                  Navigator.pop(context);
+                                },
                                 bgColor: DilogConst.firstColor,
                                 goalNumber: '1',
                                 goalTitle: 'Goal 1',
@@ -170,7 +173,10 @@ class _PageViewScreenSixState extends State<PageViewScreenSix> {
                   showDialog(
                     context: context,
                     builder: (context) {
-                      return const ReuseableDialog(
+                      return ReuseableDialog(
+                        onTapClose: () {
+                          Navigator.pop(context);
+                        },
                         bgColor: DilogConst.secondColor,
                         goalDescription:
                             'End hunger, achieve food security and improved nutrition and promote sustainable agriculture.',
@@ -192,7 +198,10 @@ class _PageViewScreenSixState extends State<PageViewScreenSix> {
                   showDialog(
                     context: context,
                     builder: (context) {
-                      return const ReuseableDialog(
+                      return ReuseableDialog(
+                        onTapClose: () {
+                          Navigator.pop(context);
+                        },
                         bgColor: DilogConst.thirdColor,
                         goalDescription:
                             'Ensure healthy lives and promote well-being for all at all ages.',
@@ -224,7 +233,10 @@ class _PageViewScreenSixState extends State<PageViewScreenSix> {
                   showDialog(
                     context: context,
                     builder: (context) {
-                      return const ReuseableDialog(
+                      return ReuseableDialog(
+                        onTapClose: () {
+                          Navigator.pop(context);
+                        },
                         bgColor: DilogConst.fourthColor,
                         goalDescription: '''Ensure inclusive and equitable
 quality education and promote
@@ -248,7 +260,10 @@ for all.''',
                   showDialog(
                     context: context,
                     builder: (context) {
-                      return const ReuseableDialog(
+                      return ReuseableDialog(
+                        onTapClose: () {
+                          Navigator.pop(context);
+                        },
                         bgColor: DilogConst.fifthColor,
                         goalDescription:
                             'Achieve gender equality and empower all women and girls.',
@@ -270,7 +285,10 @@ for all.''',
                   showDialog(
                     context: context,
                     builder: (context) {
-                      return const ReuseableDialog(
+                      return ReuseableDialog(
+                        onTapClose: () {
+                          Navigator.pop(context);
+                        },
                         bgColor: DilogConst.sixthColor,
                         goalDescription:
                             'Ensure availability and sustainable management of water and sanitation for all.',
@@ -302,7 +320,10 @@ for all.''',
                   showDialog(
                     context: context,
                     builder: (context) {
-                      return const ReuseableDialog(
+                      return ReuseableDialog(
+                        onTapClose: () {
+                          Navigator.pop(context);
+                        },
                         bgColor: DilogConst.seventhColor,
                         goalDescription: '''Ensure access to affordable,
 reliable, sustainable and modern energy for all.''',
@@ -324,7 +345,10 @@ reliable, sustainable and modern energy for all.''',
                   showDialog(
                     context: context,
                     builder: (context) {
-                      return const ReuseableDialog(
+                      return ReuseableDialog(
+                        onTapClose: () {
+                          Navigator.pop(context);
+                        },
                         bgColor: DilogConst.eighthColor,
                         goalDescription: '''Promote sustained, inclusive
 and sustainable economic 
@@ -349,7 +373,10 @@ for all.''',
                   showDialog(
                     context: context,
                     builder: (context) {
-                      return const ReuseableDialog(
+                      return ReuseableDialog(
+                        onTapClose: () {
+                          Navigator.pop(context);
+                        },
                         bgColor: DilogConst.ninthColor,
                         goalDescription: '''Build resilient infrastructure,
 promote inclusive and 
@@ -383,7 +410,10 @@ and foster innovation.''',
                   showDialog(
                     context: context,
                     builder: (context) {
-                      return const ReuseableDialog(
+                      return ReuseableDialog(
+                        onTapClose: () {
+                          Navigator.pop(context);
+                        },
                         bgColor: DilogConst.tenthColor,
                         goalDescription:
                             'Reduce inequality within and among countries.',
@@ -405,7 +435,10 @@ and foster innovation.''',
                   showDialog(
                     context: context,
                     builder: (context) {
-                      return const ReuseableDialog(
+                      return ReuseableDialog(
+                        onTapClose: () {
+                          Navigator.pop(context);
+                        },
                         bgColor: DilogConst.eleventhColor,
                         goalDescription: '''Make cities and human 
 settlements inclusive, safe,
@@ -428,7 +461,10 @@ resilient and sustainable.''',
                   showDialog(
                     context: context,
                     builder: (context) {
-                      return const ReuseableDialog(
+                      return ReuseableDialog(
+                        onTapClose: () {
+                          Navigator.pop(context);
+                        },
                         bgColor: DilogConst.twelthColor,
                         goalDescription:
                             'Ensure sustainable consumption and production patterns.',
@@ -460,7 +496,10 @@ resilient and sustainable.''',
                   showDialog(
                     context: context,
                     builder: (context) {
-                      return const ReuseableDialog(
+                      return ReuseableDialog(
+                        onTapClose: () {
+                          Navigator.pop(context);
+                        },
                         bgColor: DilogConst.thirtenColor,
                         goalDescription:
                             'Take urgent action to combat climate change and its impacts.',
@@ -482,7 +521,10 @@ resilient and sustainable.''',
                   showDialog(
                     context: context,
                     builder: (context) {
-                      return const ReuseableDialog(
+                      return ReuseableDialog(
+                        onTapClose: () {
+                          Navigator.pop(context);
+                        },
                         bgColor: DilogConst.fourtenthColor,
                         goalDescription: '''Conserve and sustainability use
 the oceans, seas and marine
@@ -506,7 +548,10 @@ development.''',
                   showDialog(
                     context: context,
                     builder: (context) {
-                      return const ReuseableDialog(
+                      return ReuseableDialog(
+                        onTapClose: () {
+                          Navigator.pop(context);
+                        },
                         bgColor: DilogConst.fifteenthColor,
                         goalDescription: '''Protect, restore and promote
 sustainable use of terrestial
@@ -544,8 +589,11 @@ biodiversity loss.''',
                   showDialog(
                     context: context,
                     builder: (context) {
-                      return const ReuseableDialog(
-                        bgColor: DilogConst.sixthColor,
+                      return ReuseableDialog(
+                        onTapClose: () {
+                          Navigator.pop(context);
+                        },
+                        bgColor: DilogConst.sixtenthColor,
                         goalDescription: '''Promote peaceful and 
 inclusive societies for 
 sustainable development,
@@ -570,8 +618,11 @@ institutions at all levels.''',
                   showDialog(
                     context: context,
                     builder: (context) {
-                      return const ReuseableDialog(
-                        bgColor: DilogConst.sixthColor,
+                      return ReuseableDialog(
+                        onTapClose: () {
+                          Navigator.pop(context);
+                        },
+                        bgColor: DilogConst.seventeenthColor,
                         goalDescription: '''Strengthen the means of 
 implementation and revitalize
 the Global Partnership for

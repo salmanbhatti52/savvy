@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
@@ -31,6 +30,7 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
   List<Years> planList = [];
   List<String> otherItems = [];
   final ApiServices _apiServices = ApiServices();
+  Color sytemUiOverlayColor = Colors.white;
 
   List<String> years = [
     '1 Year',
@@ -55,22 +55,32 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
   @override
   Widget build(BuildContext context) {
     size = MediaQuery.of(context).size;
-    return ColorfulSafeArea(
-      color: Colors.white,
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        drawerEnableOpenDragGesture: false,
-        endDrawer: myEndDrawer(),
-        appBar: _buildAppBar(),
-        body: selectedPlanBody(),
-      ),
+    return Scaffold(
+      backgroundColor: Colors.white,
+      drawerEnableOpenDragGesture: false,
+      onEndDrawerChanged: (isOpened) {
+        if (isOpened == true) {
+          setState(() {
+            sytemUiOverlayColor = const Color(0xFFCBF6E8);
+          });
+        } else {
+          setState(() {
+            sytemUiOverlayColor = Colors.white;
+          });
+        }
+      },
+      endDrawer: Theme(
+          data: Theme.of(context).copyWith(canvasColor: Colors.black),
+          child: myEndDrawer()),
+      appBar: _buildAppBar(),
+      body: selectedPlanBody(),
     );
   }
 
   AppBar _buildAppBar() {
     return AppBar(
-      systemOverlayStyle: const SystemUiOverlayStyle(
-        statusBarColor: Colors.white,
+      systemOverlayStyle: SystemUiOverlayStyle(
+        statusBarColor: sytemUiOverlayColor,
         statusBarIconBrightness: Brightness.dark,
       ),
       elevation: 0,
@@ -159,6 +169,11 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
       'Waste',
       'Renewable Energy Generated',
     ];
+    List<String> svgsPath = [
+      (r'assets/svgs/planpagsvg.svg'),
+      (r'assets/svgs/planpgsvg3.svg'),
+      (r'assets/svgs/planpgsvg2.svg'),
+    ];
 
     List<String> value = [
       planList[dropDownIndex].co2,
@@ -204,7 +219,13 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
                     bottom: 0,
                     left: 0,
                     right: 0,
-                    child: SvgPicture.asset(r'assets/svgs/planpagsvg.svg'))
+                    child: SizedBox(
+                        height: size.height * 0.2,
+                        width: size.width * 0.3,
+                        child: SvgPicture.asset(
+                          svgsPath[index],
+                          fit: BoxFit.fill,
+                        )))
               ],
             ),
           ),
@@ -220,87 +241,6 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
     int permonthInvestmentt = permonthInvestment.toInt();
     return Column(
       children: [
-        Flexible(
-            flex: 8,
-            child: Container(
-              decoration: myBoxDecoration(),
-              width: size.width * 0.9,
-              child: SizedBox(
-                width: size.width * 0.5,
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 25),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      // Flexible(
-                      //   flex: 1,
-                      //   child: Text(
-                      //     '''Your Plan(Years)''',
-                      //     style: myTextStyle(),
-                      //   ),
-                      // ),
-                      // Flexible(flex: 1, child: yearSlider()),
-                      // Flexible(
-                      //   flex: 1,
-                      //   child: Text(
-                      //     '$yearssPlan' ' Years',
-                      //     style: myTextStyle(),
-                      //   ),
-                      // ),
-                      Flexible(
-                        flex: 1,
-                        child: Text(
-                          'YOUR 1ST PAYMENT',
-                          style: myTextStyle(),
-                        ),
-                      ),
-                      Flexible(flex: 1, child: mySlider()),
-                      Flexible(
-                        flex: 1,
-                        child: Text(
-                          '€' '$initialInvestmentt',
-                          style: myTextStyle(),
-                        ),
-                      ),
-                      Flexible(
-                        flex: 1,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            const Flexible(
-                              //  flex: 2,
-                              child: SizedBox(
-                                width: 5,
-                              ),
-                            ),
-                            Flexible(
-                              flex: 10,
-                              child: Text(
-                                'YOUR MONTHLY PAYMENTS',
-                                style: myTextStyle(),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Flexible(flex: 1, child: mySliderTwo()),
-                      Flexible(
-                        flex: 1,
-                        child: Text(
-                          '€' '$permonthInvestmentt',
-                          style: myTextStyle(),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            )),
-        const SizedBox(
-          height: 5,
-        ),
         Flexible(
           flex: 3,
           child: Container(
@@ -392,20 +332,73 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
               ),
             ),
           ),
-        )
-        // child: SizedBox(
-        //   width: size.width * 0.9,
-        //   child: ListView.separated(
-        //     itemCount: planList.length,
-        //     scrollDirection: Axis.horizontal,
-        //     itemBuilder: _itemBuilder,
-        //     separatorBuilder: (context, index) {
-        //       return const SizedBox(
-        //         width: 10,
-        //       );
-        //     },
-        //   ),
-        // ))
+        ),
+        const SizedBox(
+          height: 5,
+        ),
+        Flexible(
+            flex: 8,
+            child: Container(
+              decoration: myBoxDecoration(),
+              width: size.width * 0.9,
+              child: SizedBox(
+                width: size.width * 0.5,
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 25),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Flexible(
+                        flex: 1,
+                        child: Text(
+                          'YOUR 1ST PAYMENT',
+                          style: myTextStyle(),
+                        ),
+                      ),
+                      Flexible(flex: 1, child: mySlider()),
+                      Flexible(
+                        flex: 1,
+                        child: Text(
+                          '€' '$initialInvestmentt',
+                          style: myTextStyle(),
+                        ),
+                      ),
+                      Flexible(
+                        flex: 1,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            const Flexible(
+                              //  flex: 2,
+                              child: SizedBox(
+                                width: 5,
+                              ),
+                            ),
+                            Flexible(
+                              flex: 10,
+                              child: Text(
+                                'YOUR MONTHLY PAYMENTS',
+                                style: myTextStyle(),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Flexible(flex: 1, child: mySliderTwo()),
+                      Flexible(
+                        flex: 1,
+                        child: Text(
+                          '€' '$permonthInvestmentt',
+                          style: myTextStyle(),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            )),
       ],
     );
   }
@@ -435,7 +428,7 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
             }
           } else {
             Fluttertoast.showToast(
-              msg: 'Select Values',
+              msg: 'Please Select Years',
             );
             setState(() {
               permonthInvestment = 0;
@@ -490,7 +483,7 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
           }
         } else {
           Fluttertoast.showToast(
-            msg: 'Select Values',
+            msg: 'Please Select Years',
           );
           setState(() {
             permonthInvestment = 0;
@@ -614,11 +607,8 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
                   Flexible(
                       child: InkWell(
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(
-                        builder: (context) {
-                          return const SelectedScreen();
-                        },
-                      ));
+                      Navigator.popAndPushNamed(
+                          context, SelectedScreen.screenName);
                     },
                     child: Text(
                       'PORTFOLIO',
@@ -628,11 +618,7 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
                   Flexible(
                       child: InkWell(
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(
-                        builder: (context) {
-                          return const BlogScreen();
-                        },
-                      ));
+                      Navigator.popAndPushNamed(context, BlogScreen.screenName);
                     },
                     child: Text(
                       'LEARN',
@@ -693,80 +679,6 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
         fontWeight: FontWeight.bold);
   }
 
-  // Widget _itemBuilder(BuildContext context, int index) {
-  //   String? plan = planList[index].year;
-
-  //   return GestureDetector(
-  //     onTap: () {
-  //       otherItems = [];
-
-  //       setState(() {});
-  //     },
-  //     child: Container(
-  //       width: size.width * 0.8,
-  //       decoration: myBoxDecorationn(),
-  //       child: Padding(
-  //         padding: const EdgeInsets.all(8.0),
-  //         child: Column(
-  //           mainAxisAlignment: MainAxisAlignment.center,
-  //           children: [
-  //             Flexible(
-  //                 flex: 2,
-  //                 child: RichText(
-  //                     text: TextSpan(
-  //                         style: GoogleFonts.poppins(
-  //                             color: Colors.black,
-  //                             fontSize: size.height * 0.020),
-  //                         children: [
-  //                       const TextSpan(text: 'Your investments after '),
-  //                       TextSpan(
-  //                           text: '$plan' ' Years',
-  //                           style: GoogleFonts.poppins(
-  //                             fontWeight: FontWeight.bold,
-  //                             fontSize: size.height * 0.020,
-  //                             color: Colors.black,
-  //                           )),
-  //                     ]))),
-  //             SizedBox(
-  //               height: size.height * 0.0090,
-  //             ),
-  //             Flexible(
-  //                 flex: 2,
-  //                 child: Row(
-  //                   mainAxisAlignment: MainAxisAlignment.center,
-  //                   children: [
-  //                     Flexible(
-  //                         flex: 1,
-  //                         child: SizedBox(
-  //                           height: size.height * 0.070,
-  //                           width: size.width * 0.14,
-  //                           child: SvgPicture.asset(
-  //                             r'assets/svgs/poundsvg.svg',
-  //                             fit: BoxFit.fitHeight,
-  //                           ),
-  //                         )),
-  //                     Flexible(
-  //                       flex: 2,
-  //                       child: Text(
-  //                         planList[index].withSavvy.toString(),
-  //                         softWrap: false,
-  //                         overflow: TextOverflow.ellipsis,
-  //                         style: GoogleFonts.lato(
-  //                           fontSize: size.height * 0.03,
-  //                           fontWeight: FontWeight.bold,
-  //                           color: Colors.black,
-  //                         ),
-  //                       ),
-  //                     ),
-  //                   ],
-  //                 )),
-  //           ],
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
-
   Widget _dropDownButton() {
     return DropdownButton2(
       dropdownMaxHeight: size.height * 0.3,
@@ -791,7 +703,7 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
           selectedYear = value as String;
           yearsPlan = years.indexOf(value).toInt() + 1;
 
-          print(yearsPlan.toString());
+          //  print(yearsPlan.toString());
           dropDownIndex = years.indexOf(value);
           Response response = await _apiServices.calculatePlan(
               yearsPlan.toString(), initialInvestment, permonthInvestment);
@@ -800,7 +712,7 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
           otherItems.add(planList[dropDownIndex].waste);
           otherItems.add(planList[dropDownIndex].electricity);
         });
-        print(years.indexOf(value.toString()));
+        // print(years.indexOf(value.toString()));
       },
       buttonDecoration: BoxDecoration(
           color: Colors.transparent,
@@ -816,150 +728,3 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
     );
   }
 }
-// }
-//  Flexible(
-//             flex: 3,
-//             child: Container(
-//               width: size.width * 0.9,
-//               decoration: myBoxDecorationn(),
-//               child: Padding(
-//                 padding: const EdgeInsets.all(8.0),
-//                 child: Column(
-//                   mainAxisAlignment: MainAxisAlignment.center,
-//                   children: [
-//                     Flexible(
-//                         flex: 2,
-//                         child: RichText(
-//                             text: TextSpan(
-//                                 style: GoogleFonts.poppins(
-//                                     color: Colors.black,
-//                                     fontSize: size.height * 0.020),
-//                                 children: [
-//                               const TextSpan(text: 'Your investments after '),
-//                               TextSpan(
-//                                   text: '$yearssPlan' ' Years',
-//                                   style: GoogleFonts.poppins(
-//                                     fontWeight: FontWeight.bold,
-//                                     fontSize: size.height * 0.020,
-//                                     color: Colors.black,
-//                                   )),
-//                             ]))),
-//                     SizedBox(
-//                       height: size.height * 0.0090,
-//                     ),
-//                     Flexible(
-//                         flex: 2,
-//                         child: Row(
-//                           mainAxisAlignment: MainAxisAlignment.center,
-//                           children: [
-//                             Flexible(
-//                                 flex: 1,
-//                                 child: SizedBox(
-//                                   height: size.height * 0.070,
-//                                   width: size.width * 0.14,
-//                                   child: SvgPicture.asset(
-//                                     r'assets/svgs/poundsvg.svg',
-//                                     fit: BoxFit.fitHeight,
-//                                   ),
-//                                 )),
-//                             Flexible(
-//                               flex: 2,
-//                               child: Text(
-//                                 savvyValue,
-//                                 softWrap: false,
-//                                 overflow: TextOverflow.ellipsis,
-//                                 style: GoogleFonts.lato(
-//                                   fontSize: size.height * 0.03,
-//                                   fontWeight: FontWeight.bold,
-//                                   color: Colors.black,
-//                                 ),
-//                               ),
-//                             ),
-//                           ],
-//                         )),
-//                   ],
-//                 ),
-//               ),
-//             )),
-
-//  Container(
-//               width: size.width * 0.9,
-//               decoration: myBoxDecorationn(),
-//               child: Padding(
-//                 padding: const EdgeInsets.all(8.0),
-//                 child: Column(
-//                   mainAxisAlignment: MainAxisAlignment.center,
-//                   children: [
-//                     Flexible(
-//                         flex: 2,
-//                         child: RichText(
-//                             text: TextSpan(
-//                                 style: GoogleFonts.poppins(
-//                                     color: Colors.black,
-//                                     fontSize: size.height * 0.020),
-//                                 children: [
-//                               const TextSpan(text: 'Your investments after '),
-//                               TextSpan(
-//                                   text: '$yearssPlan' ' Years',
-//                                   style: GoogleFonts.poppins(
-//                                     fontWeight: FontWeight.bold,
-//                                     fontSize: size.height * 0.020,
-//                                     color: Colors.black,
-//                                   )),
-//                             ]))),
-//                     SizedBox(
-//                       height: size.height * 0.0090,
-//                     ),
-//                     Flexible(
-//                         flex: 2,
-//                         child: Row(
-//                           mainAxisAlignment: MainAxisAlignment.center,
-//                           children: [
-//                             Flexible(
-//                                 flex: 1,
-//                                 child: SizedBox(
-//                                   height: size.height * 0.070,
-//                                   width: size.width * 0.14,
-//                                   child: SvgPicture.asset(
-//                                     r'assets/svgs/poundsvg.svg',
-//                                     fit: BoxFit.fitHeight,
-//                                   ),
-//                                 )),
-//                             Flexible(
-//                               flex: 2,
-//                               child: Text(
-//                                 savvyValue,
-//                                 softWrap: false,
-//                                 overflow: TextOverflow.ellipsis,
-//                                 style: GoogleFonts.lato(
-//                                   fontSize: size.height * 0.03,
-//                                   fontWeight: FontWeight.bold,
-//                                   color: Colors.black,
-//                                 ),
-//                               ),
-//                             ),
-//                           ],
-//                         )),
-//                   ],
-//                 ),
-//               ),
-//             )
- 
- // final List<DropDownYears> years = [
-  //   DropDownYears(year: '1 Years'),
-  //   DropDownYears(year: '2 Years'),
-  //   DropDownYears(year: '3 Years'),
-  //   DropDownYears(year: '4 Years'),
-  //   DropDownYears(year: '5 Years'),
-  //   DropDownYears(year: '6 Years'),
-  //   DropDownYears(year: '7 Years'),
-  //   DropDownYears(year: '8 Years'),
-  //   DropDownYears(year: '9 Years'),
-  //   DropDownYears(year: '10 Years'),
-  //   DropDownYears(year: '11 Years'),
-  //   DropDownYears(year: '12 Years'),
-  //   DropDownYears(year: '13 Years'),
-  //   DropDownYears(year: '14 Years'),
-  //   DropDownYears(year: '15 Years'),
-  // ];
-  // var selectedYear = DropDownYears(year: 'years');

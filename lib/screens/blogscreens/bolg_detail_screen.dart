@@ -70,10 +70,13 @@ We  need to do more in order to preserve our oceans and meet the sustainable dev
           bottom: size.height - size.height * 0.10,
           left: size.width - size.width * 0.97,
           child: RoundButton(
+              onTap: () {
+                Navigator.pop(context);
+              },
               icon: Icon(
-            Icons.arrow_back_ios_sharp,
-            color: Colors.white.withOpacity(0.3),
-          )),
+                Icons.arrow_back_ios_sharp,
+                color: Colors.white.withOpacity(0.3),
+              )),
         ),
       ],
     );

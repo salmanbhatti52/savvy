@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -16,12 +18,15 @@ class PortFolioScreen extends StatefulWidget {
 
 class _PortFolioScreenState extends State<PortFolioScreen> {
   late Size size;
+  int selected = 0;
+  Random random = Random();
+
   @override
   Widget build(BuildContext context) {
     size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: _buildAppBar(),
-      body: SingleChildScrollView(child: _portfolioBody()),
+      body: _portfolioBody(),
     );
   }
 
@@ -60,22 +65,27 @@ class _PortFolioScreenState extends State<PortFolioScreen> {
   }
 
   Widget _portfolioBody() {
-    //  var tileFlex = 1;
-    return SizedBox(
-      height: size.height,
-      width: size.width,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Flexible(flex: 1, child: textDescription()),
-          Flexible(flex: 3, child: pieChart()),
-          expansionTile(),
-          expansionTile(),
-          expansionTile(),
-          expansionTile(),
-          Flexible(flex: 1, child: acitionButton())
-        ],
-      ),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Flexible(flex: 1, child: textDescription()),
+        Flexible(flex: 3, child: pieChart()),
+        Flexible(
+            flex: 4,
+            child: ListView.separated(
+              physics: const BouncingScrollPhysics(),
+              // key: Key('builder ${selected.toString()}'),
+              itemBuilder: _itemBuilder,
+              separatorBuilder: (context, index) {
+                return const SizedBox(
+                  height: 5,
+                );
+              },
+              itemCount: 7,
+            )),
+        Flexible(flex: 1, child: acitionButton()),
+      ],
     );
   }
 
@@ -103,58 +113,39 @@ class _PortFolioScreenState extends State<PortFolioScreen> {
   }
 
   Widget pieChart() {
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        Material(
-          // clipBehavior: Clip.hardEdge,
-          borderRadius: BorderRadius.circular(size.height * 0.16),
-          elevation: 5,
-          child: Container(
-            //     clipBehavior: Clip.hardEdge,
-            height: size.height * 0.46,
-            width: size.width * 0.65,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(size.height * 0.16),
-              color: Colors.white10,
-            ),
-          ),
-        ),
-        PieChart(
-          animationDuration: const Duration(seconds: 1),
-          colorList: const [
-            Color(0xFFDCF0E5),
-            Color(0xFFC9BAF2),
-            Color(0xFF016654),
-            Color(0xFF202445),
-            Color(0xFF02E0A3),
-          ],
-          chartValuesOptions: const ChartValuesOptions(
-            showChartValuesInPercentage: true,
-            // chartValueBackgroundColor: Colors.white,
-            showChartValuesOutside: true,
-            showChartValueBackground: false,
-            chartValueStyle:
-                TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-          ),
-          legendOptions: const LegendOptions(showLegends: false),
-          dataMap: const {
-            'one': 20,
-            'two': 20,
-            'three': 20,
-            'four': 20,
-            'five': 20,
-          },
-          chartRadius: size.height * 0.20,
-          chartType: ChartType.ring,
-          ringStrokeWidth: size.height * 0.085,
-          centerText: 'Savvy',
-          centerTextStyle: GoogleFonts.lato(
-              color: const Color(0xFF325698),
-              fontWeight: FontWeight.w700,
-              fontSize: size.height * 0.028),
-        ),
+    return PieChart(
+      animationDuration: const Duration(seconds: 1),
+      colorList: const [
+        Color(0xFFDCF0E5),
+        Color(0xFFC9BAF2),
+        Color(0xFF016654),
+        Color(0xFF202445),
+        Color(0xFF02E0A3),
       ],
+      chartValuesOptions: const ChartValuesOptions(
+        showChartValuesInPercentage: true,
+        // chartValueBackgroundColor: Colors.white,
+        showChartValuesOutside: true,
+        showChartValueBackground: false,
+        chartValueStyle:
+            TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+      ),
+      legendOptions: const LegendOptions(showLegends: false),
+      dataMap: const {
+        'one': 20,
+        'two': 20,
+        'three': 20,
+        'four': 20,
+        'five': 20,
+      },
+      chartRadius: size.height * 0.20,
+      chartType: ChartType.ring,
+      ringStrokeWidth: size.height * 0.085,
+      centerText: 'Savvy',
+      centerTextStyle: GoogleFonts.lato(
+          color: const Color(0xFF325698),
+          fontWeight: FontWeight.w700,
+          fontSize: size.height * 0.028),
     );
   }
 
@@ -272,18 +263,41 @@ class _PortFolioScreenState extends State<PortFolioScreen> {
       ],
     );
   }
+
+  Widget _itemBuilder(BuildContext context, int index) {
+    return MyExpansionTile(
+        key: Key(index.toString()),
+        initiallyExpanded: index == selected,
+        onExpansionChanged: (newstate) {
+          if (newstate) {
+            setState(() {
+              const Duration(seconds: 20000);
+
+              selected = index;
+            });
+          } else {
+            setState(() {
+              selected = -1;
+            });
+          }
+        },
+        sideContainer: Container(
+          color: Colors.primaries[random.nextInt(Colors.primaries.length)],
+          width: 10,
+          height: size.height * 0.067,
+        ),
+        image: Image.asset(r'assets/images/selecteditem2.png'),
+        tileText: const Text('DEWTWETA'),
+        color: index % 2 == 0 ? Colors.white : Colors.grey.withOpacity(0.1),
+        child: Container(
+          height: 30,
+          width: 30,
+          color: Colors.green,
+        ));
+  }
 }
 
-Widget expansionTile() {
-  return MyExpansionTile(
-      sideContainer: Container(color: Colors.white),
-      image: const Icon(Icons.add),
-      tileText: const Text('okay'),
-      child: SizedBox(
-        height: 40,
-        width: 300,
-      ));
-}
+
 
 //  MyExpansionTile(
 //             sideContainer: Container(color: Colors.white),
@@ -374,3 +388,48 @@ Widget expansionTile() {
 //         ),
 //       ),
 //     );
+
+// chart.PieChart(chart.PieChartData(
+//               centerSpaceRadius: 30,
+//               //startDegreeOffset: 10,
+//               centerSpaceColor: Colors.white,
+
+//               sectionsSpace: 0,
+//               sections: [
+//                 chart.PieChartSectionData(
+//                     color: Colors.pink,
+//                     badgeWidget: const Text('okay'),
+//                     radius: 70,
+//                     borderSide:
+//                         const BorderSide(color: Colors.white, width: 5)),
+//                 chart.PieChartSectionData(
+//                     color: Colors.pink,
+//                     badgeWidget: const Text('okay'),
+//                     radius: 70,
+//                     borderSide:
+//                         const BorderSide(color: Colors.white, width: 5)),
+//                 chart.PieChartSectionData(
+//                     color: Colors.pink,
+//                     badgeWidget: const Text('okay'),
+//                     radius: 70,
+//                     borderSide:
+//                         const BorderSide(color: Colors.white, width: 5)),
+//                 chart.PieChartSectionData(
+//                     color: Colors.pink,
+//                     badgeWidget: const Text('okay'),
+//                     radius: 70,
+//                     borderSide:
+//                         const BorderSide(color: Colors.white, width: 5)),
+//                 chart.PieChartSectionData(
+//                     color: Colors.pink,
+//                     badgeWidget: const Text('okay'),
+//                     radius: 70,
+//                     borderSide:
+//                         const BorderSide(color: Colors.white, width: 3)),
+//               ],
+//               borderData: chart.FlBorderData(
+//                   border: Border.all(
+//                       // strokeAlign: StrokeAlign.inside,
+//                       color: Colors.black,
+//                       width: 6,
+//                       style: BorderStyle.solid)))),

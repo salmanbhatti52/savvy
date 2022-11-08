@@ -5,7 +5,7 @@
    
         android:label="savvy"
         android:name="${applicationName}"
-        android:icon="@mipmap/icon">
+        android:icon="@mipmap/updated_icon">
         <activity
             android:name=".MainActivity"
             android:exported="true"
