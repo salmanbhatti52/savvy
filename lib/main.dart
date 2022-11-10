@@ -6,6 +6,7 @@ import 'package:savvy/screens/landing_page.dart';
 import 'package:savvy/screens/login_page.dart';
 import 'package:savvy/screens/page_view_Screens/page_view_screen_six.dart';
 import 'package:savvy/screens/post_page_view_screens/selected_screen.dart';
+import 'package:savvy/screens/post_page_view_screens/temp_screen.dart';
 import 'package:savvy/screens/signup_page.dart';
 
 void main() {
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         home: const PageViewScreenSix(),
         routes: {
+          TempScreen.screenName: (context) => const TempScreen(),
           LandingPage.screenName: (context) {
             return const LandingPage();
           },

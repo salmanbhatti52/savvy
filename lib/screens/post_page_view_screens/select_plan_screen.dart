@@ -9,7 +9,7 @@ import 'package:http/http.dart';
 import 'package:savvy/models/invesment_model.dart';
 import 'package:savvy/screens/blogscreens/blog_screen_one.dart';
 import 'package:savvy/screens/login_page.dart';
-import 'package:savvy/screens/post_page_view_screens/selected_screen.dart';
+import 'package:savvy/screens/post_page_view_screens/temp_screen.dart';
 import 'package:savvy/services/api_services.dart';
 
 import '../../utils/color_constants.dart';
@@ -607,8 +607,7 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
                   Flexible(
                       child: InkWell(
                     onTap: () {
-                      Navigator.popAndPushNamed(
-                          context, SelectedScreen.screenName);
+                      Navigator.popAndPushNamed(context, TempScreen.screenName);
                     },
                     child: Text(
                       'PORTFOLIO',

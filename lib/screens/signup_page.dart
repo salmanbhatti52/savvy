@@ -349,7 +349,7 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   String? _passwordValidate(String? value) {
-    if (value!.isEmpty) {
+    if (value!.isEmpty && value.length < 5) {
       return 'please enter password';
     }
     return null;

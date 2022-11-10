@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:savvy/common/widgets/custom_button.dart';
 import 'package:savvy/models/user.dart';
+import 'package:savvy/screens/dialouges/not_found_sdg.dart';
 import 'package:savvy/screens/features/updateuser_screen.dart';
 import 'package:savvy/screens/page_view_Screens/page_view.dart';
 import 'package:savvy/utils/color_constants.dart';
@@ -43,7 +44,7 @@ class IntroPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Flexible(flex: 1, child: welcomeText(size)),
+              Flexible(flex: 1, child: welcomeText(size, context)),
               Flexible(flex: 3, child: descriptionText(size)),
               Flexible(flex: 2, child: introText(size)),
               SizedBox(
@@ -63,13 +64,23 @@ class IntroPage extends StatelessWidget {
     );
   }
 
-  Widget welcomeText(Size size) {
-    return Text(
-      'Welcome to Savvy.',
-      style: GoogleFonts.poppins(
-          fontWeight: FontWeight.w500,
-          fontSize: size.height * 0.040,
-          color: ColorConstants.introPageTextColor),
+  Widget welcomeText(Size size, BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return const SdgDialog();
+          },
+        );
+      },
+      child: Text(
+        'Welcome to Savvy.',
+        style: GoogleFonts.poppins(
+            fontWeight: FontWeight.w500,
+            fontSize: size.height * 0.040,
+            color: ColorConstants.introPageTextColor),
+      ),
     );
   }
 

@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:expandable_text/expandable_text.dart';
 import 'package:savvy/common/widgets/round_icon_button.dart';
 import 'package:savvy/utils/color_constants.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class BlogDetail extends StatefulWidget {
   const BlogDetail({super.key});
@@ -126,8 +127,19 @@ We  need to do more in order to preserve our oceans and meet the sustainable dev
         collapseText: 'less',
         linkColor: Colors.black,
         style: readbologStyle(),
+        onExpandedChanged: (value) {
+          _launchURL();
+        },
       ),
     );
+  }
+
+  _launchURL() async {
+    final Uri url = Uri.parse('https://www.savvyinvest.fr/new-index-1');
+
+    if (!await launchUrl(url)) {
+      throw 'Could not launch $url';
+    }
   }
 
   readbologStyle() {

@@ -1,6 +1,7 @@
 import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:savvy/screens/dialouges/dialog_controller/detail_dialogs.dart';
 import 'package:savvy/screens/dialouges/info_dialog.dart';
 import 'package:savvy/screens/dialouges/reuseabel_info_dialog.dart';
 import 'package:savvy/screens/post_page_view_screens/chosed_goals_Screen.dart';
@@ -8,6 +9,7 @@ import 'package:savvy/screens/post_page_view_screens/chosed_goals_Screen.dart';
 import '../../common/widgets/custom_button.dart';
 import '../../utils/color_constants.dart';
 import '../../utils/dialog_const.dart';
+import '../dialouges/detail_dialog.dart';
 import '../post_page_view_screens/selected_screen.dart';
 
 class PageViewScreenSix extends StatefulWidget {
@@ -21,6 +23,7 @@ class _PageViewScreenSixState extends State<PageViewScreenSix> {
   int itemsAdded = 0;
   bool isNotUndo = true;
   InfoDialog infoDialog = InfoDialog();
+  DetailDialogs detailDialogs = DetailDialogs();
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -150,6 +153,15 @@ class _PageViewScreenSixState extends State<PageViewScreenSix> {
                                 onTapClose: () {
                                   Navigator.pop(context);
                                 },
+                                onButtonTap: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return DetailDialog()
+                                          .detailDialog(size, context);
+                                    },
+                                  );
+                                },
                                 bgColor: DilogConst.firstColor,
                                 goalNumber: '1',
                                 goalTitle: 'Goal 1',
@@ -174,6 +186,14 @@ class _PageViewScreenSixState extends State<PageViewScreenSix> {
                     context: context,
                     builder: (context) {
                       return ReuseableDialog(
+                        onButtonTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return detailDialogs.goal2dialog();
+                            },
+                          );
+                        },
                         onTapClose: () {
                           Navigator.pop(context);
                         },
@@ -199,6 +219,14 @@ class _PageViewScreenSixState extends State<PageViewScreenSix> {
                     context: context,
                     builder: (context) {
                       return ReuseableDialog(
+                        onButtonTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return detailDialogs.goal3Dialog();
+                            },
+                          );
+                        },
                         onTapClose: () {
                           Navigator.pop(context);
                         },
@@ -234,6 +262,14 @@ class _PageViewScreenSixState extends State<PageViewScreenSix> {
                     context: context,
                     builder: (context) {
                       return ReuseableDialog(
+                        onButtonTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return detailDialogs.goal4Dialog();
+                            },
+                          );
+                        },
                         onTapClose: () {
                           Navigator.pop(context);
                         },
@@ -261,6 +297,14 @@ for all.''',
                     context: context,
                     builder: (context) {
                       return ReuseableDialog(
+                        onButtonTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return detailDialogs.goal5Dialog();
+                            },
+                          );
+                        },
                         onTapClose: () {
                           Navigator.pop(context);
                         },
@@ -286,6 +330,14 @@ for all.''',
                     context: context,
                     builder: (context) {
                       return ReuseableDialog(
+                        onButtonTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return detailDialogs.goal6Dialog();
+                            },
+                          );
+                        },
                         onTapClose: () {
                           Navigator.pop(context);
                         },
@@ -436,6 +488,14 @@ and foster innovation.''',
                     context: context,
                     builder: (context) {
                       return ReuseableDialog(
+                        onButtonTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return detailDialogs.goal11Dialog();
+                            },
+                          );
+                        },
                         onTapClose: () {
                           Navigator.pop(context);
                         },
@@ -462,6 +522,14 @@ resilient and sustainable.''',
                     context: context,
                     builder: (context) {
                       return ReuseableDialog(
+                        onButtonTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return detailDialogs.goal12Dialog();
+                            },
+                          );
+                        },
                         onTapClose: () {
                           Navigator.pop(context);
                         },
@@ -497,6 +565,14 @@ resilient and sustainable.''',
                     context: context,
                     builder: (context) {
                       return ReuseableDialog(
+                        onButtonTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return detailDialogs.goal13Dialog();
+                            },
+                          );
+                        },
                         onTapClose: () {
                           Navigator.pop(context);
                         },
@@ -522,6 +598,14 @@ resilient and sustainable.''',
                     context: context,
                     builder: (context) {
                       return ReuseableDialog(
+                        onButtonTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return detailDialogs.goal14Dialog();
+                            },
+                          );
+                        },
                         onTapClose: () {
                           Navigator.pop(context);
                         },

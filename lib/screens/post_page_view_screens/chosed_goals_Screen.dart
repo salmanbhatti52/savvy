@@ -62,7 +62,7 @@ class _ChoosedGoalsScreenState extends State<ChoosedGoalsScreen> {
                     showDialog(
                       context: context,
                       builder: (context) {
-                        return infoDialog.infoDialog(size, context);
+                        return DetailDialog().detailDialog(size, context);
                       },
                     );
                   },

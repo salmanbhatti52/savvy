@@ -13,6 +13,7 @@ class ReuseableDialog extends StatelessWidget {
     required this.goalTitle,
     required this.goalDescription,
     required this.goalDetail,
+    this.onButtonTap,
   }) : super(key: key);
 
   final Color bgColor;
@@ -21,6 +22,7 @@ class ReuseableDialog extends StatelessWidget {
   final String goalTitle;
   final String goalDescription;
   final String goalDetail;
+  final void Function()? onButtonTap;
 
   @override
   Widget build(BuildContext context) {
@@ -122,7 +124,7 @@ class ReuseableDialog extends StatelessWidget {
                           Flexible(
                             flex: 2,
                             child: MyButton(
-                              ontap: () {},
+                              ontap: onButtonTap,
                               color: Colors.black.withOpacity(0.1),
                               border: Border.all(width: 2, color: Colors.white),
                               height: size.height * 0.050,

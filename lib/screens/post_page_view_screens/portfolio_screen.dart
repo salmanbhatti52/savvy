@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -19,7 +17,11 @@ class PortFolioScreen extends StatefulWidget {
 class _PortFolioScreenState extends State<PortFolioScreen> {
   late Size size;
   int selected = 0;
-  Random random = Random();
+//Random random = Random();
+  List<Color> tileColors = [
+    const Color(0xFF58E5AA),
+    const Color(0xFF325698),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +84,7 @@ class _PortFolioScreenState extends State<PortFolioScreen> {
                   height: 5,
                 );
               },
-              itemCount: 7,
+              itemCount: 2,
             )),
         Flexible(flex: 1, child: acitionButton()),
       ],
@@ -265,35 +267,43 @@ class _PortFolioScreenState extends State<PortFolioScreen> {
   }
 
   Widget _itemBuilder(BuildContext context, int index) {
-    return MyExpansionTile(
-        key: Key(index.toString()),
-        initiallyExpanded: index == selected,
-        onExpansionChanged: (newstate) {
-          if (newstate) {
-            setState(() {
-              const Duration(seconds: 20000);
+    return Container(
+      color: Colors.green,
+      height: size.height * 0.030,
+      constraints: BoxConstraints(
+        minHeight: size.height - 700,
+        minWidth: size.width,
+      ),
+      child: MyExpansionTile(
+          key: Key(index.toString()),
+          initiallyExpanded: index == selected,
+          onExpansionChanged: (newstate) {
+            if (newstate) {
+              setState(() {
+                const Duration(seconds: 20000);
 
-              selected = index;
-            });
-          } else {
-            setState(() {
-              selected = -1;
-            });
-          }
-        },
-        sideContainer: Container(
-          color: Colors.primaries[random.nextInt(Colors.primaries.length)],
-          width: 10,
-          height: size.height * 0.067,
-        ),
-        image: Image.asset(r'assets/images/selecteditem2.png'),
-        tileText: const Text('DEWTWETA'),
-        color: index % 2 == 0 ? Colors.white : Colors.grey.withOpacity(0.1),
-        child: Container(
-          height: 30,
-          width: 30,
-          color: Colors.green,
-        ));
+                selected = index;
+              });
+            } else {
+              setState(() {
+                selected = -1;
+              });
+            }
+          },
+          sideContainer: Container(
+            color: tileColors[index],
+            width: 10,
+            height: size.height * 0.1 * 2,
+          ),
+          image: Image.asset(r'assets/images/selecteditem2.png'),
+          tileText: const Text('DEWTWETA'),
+          color: index % 2 == 0 ? Colors.white : Colors.grey.withOpacity(0.1),
+          child: Container(
+            height: size.height * 0.067,
+            width: size.width,
+            color: tileColors[index],
+          )),
+    );
   }
 }
 

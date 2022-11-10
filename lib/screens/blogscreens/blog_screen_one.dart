@@ -109,13 +109,13 @@ class _BlogScreenState extends State<BlogScreen> {
           Container(
             clipBehavior: Clip.hardEdge,
             width: size.width - size.width * 0.5,
-            height: size.height * 0.3,
+            height: size.height * 0.30,
             decoration: BoxDecoration(
                 color: Colors.grey.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(15)),
             child: Image.asset(
               r'assets/images/Mask group_01.png',
-              fit: BoxFit.cover,
+              fit: BoxFit.fill,
             ),
           ),
           Positioned(
@@ -129,7 +129,7 @@ class _BlogScreenState extends State<BlogScreen> {
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(8),
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -149,7 +149,7 @@ class _BlogScreenState extends State<BlogScreen> {
     );
   }
 
-  _favroiteBlogs() {
+  Widget _favroiteBlogs() {
     return ListView.separated(
       itemBuilder: _favoriteItemBuilder,
       separatorBuilder: (context, index) {
