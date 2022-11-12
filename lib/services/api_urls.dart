@@ -15,4 +15,7 @@ class ApiUrls {
 
   static const String endPointCalculator =
       'https://savvy.eigix.net/webservices/investment_calculator/';
+
+  static const String endPointGetAllSdgs =
+      'https://savvy.eigix.net/webservices/get_sdgs';
 }

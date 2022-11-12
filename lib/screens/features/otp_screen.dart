@@ -1,5 +1,6 @@
 import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
+import 'package:form_validator/form_validator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:savvy/common/widgets/custom_button.dart';
 import 'package:savvy/common/widgets/otp_screen_textfeild.dart';
@@ -140,26 +141,30 @@ class _OtpScreenState extends State<OtpScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Flexible(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Flexible(
-                      child: Text(
-                        'Email',
-                        style: textStyle(),
+                child: Form(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Flexible(
+                        child: Text(
+                          'Email',
+                          style: textStyle(),
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      height: size.height * 0.007,
-                    ),
-                    Flexible(
-                      child: OtpTextFeild(
-                        controller: _emailController,
-                        hintText: 'Enter Email',
-                        autofocus: false,
+                      SizedBox(
+                        height: size.height * 0.007,
                       ),
-                    )
-                  ],
+                      Flexible(
+                        child: OtpTextFeild(
+                          controller: _emailController,
+                          validator:
+                              ValidationBuilder().email().maxLength(50).build(),
+                          hintText: 'Enter Email',
+                          autofocus: false,
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
             ],

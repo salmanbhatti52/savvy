@@ -9,7 +9,7 @@ import 'package:savvy/models/create_user.dart';
 import 'package:savvy/screens/intro_page.dart';
 import 'package:savvy/screens/login_page.dart';
 import 'package:savvy/services/api_services.dart';
-
+import 'package:form_validator/form_validator.dart';
 import '../common/widgets/custom_button.dart';
 import '../common/widgets/text_feilds.dart';
 import '../utils/color_constants.dart';
@@ -169,7 +169,10 @@ class _SignUpPageState extends State<SignUpPage> {
                         child: SignUpPageTextFeild(
                             controller: _emailController,
                             hintText: 'email@example.com',
-                            validator: _emailValidate,
+                            validator: ValidationBuilder()
+                                .email()
+                                .maxLength(50)
+                                .build(),
                             autofocus: false,
                             labelText: '',
                             obscureText: false),
@@ -201,7 +204,10 @@ class _SignUpPageState extends State<SignUpPage> {
                         child: SignUpPageTextFeild(
                             controller: _passwordController,
                             hintText: 'Enter Passwored',
-                            validator: _passwordValidate,
+                            validator: ValidationBuilder()
+                                .minLength(5)
+                                .maxLength(50)
+                                .build(),
                             autofocus: false,
                             labelText: '',
                             obscureText: true),

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class MyExpansionTile extends StatelessWidget {
   const MyExpansionTile({
     Key? key,
-    required this.sideContainer,
+    this.sideContainer,
     required this.image,
     required this.tileText,
     this.dropDownButton,
@@ -14,7 +14,7 @@ class MyExpansionTile extends StatelessWidget {
     this.initiallyExpanded = false,
   }) : super(key: key);
 
-  final Widget sideContainer;
+  final Widget? sideContainer;
   final Widget image;
   final Widget tileText;
   final Widget? dropDownButton;
@@ -28,7 +28,7 @@ class MyExpansionTile extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Expanded(flex: 1, child: sideContainer),
+        //Expanded(flex: 1, child: sideContainer),
         Expanded(
             flex: 60,
             child: ExpansionTile(

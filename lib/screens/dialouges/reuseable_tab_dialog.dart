@@ -92,7 +92,9 @@ class _ReuseableTabDialogState extends State<ReuseableTabDialog>
                         ),
                       )
                     ],
-                  )),
+                  )
+                  
+                  ),
               SizedBox(
                 height: size.height * 0.008,
               ),

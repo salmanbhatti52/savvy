@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pie_chart/pie_chart.dart';
-import 'package:savvy/common/widgets/reuseabel_expansion_tile.dart';
+import 'package:savvy/common/widgets/reuseable_row.dart';
 import 'package:savvy/screens/post_page_view_screens/select_plan_screen.dart';
+import 'package:savvy/utils/dialog_const.dart';
+import 'package:savvy/utils/portfolio_screen_utils.dart';
 import '../../common/widgets/custom_button.dart';
 import '../../utils/color_constants.dart';
 
@@ -17,14 +19,32 @@ class PortFolioScreen extends StatefulWidget {
 class _PortFolioScreenState extends State<PortFolioScreen> {
   late Size size;
   int selected = 0;
+  int itemIndex = -1;
+  int sepratorIndex = 0;
 //Random random = Random();
   List<Color> tileColors = [
-    const Color(0xFF58E5AA),
-    const Color(0xFF325698),
+    DialogConst.firstColor,
+    DialogConst.secondColor,
+    DialogConst.thirdColor,
+    DialogConst.fourthColor,
+    DialogConst.fifthColor,
+    DialogConst.sixthColor,
+    DialogConst.seventhColor,
+    DialogConst.eighthColor,
+    DialogConst.ninthColor,
+    DialogConst.tenthColor,
+    DialogConst.eleventhColor,
+    DialogConst.twelthColor,
+    DialogConst.thirtenColor,
+    DialogConst.fourtenthColor,
   ];
+  PortfolioUtils portfolioUtils = PortfolioUtils();
+  List<String> leading = [];
 
   @override
   Widget build(BuildContext context) {
+    leading = portfolioUtils.tileImages;
+    //  print('build is Called');
     size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: _buildAppBar(),
@@ -80,11 +100,20 @@ class _PortFolioScreenState extends State<PortFolioScreen> {
               // key: Key('builder ${selected.toString()}'),
               itemBuilder: _itemBuilder,
               separatorBuilder: (context, index) {
-                return const SizedBox(
-                  height: 5,
-                );
+                if (itemIndex == index) {
+                  print("seprator index$index");
+                  return Container(
+                    height: 20,
+                    width: 100,
+                    color: tileColors[index],
+                  );
+                } else {
+                  return const Divider(
+                    height: 4,
+                  );
+                }
               },
-              itemCount: 2,
+              itemCount: leading.length,
             )),
         Flexible(flex: 1, child: acitionButton()),
       ],
@@ -163,146 +192,175 @@ class _PortFolioScreenState extends State<PortFolioScreen> {
     );
   }
 
-  Widget selectedList() {
-    return Column(
-      children: [
-        Flexible(
-          child: SingleChildScrollView(
-            child: MyExpansionTile(
-              sideContainer: Container(color: Colors.red),
-              image: Image.asset(r'assets/images/selecteditem2.png'),
-              tileText: const Text('Savvy App'),
-              color: Colors.grey[300],
-              child: Container(
-                color: Colors.orange,
-                height: 20,
-                width: 100,
-              ),
-            ),
-          ),
-        ),
-        Flexible(
-          child: SingleChildScrollView(
-            child: MyExpansionTile(
-              sideContainer: Container(
-                color: Colors.red,
-                height: 60,
-              ),
-              image: Image.asset(r'assets/images/selecteditem2.png'),
-              tileText: const Text('Savvy App'),
-              color: Colors.grey[300],
-              child: Container(
-                color: Colors.orange,
-                height: 20,
-                width: 100,
-              ),
-            ),
-          ),
-        ),
-        const SizedBox(
-          height: 5,
-        ),
-        Flexible(
-          child: SingleChildScrollView(
-            child: MyExpansionTile(
-              sideContainer: Container(color: Colors.red),
-              image: Image.asset(r'assets/images/selecteditem2.png'),
-              tileText: const Text('Savvy App'),
-              color: Colors.grey[300],
-              child: Container(
-                color: Colors.orange,
-                height: 20,
-                width: 100,
-              ),
-            ),
-          ),
-        ),
-        Flexible(
-          child: SingleChildScrollView(
-            child: MyExpansionTile(
-              sideContainer: Container(color: Colors.red),
-              image: Image.asset(r'assets/images/selecteditem2.png'),
-              tileText: const Text('Savvy App'),
-              color: Colors.grey[300],
-              child: Container(
-                color: Colors.orange,
-                height: 20,
-                width: 100,
-              ),
-            ),
-          ),
-        ),
-        Flexible(
-          child: SingleChildScrollView(
-            child: MyExpansionTile(
-              sideContainer: Container(color: Colors.red),
-              image: Image.asset(r'assets/images/selecteditem2.png'),
-              tileText: const Text('Savvy App'),
-              color: Colors.grey[300],
-              child: Container(
-                color: Colors.orange,
-                height: 20,
-                width: 100,
-              ),
-            ),
-          ),
-        ),
-        Flexible(
-          child: SingleChildScrollView(
-            child: MyExpansionTile(
-              sideContainer: Container(color: Colors.red),
-              image: Image.asset(r'assets/images/selecteditem2.png'),
-              tileText: const Text('Savvy App'),
-              color: Colors.grey[300],
-              child: Container(
-                color: Colors.orange,
-                height: 20,
-                width: 100,
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
+  // Widget selectedList() {
+  //   return Column(
+  //     children: [
+  //       Flexible(
+  //         child: SingleChildScrollView(
+  //           child: MyExpansionTile(
+  //             sideContainer: Container(color: Colors.red),
+  //             image: Image.asset(r'assets/images/selecteditem2.png'),
+  //             tileText: const Text('Savvy App'),
+  //             color: Colors.grey[300],
+  //             child: Container(
+  //               color: Colors.orange,
+  //               height: 20,
+  //               width: 100,
+  //             ),
+  //           ),
+  //         ),
+  //       ),
+  //       Flexible(
+  //         child: SingleChildScrollView(
+  //           child: MyExpansionTile(
+  //             sideContainer: Container(
+  //               color: Colors.red,
+  //               height: 60,
+  //             ),
+  //             image: Image.asset(r'assets/images/selecteditem2.png'),
+  //             tileText: const Text('Savvy App'),
+  //             color: Colors.grey[300],
+  //             child: Container(
+  //               color: Colors.orange,
+  //               height: 20,
+  //               width: 100,
+  //             ),
+  //           ),
+  //         ),
+  //       ),
+  //       const SizedBox(
+  //         height: 5,
+  //       ),
+  //       Flexible(
+  //         child: SingleChildScrollView(
+  //           child: MyExpansionTile(
+  //             sideContainer: Container(color: Colors.red),
+  //             image: Image.asset(r'assets/images/selecteditem2.png'),
+  //             tileText: const Text('Savvy App'),
+  //             color: Colors.grey[300],
+  //             child: Container(
+  //               color: Colors.orange,
+  //               height: 20,
+  //               width: 100,
+  //             ),
+  //           ),
+  //         ),
+  //       ),
+  //       Flexible(
+  //         child: SingleChildScrollView(
+  //           child: MyExpansionTile(
+  //             sideContainer: Container(color: Colors.red),
+  //             image: Image.asset(r'assets/images/selecteditem2.png'),
+  //             tileText: const Text('Savvy App'),
+  //             color: Colors.grey[300],
+  //             child: Container(
+  //               color: Colors.orange,
+  //               height: 20,
+  //               width: 100,
+  //             ),
+  //           ),
+  //         ),
+  //       ),
+  //       Flexible(
+  //         child: SingleChildScrollView(
+  //           child: MyExpansionTile(
+  //             sideContainer: Container(color: Colors.red),
+  //             image: Image.asset(r'assets/images/selecteditem2.png'),
+  //             tileText: const Text('Savvy App'),
+  //             color: Colors.grey[300],
+  //             child: Container(
+  //               color: Colors.orange,
+  //               height: 20,
+  //               width: 100,
+  //             ),
+  //           ),
+  //         ),
+  //       ),
+  //       Flexible(
+  //         child: SingleChildScrollView(
+  //           child: MyExpansionTile(
+  //             sideContainer: Container(color: Colors.red),
+  //             image: Image.asset(r'assets/images/selecteditem2.png'),
+  //             tileText: const Text('Savvy App'),
+  //             color: Colors.grey[300],
+  //             child: Container(
+  //               color: Colors.orange,
+  //               height: 20,
+  //               width: 100,
+  //             ),
+  //           ),
+  //         ),
+  //       ),
+  //     ],
+  //   );
+  // }
 
   Widget _itemBuilder(BuildContext context, int index) {
-    return Container(
-      color: Colors.green,
-      height: size.height * 0.030,
-      constraints: BoxConstraints(
-        minHeight: size.height - 700,
-        minWidth: size.width,
-      ),
-      child: MyExpansionTile(
-          key: Key(index.toString()),
-          initiallyExpanded: index == selected,
-          onExpansionChanged: (newstate) {
-            if (newstate) {
-              setState(() {
-                const Duration(seconds: 20000);
-
-                selected = index;
-              });
-            } else {
-              setState(() {
-                selected = -1;
-              });
-            }
-          },
+    return SizedBox(
+      height: size.height * 0.050,
+      width: size.width,
+      child: ReuseableRow(
+          color: Colors.blue,
           sideContainer: Container(
             color: tileColors[index],
-            width: 10,
-            height: size.height * 0.1 * 2,
+            width: 20,
           ),
-          image: Image.asset(r'assets/images/selecteditem2.png'),
-          tileText: const Text('DEWTWETA'),
-          color: index % 2 == 0 ? Colors.white : Colors.grey.withOpacity(0.1),
-          child: Container(
-            height: size.height * 0.067,
-            width: size.width,
-            color: tileColors[index],
-          )),
+          image: Image.asset(leading[index]),
+          tileText: const Text('No Poverty'),
+          dropDownButton: GestureDetector(
+              onTap: () {
+                debugPrint('ontap');
+                setState(() {
+                  itemIndex = index;
+                });
+
+                print(itemIndex.toString());
+              },
+              child: const Icon(
+                  Icons.ios_share_rounded)) // child: MyExpansionTile(
+          //     key: Key(index.toString()),
+          //     initiallyExpanded: index == selected,
+          //     onExpansionChanged: (newstate) {
+          //       if (newstate) {
+          //         setState(() {
+          //           const Duration(seconds: 20000);
+
+          //           selected = index;
+          //         });
+          //       } else {
+          //         setState(() {
+          //           selected = -1;
+          //         });
+          //       }
+          //     },
+          //     // sideContainer: const SizedBox(),
+          //     image: Container(
+          //       color: Colors.purple,
+          //       width: 40,
+          //       child: Row(
+          //         mainAxisAlignment: MainAxisAlignment.start,
+          //         children: [
+          //           Expanded(
+          //             child: Container(
+          //               color: Colors.red,
+          //               width: 10,
+          //             ),
+          //           ),
+          //           const Icon(
+          //             Icons.add,
+          //             size: 10,
+          //           )
+          //         ],
+          //       ),
+          //     ),
+          //     tileText: const Text('DEWTWETA'),
+          //     color: index % 2 == 0 ? Colors.white : Colors.grey.withOpacity(0.1),
+          //     child: Container(
+          //       height: size.height * 0.067,
+          //       width: size.width,
+          //       color: tileColors[index],
+          //     )),
+          ),
     );
   }
 }

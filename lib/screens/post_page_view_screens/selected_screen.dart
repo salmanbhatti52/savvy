@@ -1,10 +1,13 @@
 import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'package:savvy/common/widgets/custom_button.dart';
 import 'package:savvy/common/widgets/reuseable_row.dart';
+import 'package:savvy/controllers/screen_six_controller/selected_sds_list.dart';
+import 'package:savvy/models/sdgs_models/sdgs_list.dart';
 import 'package:savvy/screens/post_page_view_screens/select_plan_screen.dart';
 import 'package:savvy/utils/color_constants.dart';
 
@@ -17,9 +20,18 @@ class SelectedScreen extends StatefulWidget {
 }
 
 class _SelectedScreenState extends State<SelectedScreen> {
+  List<SdgsList> list = [];
+  final getList = Get.put(SdgsListController());
   var dropDownFlex = 0;
   bool showDropDown = false;
   late Size size;
+
+  @override
+  void initState() {
+    super.initState();
+    list = getList.selectedSds;
+  }
+
   @override
   Widget build(BuildContext context) {
     size = MediaQuery.of(context).size;

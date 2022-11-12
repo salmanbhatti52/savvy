@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart';
 import 'package:savvy/models/create_user.dart';
 import 'package:savvy/models/login_user.dart';
+import 'package:savvy/models/sdgs_models/sdgs_list.dart';
 import 'package:savvy/models/user.dart';
 import 'package:savvy/services/api_urls.dart';
 
@@ -71,5 +72,21 @@ class ApiServices {
     // debugPrint(withSavy);
 
     return response;
+  }
+
+  Future<List<SdgsList>> getAllSdgs() async {
+    Response response = await get(Uri.parse(ApiUrls.endPointGetAllSdgs));
+
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
+      List<SdgsList> list = [];
+      for (int i = 0; i <= 16; i++) {
+        var item = SdgsList.fromMap(data["data"][i]);
+        list.add(item);
+      }
+      return list;
+    } else {
+      throw Exception();
+    }
   }
 }

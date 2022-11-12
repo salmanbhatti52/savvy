@@ -330,7 +330,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   String? _passwordValidate(String? value) {
-    if (value!.isEmpty && value.length > 8) {
+    if (value!.isEmpty && value.length < 5) {
       return 'please enter password';
     }
     return null;

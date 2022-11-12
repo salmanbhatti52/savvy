@@ -1,15 +1,19 @@
 import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:savvy/controllers/screen_six_controller/selected_sds_list.dart';
 import 'package:savvy/screens/dialouges/dialog_controller/detail_dialogs.dart';
+import 'package:savvy/screens/dialouges/dialog_controller/info_dialogs.dart';
 import 'package:savvy/screens/dialouges/info_dialog.dart';
 import 'package:savvy/screens/dialouges/reuseabel_info_dialog.dart';
 import 'package:savvy/screens/post_page_view_screens/chosed_goals_Screen.dart';
+import 'package:savvy/services/api_services.dart';
+import 'package:savvy/utils/pgviewscreensixutils/Sc_six_utils.dart';
 
 import '../../common/widgets/custom_button.dart';
+import '../../models/sdgs_models/sdgs_list.dart';
 import '../../utils/color_constants.dart';
-import '../../utils/dialog_const.dart';
-import '../dialouges/detail_dialog.dart';
 import '../post_page_view_screens/selected_screen.dart';
 
 class PageViewScreenSix extends StatefulWidget {
@@ -20,14 +24,34 @@ class PageViewScreenSix extends StatefulWidget {
 }
 
 class _PageViewScreenSixState extends State<PageViewScreenSix> {
-  int itemsAdded = 0;
-  bool isNotUndo = true;
+  // int itemsAdded = 0;
+  //bool isNotUndo = true;
   InfoDialog infoDialog = InfoDialog();
   DetailDialogs detailDialogs = DetailDialogs();
+  InfoDialogs info = InfoDialogs(detailDialogs: DetailDialogs());
+  List<ReuseableDialog> infoDialogs = [];
+  int itemCount = 0;
+  List<SdgsList> list = [];
+  ScSixUtils isDragged = ScSixUtils();
+  final ApiServices _apiServices = ApiServices();
+  List<SdgsList> selectedList = [];
+  final sdgListController = Get.put(SdgsListController());
+
+  @override
+  void initState() {
+    // print('init state is called');
+    super.initState();
+    getSdgs();
+  }
+
+  getSdgs() async {
+    list = await _apiServices.getAllSdgs();
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-
+    infoDialogs = info.getInfoDialogList(context, size);
     return ColorfulSafeArea(
       color: Colors.white,
       child: Scaffold(
@@ -144,594 +168,663 @@ class _PageViewScreenSixState extends State<PageViewScreenSix> {
             children: [
               Flexible(
                   flex: 1,
-                  child: InkWell(
-                      onTap: () {
-                        showDialog(
-                          context: context,
-                          builder: (context) {
-                            return ReuseableDialog(
-                                onTapClose: () {
-                                  Navigator.pop(context);
-                                },
-                                onButtonTap: () {
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return DetailDialog()
-                                          .detailDialog(size, context);
-                                    },
-                                  );
-                                },
-                                bgColor: DilogConst.firstColor,
-                                goalNumber: '1',
-                                goalTitle: 'Goal 1',
-                                goalDescription:
-                                    'End poverty in all its forms everywhere.',
-                                goalDetail:
-                                    'Today, 9.2% of the world survives on less than 1.90 a day, compared to nearly 36% in 1990.');
-                          },
-                        );
-                      },
-                      child: Card(
-                          elevation: elevation,
-                          child:
-                              Image.asset(r'assets/images/pgsixcompnent1.png'))
+                  child: Draggable(
+                    onDragCompleted: () {
+                      setState(() {
+                        isDragged.goal1 = false;
+                        itemCount++;
+                        sdgListController.addSdgs(list[0]);
 
-                      // :
+                        //  print('onDragged Completed');
+                      });
+                    },
+                    feedback: Card(
+                      child: Image.asset(r'assets/images/pgsixcompnent1.png'),
+                    ),
+                    child: InkWell(
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return infoDialogs[0];
+                            },
+                          );
+                        },
+                        child: Card(
+                            elevation: elevation,
+                            child: isDragged.goal1
+                                ? Image.asset(
+                                    r'assets/images/pgsixcompnent1.png')
+                                : InkWell(
+                                    onTap: () => setState(() {
+                                          isDragged.goal1 = true;
+                                          itemCount--;
+                                          sdgListController.removeSds(list[0]);
+                                        }),
+                                    child: const Icon(Icons.undo)))
+
+                        // :
+                        ),
+                  )),
+              Flexible(
+                  child: Draggable(
+                onDragCompleted: () {
+                  setState(() {
+                    isDragged.goal2 = false;
+                    itemCount++;
+
+                    //  print('onDragged Completed');
+                  });
+                },
+                feedback: Card(
+                  child: Image.asset(r'assets/images/pgsixcompnent2.png'),
+                ),
+                child: InkWell(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return infoDialogs[1];
+                        },
+                      );
+                    },
+                    child: Card(
+                        elevation: elevation,
+                        child: isDragged.goal2
+                            ? Image.asset(r'assets/images/pgsixcompnent2.png')
+                            : InkWell(
+                                onTap: () => setState(() {
+                                      isDragged.goal2 = true;
+                                      itemCount--;
+                                    }),
+                                child: const Icon(Icons.undo)))
+
+                    // :
+                    ),
+              )),
+              Flexible(
+                  child: Draggable(
+                onDragCompleted: () {
+                  setState(() {
+                    isDragged.goal3 = false;
+                    itemCount++;
+                  });
+                },
+                feedback: Card(
+                  child: Image.asset(r'assets/images/pgsixcompnent3.png'),
+                ),
+                child: InkWell(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return infoDialogs[2];
+                        },
+                      );
+                    },
+                    child: Card(
+                        elevation: elevation,
+                        child: isDragged.goal3
+                            ? Image.asset(r'assets/images/pgsixcompnent3.png')
+                            : InkWell(
+                                onTap: () => setState(() {
+                                      isDragged.goal3 = true;
+                                      itemCount--;
+                                    }),
+                                child: const Icon(Icons.undo)))
+
+                    // :
+                    ),
+              )),
+            ],
+          ),
+        ),
+        SizedBox(
+          height: space,
+        ),
+        Expanded(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Flexible(
+                  child: Draggable(
+                onDragCompleted: () {
+                  setState(() {
+                    isDragged.goal4 = false;
+                    itemCount++;
+                  });
+                },
+                feedback: Card(
+                  child: Image.asset(r'assets/images/pgsixcompnent4.png'),
+                ),
+                child: InkWell(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return infoDialogs[3];
+                        },
+                      );
+                    },
+                    child: Card(
+                        elevation: elevation,
+                        child: isDragged.goal4
+                            ? Image.asset(r'assets/images/pgsixcompnent4.png')
+                            : InkWell(
+                                onTap: () => setState(() {
+                                      isDragged.goal4 = true;
+                                      itemCount--;
+                                    }),
+                                child: const Icon(Icons.undo)))
+
+                    // :
+                    ),
+              )),
+              Flexible(
+                  child: Draggable(
+                onDragCompleted: () {
+                  setState(() {
+                    isDragged.goal5 = false;
+                    itemCount++;
+                  });
+                },
+                feedback: Card(
+                  child: Image.asset(r'assets/images/pgsixcompnent5.png'),
+                ),
+                child: InkWell(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return infoDialogs[4];
+                        },
+                      );
+                    },
+                    child: Card(
+                        elevation: elevation,
+                        child: isDragged.goal5
+                            ? Image.asset(r'assets/images/pgsixcompnent5.png')
+                            : InkWell(
+                                onTap: () => setState(() {
+                                      isDragged.goal5 = true;
+                                      itemCount--;
+                                    }),
+                                child: const Icon(Icons.undo)))),
+              )),
+              Flexible(
+                  child: Draggable(
+                onDragCompleted: () {
+                  setState(() {
+                    isDragged.goal6 = false;
+                    itemCount++;
+                  });
+                },
+                feedback: Card(
+                  child: Image.asset(r'assets/images/pgsixcompnent6.png'),
+                ),
+                child: InkWell(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return infoDialogs[5];
+                        },
+                      );
+                    },
+                    child: Card(
+                        elevation: elevation,
+                        child: isDragged.goal6
+                            ? Image.asset(r'assets/images/pgsixcompnent6.png')
+                            : InkWell(
+                                onTap: () => setState(() {
+                                      isDragged.goal6 = true;
+                                      itemCount--;
+                                    }),
+                                child: const Icon(Icons.undo)))
+
+                    // :
+                    ),
+              )),
+            ],
+          ),
+        ),
+        SizedBox(
+          height: space,
+        ),
+        Expanded(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Flexible(
+                  child: Draggable(
+                onDragCompleted: () {
+                  setState(() {
+                    isDragged.goal7 = false;
+                    itemCount++;
+                  });
+                },
+                feedback: Card(
+                  child: Image.asset(r'assets/images/pgcomponent7.png'),
+                ),
+                child: InkWell(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return infoDialogs[6];
+                        },
+                      );
+                    },
+                    child: Card(
+                        elevation: elevation,
+                        child: isDragged.goal7
+                            ? Image.asset(r'assets/images/pgcomponent7.png')
+                            : InkWell(
+                                onTap: () => setState(() {
+                                      isDragged.goal7 = true;
+                                      itemCount--;
+                                    }),
+                                child: const Icon(Icons.undo)))
+
+                    // :
+                    ),
+              )),
+              Flexible(
+                  child: Draggable(
+                onDragCompleted: () {
+                  setState(() {
+                    isDragged.goal8 = false;
+                    itemCount++;
+                  });
+                },
+                feedback: Card(
+                  child: Image.asset(r'assets/images/pgcomponent8.png'),
+                ),
+                child: InkWell(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return infoDialogs[7];
+                        },
+                      );
+                    },
+                    child: Card(
+                        elevation: elevation,
+                        child: isDragged.goal8
+                            ? Image.asset(r'assets/images/pgcomponent8.png')
+                            : InkWell(
+                                onTap: () => setState(() {
+                                      isDragged.goal8 = true;
+                                      itemCount--;
+                                    }),
+                                child: const Icon(Icons.undo)))
+
+                    // :
+                    ),
+              )),
+              Flexible(
+                  child: Draggable(
+                onDragCompleted: () {
+                  setState(() {
+                    isDragged.goal9 = false;
+                    itemCount++;
+                  });
+                },
+                feedback: Card(
+                  child: Image.asset(r'assets/images/pgcomponent9.png'),
+                ),
+                child: InkWell(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return infoDialogs[8];
+                        },
+                      );
+                    },
+                    child: Card(
+                        elevation: elevation,
+                        child: isDragged.goal9
+                            ? Image.asset(r'assets/images/pgcomponent9.png')
+                            : InkWell(
+                                onTap: () => setState(() {
+                                      isDragged.goal9 = true;
+                                      itemCount--;
+                                    }),
+                                child: const Icon(Icons.undo)))
+
+                    // :
+                    ),
+              )),
+            ],
+          ),
+        ),
+        SizedBox(
+          height: space,
+        ),
+        Expanded(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Flexible(
+                  child: Draggable(
+                onDragCompleted: () {
+                  setState(() {
+                    isDragged.goal10 = false;
+                    itemCount++;
+                  });
+                },
+                feedback: Card(
+                  child: Image.asset(r'assets/images/pgcomponent10.png'),
+                ),
+                child: InkWell(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return infoDialogs[9];
+                        },
+                      );
+                    },
+                    child: Card(
+                        elevation: elevation,
+                        child: isDragged.goal10
+                            ? Image.asset(r'assets/images/pgcomponent10.png')
+                            : InkWell(
+                                onTap: () => setState(() {
+                                      isDragged.goal10 = true;
+                                      itemCount--;
+                                    }),
+                                child: const Icon(Icons.undo)))
+
+                    // :
+                    ),
+              )),
+              Flexible(
+                  child: Draggable(
+                onDragCompleted: () {
+                  setState(() {
+                    isDragged.goal11 = false;
+                    itemCount++;
+                  });
+                },
+                feedback: Card(
+                  child: Image.asset(r'assets/images/pgcomponent11.png'),
+                ),
+                child: InkWell(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return infoDialogs[10];
+                        },
+                      );
+                    },
+                    child: Card(
+                        elevation: elevation,
+                        child: isDragged.goal11
+                            ? Image.asset(r'assets/images/pgcomponent11.png')
+                            : InkWell(
+                                onTap: () => setState(() {
+                                      isDragged.goal11 = true;
+                                      itemCount--;
+                                    }),
+                                child: const Icon(Icons.undo)))
+
+                    // :
+                    ),
+              )),
+              Flexible(
+                  child: Draggable(
+                onDragCompleted: () {
+                  setState(() {
+                    isDragged.goal12 = false;
+                    itemCount++;
+                  });
+                },
+                feedback: Card(
+                  child: Image.asset(r'assets/images/pgcomponent12.png'),
+                ),
+                child: InkWell(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return infoDialogs[11];
+                        },
+                      );
+                    },
+                    child: Card(
+                        elevation: elevation,
+                        child: isDragged.goal12
+                            ? Image.asset(r'assets/images/pgcomponent12.png')
+                            : InkWell(
+                                onTap: () => setState(() {
+                                      isDragged.goal12 = true;
+                                      itemCount--;
+                                    }),
+                                child: const Icon(Icons.undo)))
+
+                    // :
+                    ),
+              )),
+            ],
+          ),
+        ),
+        SizedBox(
+          height: space,
+        ),
+        Expanded(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Flexible(
+                  child: Draggable(
+                onDragCompleted: () {
+                  setState(() {
+                    isDragged.goal13 = false;
+                    itemCount++;
+                  });
+                },
+                feedback: Card(
+                  child: Image.asset(r'assets/images/pgcomponent13.png'),
+                ),
+                child: InkWell(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return infoDialogs[12];
+                        },
+                      );
+                    },
+                    child: Card(
+                        elevation: elevation,
+                        child: isDragged.goal13
+                            ? Image.asset(r'assets/images/pgcomponent13.png')
+                            : InkWell(
+                                onTap: () => setState(() {
+                                      isDragged.goal13 = true;
+                                      itemCount--;
+                                    }),
+                                child: const Icon(Icons.undo)))
+
+                    // :
+                    ),
+              )),
+              Flexible(
+                  child: Draggable(
+                onDragCompleted: () {
+                  setState(() {
+                    isDragged.goal14 = false;
+                    itemCount++;
+                  });
+                },
+                feedback: Card(
+                  child: Image.asset(r'assets/images/pgcomponent14.png'),
+                ),
+                child: InkWell(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return infoDialogs[13];
+                        },
+                      );
+                    },
+                    child: Card(
+                        elevation: elevation,
+                        child: isDragged.goal14
+                            ? Image.asset(r'assets/images/pgcomponent14.png')
+                            : InkWell(
+                                onTap: () => setState(() {
+                                      isDragged.goal14 = true;
+                                      itemCount--;
+                                    }),
+                                child: const Icon(Icons.undo)))
+
+                    // :
+                    ),
+              )),
+              Flexible(
+                  child: Draggable(
+                onDragCompleted: () {
+                  setState(() {
+                    isDragged.goal15 = false;
+                    itemCount++;
+                  });
+                },
+                feedback: Card(
+                  child: Image.asset(r'assets/images/pgcomponent15.png'),
+                ),
+                child: InkWell(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return infoDialogs[14];
+                        },
+                      );
+                    },
+                    child: Card(
+                        elevation: elevation,
+                        child: isDragged.goal15
+                            ? Image.asset(r'assets/images/pgcomponent15.png')
+                            : InkWell(
+                                onTap: () => setState(() {
+                                      isDragged.goal15 = true;
+                                      itemCount--;
+                                    }),
+                                child: const Icon(Icons.undo)))
+
+                    // :
+                    ),
+              )),
+            ],
+          ),
+        ),
+        SizedBox(
+          height: space,
+        ),
+        Expanded(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Flexible(
+                  child: Draggable(
+                onDragCompleted: () {
+                  setState(() {
+                    isDragged.goal16 = false;
+                    itemCount++;
+                  });
+                },
+                feedback: Card(
+                  child: Image.asset(r'assets/images/pgcomponent16.png'),
+                ),
+                child: InkWell(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return infoDialogs[15];
+                        },
+                      );
+                    },
+                    child: Card(
+                        elevation: elevation,
+                        child: isDragged.goal16
+                            ? Image.asset(r'assets/images/pgcomponent16.png')
+                            : InkWell(
+                                onTap: () => setState(() {
+                                      isDragged.goal16 = true;
+                                      itemCount--;
+                                    }),
+                                child: const Icon(Icons.undo)))
+
+                    // :
+                    ),
+              )),
+              Flexible(
+                  child: Draggable(
+                onDragCompleted: () {
+                  setState(() {
+                    isDragged.goal17 = false;
+                    itemCount++;
+                  });
+                },
+                feedback: Card(
+                  child: Image.asset(r'assets/images/pgcomponent17.png'),
+                ),
+                child: InkWell(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return infoDialogs[16];
+                        },
+                      );
+                    },
+                    child: Card(
+                        elevation: elevation,
+                        child: isDragged.goal17
+                            ? Image.asset(r'assets/images/pgcomponent17.png')
+                            : InkWell(
+                                onTap: () => setState(() {
+                                      isDragged.goal17 = true;
+                                      itemCount--;
+                                    }),
+                                child: const Icon(Icons.undo)))
+
+                    // :
+                    ),
+              )),
+              Flexible(child: DragTarget(
+                builder: (context, candidateData, rejectedData) {
+                  return Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      GestureDetector(
+                          onTap: (() => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    const ChoosedGoalsScreen(),
+                              ))),
+                          child:
+                              Image.asset(r'assets/images/pgviewbasket.png')),
+                      Positioned(
+                          // top: 30,
+                          // left: 0,
+                          child: Text(
+                        itemCount.toString(),
+                        style: GoogleFonts.lato(
+                            fontSize: 24, fontWeight: FontWeight.bold),
                       )),
-              Flexible(
-                  child: InkWell(
-                onTap: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return ReuseableDialog(
-                        onButtonTap: () {
-                          showDialog(
-                            context: context,
-                            builder: (context) {
-                              return detailDialogs.goal2dialog();
-                            },
-                          );
-                        },
-                        onTapClose: () {
-                          Navigator.pop(context);
-                        },
-                        bgColor: DilogConst.secondColor,
-                        goalDescription:
-                            'End hunger, achieve food security and improved nutrition and promote sustainable agriculture.',
-                        goalDetail:
-                            'In 2020, about 829 million people globally were undernourished, it represents 9.9% of the global population.',
-                        goalNumber: '2',
-                        goalTitle: 'Goal 2',
-                      );
-                    },
+                    ],
                   );
                 },
-                child: Card(
-                    elevation: elevation,
-                    child: Image.asset(r'assets/images/pgsixcompnent2.png')),
               )),
-              Flexible(
-                  child: InkWell(
-                onTap: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return ReuseableDialog(
-                        onButtonTap: () {
-                          showDialog(
-                            context: context,
-                            builder: (context) {
-                              return detailDialogs.goal3Dialog();
-                            },
-                          );
-                        },
-                        onTapClose: () {
-                          Navigator.pop(context);
-                        },
-                        bgColor: DilogConst.thirdColor,
-                        goalDescription:
-                            'Ensure healthy lives and promote well-being for all at all ages.',
-                        goalDetail:
-                            ''' Half of the world’s population lacks access to essential health services. 5.7 million people in low and middle-income countries die each year from poor quality healthcare, and 2.9 million people die from being unable to access care. ''',
-                        goalNumber: '3',
-                        goalTitle: 'Goal 3',
-                      );
-                    },
-                  );
-                },
-                child: Card(
-                    elevation: elevation,
-                    child: Image.asset(r'assets/images/pgsixcompnent3.png')),
-              )),
-            ],
-          ),
-        ),
-        SizedBox(
-          height: space,
-        ),
-        Expanded(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Flexible(
-                  child: InkWell(
-                onTap: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return ReuseableDialog(
-                        onButtonTap: () {
-                          showDialog(
-                            context: context,
-                            builder: (context) {
-                              return detailDialogs.goal4Dialog();
-                            },
-                          );
-                        },
-                        onTapClose: () {
-                          Navigator.pop(context);
-                        },
-                        bgColor: DilogConst.fourthColor,
-                        goalDescription: '''Ensure inclusive and equitable
-quality education and promote
-lifelong learning opportunities
-for all.''',
-                        goalDetail:
-                            '''More than 72 million children of primary education age are not in school and 759 million adults are illiterate.''',
-                        goalNumber: '4',
-                        goalTitle: 'Goal 4',
-                      );
-                    },
-                  );
-                },
-                child: Card(
-                    elevation: elevation,
-                    child: Image.asset(r'assets/images/pgsixcompnent4.png')),
-              )),
-              Flexible(
-                  child: InkWell(
-                onTap: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return ReuseableDialog(
-                        onButtonTap: () {
-                          showDialog(
-                            context: context,
-                            builder: (context) {
-                              return detailDialogs.goal5Dialog();
-                            },
-                          );
-                        },
-                        onTapClose: () {
-                          Navigator.pop(context);
-                        },
-                        bgColor: DilogConst.fifthColor,
-                        goalDescription:
-                            'Achieve gender equality and empower all women and girls.',
-                        goalDetail:
-                            'Women globally earn around 37% less than men in similar roles.',
-                        goalNumber: '5',
-                        goalTitle: 'Goal 5',
-                      );
-                    },
-                  );
-                },
-                child: Card(
-                    elevation: elevation,
-                    child: Image.asset(r'assets/images/pgsixcompnent5.png')),
-              )),
-              Flexible(
-                  child: InkWell(
-                onTap: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return ReuseableDialog(
-                        onButtonTap: () {
-                          showDialog(
-                            context: context,
-                            builder: (context) {
-                              return detailDialogs.goal6Dialog();
-                            },
-                          );
-                        },
-                        onTapClose: () {
-                          Navigator.pop(context);
-                        },
-                        bgColor: DilogConst.sixthColor,
-                        goalDescription:
-                            'Ensure availability and sustainable management of water and sanitation for all.',
-                        goalDetail:
-                            '2 billion people lack access to safely managed drinking water at home. Of those, 1.2 billion people have basic drinking water service.',
-                        goalNumber: '6',
-                        goalTitle: 'Goal 6',
-                      );
-                    },
-                  );
-                },
-                child: Card(
-                    elevation: elevation,
-                    child: Image.asset(r'assets/images/pgsixcompnent6.png')),
-              )),
-            ],
-          ),
-        ),
-        SizedBox(
-          height: space,
-        ),
-        Expanded(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Flexible(
-                  child: InkWell(
-                onTap: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return ReuseableDialog(
-                        onTapClose: () {
-                          Navigator.pop(context);
-                        },
-                        bgColor: DilogConst.seventhColor,
-                        goalDescription: '''Ensure access to affordable,
-reliable, sustainable and modern energy for all.''',
-                        goalDetail:
-                            'Nearly 789 million lacked access to electricity in 2018. Even more, 2.8 billion lack access to clean cooking fuels and technologies which contributes to respiratory illness and other diseases.',
-                        goalNumber: '7',
-                        goalTitle: 'Goal 7',
-                      );
-                    },
-                  );
-                },
-                child: Card(
-                    elevation: elevation,
-                    child: Image.asset(r'assets/images/pgcomponent7.png')),
-              )),
-              Flexible(
-                  child: InkWell(
-                onTap: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return ReuseableDialog(
-                        onTapClose: () {
-                          Navigator.pop(context);
-                        },
-                        bgColor: DilogConst.eighthColor,
-                        goalDescription: '''Promote sustained, inclusive
-and sustainable economic 
-growth, full and productive 
-employment and decent work
-for all.''',
-                        goalDetail:
-                            'Globally, 61per cent of all workers were engaged in informal employment in 2016. Excluding the agricultural sector, 51per cent of all workers fell into this employment category.',
-                        goalNumber: '8',
-                        goalTitle: 'Goal 8',
-                      );
-                    },
-                  );
-                },
-                child: Card(
-                    elevation: elevation,
-                    child: Image.asset(r'assets/images/pgcomponent8.png')),
-              )),
-              Flexible(
-                  child: InkWell(
-                onTap: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return ReuseableDialog(
-                        onTapClose: () {
-                          Navigator.pop(context);
-                        },
-                        bgColor: DilogConst.ninthColor,
-                        goalDescription: '''Build resilient infrastructure,
-promote inclusive and 
-sustainable industrialization 
-and foster innovation.''',
-                        goalDetail:
-                            'Globally, 840 million people live more than 2 kilometers from all-weather roads, 1 billion people lack electricity, and 4 billion people lack Internet access.',
-                        goalNumber: '9',
-                        goalTitle: 'Goal 9',
-                      );
-                    },
-                  );
-                },
-                child: Card(
-                    elevation: elevation,
-                    child: Image.asset(r'assets/images/pgcomponent9.png')),
-              )),
-            ],
-          ),
-        ),
-        SizedBox(
-          height: space,
-        ),
-        Expanded(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Flexible(
-                  child: InkWell(
-                onTap: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return ReuseableDialog(
-                        onTapClose: () {
-                          Navigator.pop(context);
-                        },
-                        bgColor: DilogConst.tenthColor,
-                        goalDescription:
-                            'Reduce inequality within and among countries.',
-                        goalDetail:
-                            'The poorest 50% of the population own just 2% of total net wealth. The middle 40% of people own 22% of total net wealth,The richest 10% of people own 76% of total net wealth.',
-                        goalNumber: '10',
-                        goalTitle: 'Goal 10',
-                      );
-                    },
-                  );
-                },
-                child: Card(
-                    elevation: elevation,
-                    child: Image.asset(r'assets/images/pgcomponent10.png')),
-              )),
-              Flexible(
-                  child: InkWell(
-                onTap: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return ReuseableDialog(
-                        onButtonTap: () {
-                          showDialog(
-                            context: context,
-                            builder: (context) {
-                              return detailDialogs.goal11Dialog();
-                            },
-                          );
-                        },
-                        onTapClose: () {
-                          Navigator.pop(context);
-                        },
-                        bgColor: DilogConst.eleventhColor,
-                        goalDescription: '''Make cities and human 
-settlements inclusive, safe,
-resilient and sustainable.''',
-                        goalDetail:
-                            '828 million people live in slums today and most them are found in Eastern and South-Eastern Asia. ',
-                        goalNumber: '11',
-                        goalTitle: 'Goal 11',
-                      );
-                    },
-                  );
-                },
-                child: Card(
-                    elevation: elevation,
-                    child: Image.asset(r'assets/images/pgcomponent11.png')),
-              )),
-              Flexible(
-                  child: InkWell(
-                onTap: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return ReuseableDialog(
-                        onButtonTap: () {
-                          showDialog(
-                            context: context,
-                            builder: (context) {
-                              return detailDialogs.goal12Dialog();
-                            },
-                          );
-                        },
-                        onTapClose: () {
-                          Navigator.pop(context);
-                        },
-                        bgColor: DilogConst.twelthColor,
-                        goalDescription:
-                            'Ensure sustainable consumption and production patterns.',
-                        goalDetail:
-                            'Each year, an estimated 1/3 of all food produced ends up rotting in bins or spoiling due to poor transportation and harvesting practices.',
-                        goalNumber: '12',
-                        goalTitle: 'Goal 12',
-                      );
-                    },
-                  );
-                },
-                child: Card(
-                    elevation: elevation,
-                    child: Image.asset(r'assets/images/pgcomponent12.png')),
-              )),
-            ],
-          ),
-        ),
-        SizedBox(
-          height: space,
-        ),
-        Expanded(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Flexible(
-                  child: InkWell(
-                onTap: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return ReuseableDialog(
-                        onButtonTap: () {
-                          showDialog(
-                            context: context,
-                            builder: (context) {
-                              return detailDialogs.goal13Dialog();
-                            },
-                          );
-                        },
-                        onTapClose: () {
-                          Navigator.pop(context);
-                        },
-                        bgColor: DilogConst.thirtenColor,
-                        goalDescription:
-                            'Take urgent action to combat climate change and its impacts.',
-                        goalDetail:
-                            'Climate change could increase the risk of hunger and malnutrition by up to 20% by 2050.',
-                        goalNumber: '13',
-                        goalTitle: 'Goal 13',
-                      );
-                    },
-                  );
-                },
-                child: Card(
-                    elevation: elevation,
-                    child: Image.asset(r'assets/images/pgcomponent13.png')),
-              )),
-              Flexible(
-                  child: InkWell(
-                onTap: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return ReuseableDialog(
-                        onButtonTap: () {
-                          showDialog(
-                            context: context,
-                            builder: (context) {
-                              return detailDialogs.goal14Dialog();
-                            },
-                          );
-                        },
-                        onTapClose: () {
-                          Navigator.pop(context);
-                        },
-                        bgColor: DilogConst.fourtenthColor,
-                        goalDescription: '''Conserve and sustainability use
-the oceans, seas and marine
-resources for sustainable
-development.''',
-                        goalDetail:
-                            'Over three billion people depend on marine and coastal biodiversity for their livelihoods.',
-                        goalNumber: '14',
-                        goalTitle: 'Goal 14',
-                      );
-                    },
-                  );
-                },
-                child: Card(
-                    elevation: elevation,
-                    child: Image.asset(r'assets/images/pgcomponent14.png')),
-              )),
-              Flexible(
-                  child: InkWell(
-                onTap: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return ReuseableDialog(
-                        onTapClose: () {
-                          Navigator.pop(context);
-                        },
-                        bgColor: DilogConst.fifteenthColor,
-                        goalDescription: '''Protect, restore and promote
-sustainable use of terrestial
-ecosystems, sustainably 
-manage forests, combat
-desertification, and halt and
-reverse
-land degradation and halt
-biodiversity loss.''',
-                        goalDetail:
-                            'Of the 8,300 animal breeds known, 8 per cent are extinct and 22 per cent are at risk of extinction. ',
-                        goalNumber: '15',
-                        goalTitle: 'Goal 15',
-                      );
-                    },
-                  );
-                },
-                child: Card(
-                    elevation: elevation,
-                    child: Image.asset(r'assets/images/pgcomponent15.png')),
-              )),
-            ],
-          ),
-        ),
-        SizedBox(
-          height: space,
-        ),
-        Expanded(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Flexible(
-                  child: InkWell(
-                onTap: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return ReuseableDialog(
-                        onTapClose: () {
-                          Navigator.pop(context);
-                        },
-                        bgColor: DilogConst.sixtenthColor,
-                        goalDescription: '''Promote peaceful and 
-inclusive societies for 
-sustainable development,
-provide access to justice for 
-all and build effective, 
-accountable and inclusive
-institutions at all levels.''',
-                        goalDetail: '',
-                        goalNumber: '16',
-                        goalTitle: 'Goal 16',
-                      );
-                    },
-                  );
-                },
-                child: Card(
-                    elevation: elevation,
-                    child: Image.asset(r'assets/images/pgcomponent16.png')),
-              )),
-              Flexible(
-                  child: InkWell(
-                onTap: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return ReuseableDialog(
-                        onTapClose: () {
-                          Navigator.pop(context);
-                        },
-                        bgColor: DilogConst.seventeenthColor,
-                        goalDescription: '''Strengthen the means of 
-implementation and revitalize
-the Global Partnership for
-Sustainable Development.''',
-                        goalDetail: '',
-                        goalNumber: '17',
-                        goalTitle: 'Goal 17',
-                      );
-                    },
-                  );
-                },
-                child: Card(
-                    elevation: elevation,
-                    child: Image.asset(r'assets/images/pgcomponent17.png')),
-              )),
-              Flexible(
-                  child: InkWell(
-                      onTap: () {
-                        Navigator.push(context, MaterialPageRoute(
-                          builder: (context) {
-                            return const ChoosedGoalsScreen();
-                          },
-                        ));
-                      },
-                      child: Image.asset(r'assets/images/pgviewbasket.png'))),
             ],
           ),
         ),

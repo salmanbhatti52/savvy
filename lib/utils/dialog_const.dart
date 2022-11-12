@@ -1,6 +1,6 @@
 import 'package:flutter/animation.dart';
 
-class DilogConst {
+class DialogConst {
   static const Color firstColor = Color(0xFFEB1A3F);
   static const Color secondColor = Color(0xFFE2A545);
   static const Color thirdColor = Color(0xFF49A14C);

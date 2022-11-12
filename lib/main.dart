@@ -4,7 +4,6 @@ import 'package:savvy/screens/blogscreens/blog_screen_one.dart';
 import 'package:savvy/screens/intro_page.dart';
 import 'package:savvy/screens/landing_page.dart';
 import 'package:savvy/screens/login_page.dart';
-import 'package:savvy/screens/page_view_Screens/page_view_screen_six.dart';
 import 'package:savvy/screens/post_page_view_screens/selected_screen.dart';
 import 'package:savvy/screens/post_page_view_screens/temp_screen.dart';
 import 'package:savvy/screens/signup_page.dart';
@@ -28,7 +27,7 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: Colors.white,
         ),
         debugShowCheckedModeBanner: false,
-        home: const PageViewScreenSix(),
+        home: const SignUpPage(),
         routes: {
           TempScreen.screenName: (context) => const TempScreen(),
           LandingPage.screenName: (context) {
