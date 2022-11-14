@@ -164,7 +164,7 @@ class _PortFolioScreenState extends State<PortFolioScreen> {
         width: size.width * 0.6,
         spreadRadius: size.height * 0.002,
         child: Text(
-          'Reselect SDG’s',
+          '''Let's Go''',
           style: GoogleFonts.poppins(
             color: Colors.white,
             fontSize: size.height * 0.025,
