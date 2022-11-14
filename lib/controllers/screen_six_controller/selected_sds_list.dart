@@ -1,18 +1,19 @@
 import 'package:get/get.dart';
-import 'package:savvy/models/sdgs_models/sdgs_list.dart';
+
+import '../../models/sdgs_models/update_sdgs_list.dart';
 
 class SdgsListController extends GetxController {
-  List<SdgsList> selectedSds = [];
+  List<UpdatedSdgsList> selectedSds = [];
 
-  void addSdgs(SdgsList item) {
+  void addSdgs(UpdatedSdgsList item) {
     selectedSds.add(item);
   }
 
-  void removeSds(SdgsList item) {
+  void removeSds(UpdatedSdgsList item) {
     selectedSds.remove(item);
   }
 
-  List<SdgsList> getSelectedSdgs() {
+  List<UpdatedSdgsList> getSelectedSdgs() {
     return selectedSds;
   }
 }

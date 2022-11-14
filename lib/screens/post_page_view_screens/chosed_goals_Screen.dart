@@ -1,13 +1,19 @@
 // ignore: file_names
 import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:savvy/common/widgets/resuable_row_chosed.dart';
+import 'package:savvy/models/sdgs_models/update_sdgs_list.dart';
 import 'package:savvy/screens/dialouges/detail_dialog.dart';
+import 'package:savvy/screens/dialouges/dialog_controller/detail_dialogs.dart';
 import 'package:savvy/screens/dialouges/info_dialog.dart';
+import 'package:savvy/screens/dialouges/not_found_sdg.dart';
 import 'package:savvy/screens/post_page_view_screens/selected_screen.dart';
+import 'package:savvy/services/api_urls.dart';
 
 import '../../common/widgets/custom_button.dart';
+import '../../controllers/screen_six_controller/selected_sds_list.dart';
 import '../../utils/color_constants.dart';
 
 class ChoosedGoalsScreen extends StatefulWidget {
@@ -18,9 +24,19 @@ class ChoosedGoalsScreen extends StatefulWidget {
 }
 
 class _ChoosedGoalsScreenState extends State<ChoosedGoalsScreen> {
+  final sdgListController = Get.put(SdgsListController());
   late Size size;
   DetailDialog myDialog = DetailDialog();
   InfoDialog infoDialog = InfoDialog();
+  late List<UpdatedSdgsList> list;
+  DetailDialogs detailDialogs = DetailDialogs();
+
+  @override
+  void initState() {
+    super.initState();
+    list = sdgListController.selectedSds;
+  }
+
   @override
   Widget build(BuildContext context) {
     size = MediaQuery.of(context).size;
@@ -56,46 +72,20 @@ class _ChoosedGoalsScreenState extends State<ChoosedGoalsScreen> {
                 style: tileDescriptionStyle(),
               )),
           Flexible(
-              flex: 1,
-              child: ChoosedRow(
-                  ontap: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return DetailDialog().detailDialog(size, context);
-                      },
+              flex: 8,
+              child: SizedBox(
+                height: size.height * 0.7,
+                child: ListView.separated(
+                  physics: const BouncingScrollPhysics(),
+                  itemCount: list.length,
+                  itemBuilder: _itemBuilder,
+                  separatorBuilder: (context, index) {
+                    return SizedBox(
+                      height: size.height * 0.006,
                     );
                   },
-                  title: '1. No Poverty',
-                  subtitle: 'Fund: UBS ETF Sustainable Development Bank Bond..',
-                  leading: Image.asset(r'assets/images/chosenpng.png'))),
-          Flexible(
-              flex: 1,
-              child: ChoosedRow(
-                  ontap: () {},
-                  title: '2. Zero Hunger',
-                  subtitle: 'Fund: UBS ETF Sustainable Development Bank Bond..',
-                  leading: Image.asset(r'assets/images/chosenpng2.png'))),
-          Flexible(
-              flex: 1,
-              child: ChoosedRow(
-                  title: '3. Good Health & Well-Being',
-                  subtitle: 'Fund: L&G Pharma Breakthrough UCITS ETF-USD',
-                  leading: Image.asset(r'assets/images/chosenpng3.png'))),
-          Flexible(
-              flex: 1,
-              child: ChoosedRow(
-                  title: '4. Quality Education',
-                  subtitle:
-                      'Fund: Rize Education Tech & Digital Learning UCITS..',
-                  leading: Image.asset(r'assets/images/chosenpng4.png'))),
-          Flexible(
-              flex: 1,
-              child: ChoosedRow(
-                  title: '5. Gender Equality',
-                  subtitle:
-                      'Fund: Lyxor Global Gender Equality (DR) UCITS ETF..',
-                  leading: Image.asset(r'assets/images/chosenpng5.png'))),
+                ),
+              )),
           Flexible(flex: 1, child: _actionButtons(size, context)),
         ],
       ),
@@ -166,4 +156,138 @@ class _ChoosedGoalsScreenState extends State<ChoosedGoalsScreen> {
         color: ColorConstants.introPageTextColor,
         fontSize: size.height * 0.025);
   }
+
+  Widget _itemBuilder(BuildContext context, int index) {
+    // DetailDialogs detailDialogs = DetailDialogs();
+    return SizedBox(
+      height: size.height * 0.12,
+      child: ChoosedRow(
+          ontap: () {
+            if (list[index].systemSdgsId == '1') {
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return DetailDialog().detailDialog(size, context);
+                },
+              );
+            } else if (list[index].systemSdgsId == '2') {
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return detailDialogs.goal2dialog();
+                },
+              );
+            } else if (list[index].systemSdgsId == '3') {
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return detailDialogs.goal3Dialog();
+                },
+              );
+            } else if (list[index].systemSdgsId == '4') {
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return detailDialogs.goal4Dialog();
+                },
+              );
+            } else if (list[index].systemSdgsId == '5') {
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return detailDialogs.goal5Dialog();
+                },
+              );
+            } else if (list[index].systemSdgsId == '6') {
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return detailDialogs.goal6Dialog();
+                },
+              );
+            } else if (list[index].systemSdgsId == '11') {
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return detailDialogs.goal11Dialog();
+                },
+              );
+            } else if (list[index].systemSdgsId == '12') {
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return detailDialogs.goal12Dialog();
+                },
+              );
+            } else if (list[index].systemSdgsId == '13') {
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return detailDialogs.goal13Dialog();
+                },
+              );
+            } else if (list[index].systemSdgsId == '14') {
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return detailDialogs.goal14Dialog();
+                },
+              );
+            } else {
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return const SdgDialog();
+                },
+              );
+            }
+          },
+          title: "${list[index].systemSdgsId}. ${list[index].title}",
+          subtitle: list[index].description,
+          leading: Image.network(ApiUrls.baseUrl + list[index].image)),
+    );
+  }
 }
+
+
+   // Flexible(
+          //     flex: 1,
+          //     child: ChoosedRow(
+          //         ontap: () {
+          //           showDialog(
+          //             context: context,
+          //             builder: (context) {
+          //               return DetailDialog().detailDialog(size, context);
+          //             },
+          //           );
+          //         },
+          //         title: '1. No Poverty',
+          //         subtitle: 'Fund: UBS ETF Sustainable Development Bank Bond..',
+          //         leading: Image.asset(r'assets/images/chosenpng.png'))),
+          // Flexible(
+          //     flex: 1,
+          //     child: ChoosedRow(
+          //         ontap: () {},
+          //         title: '2. Zero Hunger',
+          //         subtitle: 'Fund: UBS ETF Sustainable Development Bank Bond..',
+          //         leading: Image.asset(r'assets/images/chosenpng2.png'))),
+          // Flexible(
+          //     flex: 1,
+          //     child: ChoosedRow(
+          //         title: '3. Good Health & Well-Being',
+          //         subtitle: 'Fund: L&G Pharma Breakthrough UCITS ETF-USD',
+          //         leading: Image.asset(r'assets/images/chosenpng3.png'))),
+          // Flexible(
+          //     flex: 1,
+          //     child: ChoosedRow(
+          //         title: '4. Quality Education',
+          //         subtitle:
+          //             'Fund: Rize Education Tech & Digital Learning UCITS..',
+          //         leading: Image.asset(r'assets/images/chosenpng4.png'))),
+          // Flexible(
+          //     flex: 1,
+          //     child: ChoosedRow(
+          //         title: '5. Gender Equality',
+          //         subtitle:
+          //             'Fund: Lyxor Global Gender Equality (DR) UCITS ETF..',
+          //         leading: Image.asset(r'assets/images/chosenpng5.png'))),

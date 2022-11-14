@@ -7,9 +7,10 @@ import 'package:pie_chart/pie_chart.dart';
 import 'package:savvy/common/widgets/custom_button.dart';
 import 'package:savvy/common/widgets/reuseable_row.dart';
 import 'package:savvy/controllers/screen_six_controller/selected_sds_list.dart';
-import 'package:savvy/models/sdgs_models/sdgs_list.dart';
 import 'package:savvy/screens/post_page_view_screens/select_plan_screen.dart';
 import 'package:savvy/utils/color_constants.dart';
+
+import '../../models/sdgs_models/update_sdgs_list.dart';
 
 class SelectedScreen extends StatefulWidget {
   const SelectedScreen({super.key});
@@ -20,7 +21,7 @@ class SelectedScreen extends StatefulWidget {
 }
 
 class _SelectedScreenState extends State<SelectedScreen> {
-  List<SdgsList> list = [];
+  List<UpdatedSdgsList> list = [];
   final getList = Get.put(SdgsListController());
   var dropDownFlex = 0;
   bool showDropDown = false;

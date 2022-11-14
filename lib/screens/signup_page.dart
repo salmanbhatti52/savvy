@@ -347,17 +347,17 @@ class _SignUpPageState extends State<SignUpPage> {
     return null;
   }
 
-  String? _emailValidate(String? value) {
-    if (value!.isEmpty) {
-      return 'please enter email';
-    }
-    return null;
-  }
+  // String? _emailValidate(String? value) {
+  //   if (value!.isEmpty) {
+  //     return 'please enter email';
+  //   }
+  //   return null;
+  // }
 
-  String? _passwordValidate(String? value) {
-    if (value!.isEmpty && value.length < 5) {
-      return 'please enter password';
-    }
-    return null;
-  }
+  // String? _passwordValidate(String? value) {
+  //   if (value!.isEmpty && value.length < 5) {
+  //     return 'please enter password';
+  //   }
+  //   return null;
+  // }
 }

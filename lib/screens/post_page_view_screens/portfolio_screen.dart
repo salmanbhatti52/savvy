@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'package:savvy/common/widgets/reuseable_row.dart';
 import 'package:savvy/screens/post_page_view_screens/select_plan_screen.dart';
+import 'package:savvy/services/api_urls.dart';
 import 'package:savvy/utils/dialog_const.dart';
 import 'package:savvy/utils/portfolio_screen_utils.dart';
 import '../../common/widgets/custom_button.dart';
+import '../../controllers/screen_six_controller/selected_sds_list.dart';
+import '../../models/sdgs_models/update_sdgs_list.dart';
 import '../../utils/color_constants.dart';
 
 class PortFolioScreen extends StatefulWidget {
@@ -21,6 +26,8 @@ class _PortFolioScreenState extends State<PortFolioScreen> {
   int selected = 0;
   int itemIndex = -1;
   int sepratorIndex = 0;
+  final sdgListController = Get.put(SdgsListController());
+
 //Random random = Random();
   List<Color> tileColors = [
     DialogConst.firstColor,
@@ -40,6 +47,13 @@ class _PortFolioScreenState extends State<PortFolioScreen> {
   ];
   PortfolioUtils portfolioUtils = PortfolioUtils();
   List<String> leading = [];
+  late List<UpdatedSdgsList> list;
+
+  @override
+  void initState() {
+    super.initState();
+    list = sdgListController.selectedSds;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +68,10 @@ class _PortFolioScreenState extends State<PortFolioScreen> {
 
   AppBar _buildAppBar() {
     return AppBar(
+      systemOverlayStyle: const SystemUiOverlayStyle(
+        statusBarColor: Colors.white,
+        statusBarIconBrightness: Brightness.dark,
+      ),
       elevation: 0,
       backgroundColor: Colors.transparent,
       centerTitle: true,
@@ -96,16 +114,28 @@ class _PortFolioScreenState extends State<PortFolioScreen> {
         Flexible(
             flex: 4,
             child: ListView.separated(
+              itemCount: list.length,
               physics: const BouncingScrollPhysics(),
-              // key: Key('builder ${selected.toString()}'),
+              key: Key('builder ${selected.toString()}'),
               itemBuilder: _itemBuilder,
               separatorBuilder: (context, index) {
                 if (itemIndex == index) {
-                  print("seprator index$index");
+                  //  print("seprator index$index");
                   return Container(
-                    height: 20,
-                    width: 100,
-                    color: tileColors[index],
+                    height: size.height * 0.080,
+                    width: size.width,
+                    color: Color(int.parse(list[index].colorCode)),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        overflow: TextOverflow.fade,
+                        list[index].description.toString(),
+                        style: GoogleFonts.poppins(
+                            color: Colors.black,
+                            fontSize: size.height * 0.020,
+                            fontWeight: FontWeight.w400),
+                      ),
+                    ),
                   );
                 } else {
                   return const Divider(
@@ -113,7 +143,6 @@ class _PortFolioScreenState extends State<PortFolioScreen> {
                   );
                 }
               },
-              itemCount: leading.length,
             )),
         Flexible(flex: 1, child: acitionButton()),
       ],
@@ -297,16 +326,27 @@ class _PortFolioScreenState extends State<PortFolioScreen> {
 
   Widget _itemBuilder(BuildContext context, int index) {
     return SizedBox(
-      height: size.height * 0.050,
+      height: size.height * 0.070,
       width: size.width,
       child: ReuseableRow(
-          color: Colors.blue,
+          color: Colors.white,
           sideContainer: Container(
-            color: tileColors[index],
-            width: 20,
+            color: Color(int.parse(list[index].colorCode)),
+            // width: 10,
           ),
-          image: Image.asset(leading[index]),
-          tileText: const Text('No Poverty'),
+          image: SizedBox(
+              height: size.height * 0.20,
+              width: size.width * 0.10,
+              child: Image.network(
+                ApiUrls.baseUrl + list[index].image,
+                fit: BoxFit.scaleDown,
+              )),
+          tileText: Text(
+            "${list[index].systemSdgsId}. ${list[index].title}",
+            style: GoogleFonts.poppins(
+                color: ColorConstants.landingPageTitleColor,
+                fontSize: size.height * 0.020),
+          ),
           dropDownButton: GestureDetector(
               onTap: () {
                 debugPrint('ontap');
@@ -314,10 +354,10 @@ class _PortFolioScreenState extends State<PortFolioScreen> {
                   itemIndex = index;
                 });
 
-                print(itemIndex.toString());
+                //print(itemIndex.toString());
               },
               child: const Icon(
-                  Icons.ios_share_rounded)) // child: MyExpansionTile(
+                  Icons.expand_more_sharp)) // child: MyExpansionTile(
           //     key: Key(index.toString()),
           //     initiallyExpanded: index == selected,
           //     onExpansionChanged: (newstate) {

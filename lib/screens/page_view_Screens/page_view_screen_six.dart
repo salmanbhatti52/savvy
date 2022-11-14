@@ -1,20 +1,23 @@
 import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:savvy/common/widgets/undo_widget.dart';
 import 'package:savvy/controllers/screen_six_controller/selected_sds_list.dart';
 import 'package:savvy/screens/dialouges/dialog_controller/detail_dialogs.dart';
 import 'package:savvy/screens/dialouges/dialog_controller/info_dialogs.dart';
 import 'package:savvy/screens/dialouges/info_dialog.dart';
 import 'package:savvy/screens/dialouges/reuseabel_info_dialog.dart';
-import 'package:savvy/screens/post_page_view_screens/chosed_goals_Screen.dart';
+import 'package:savvy/screens/post_page_view_screens/portfolio_screen.dart';
 import 'package:savvy/services/api_services.dart';
 import 'package:savvy/utils/pgviewscreensixutils/Sc_six_utils.dart';
 
 import '../../common/widgets/custom_button.dart';
 import '../../models/sdgs_models/sdgs_list.dart';
+import '../../models/sdgs_models/update_sdgs_list.dart';
 import '../../utils/color_constants.dart';
-import '../post_page_view_screens/selected_screen.dart';
+import '../post_page_view_screens/chosed_goals_Screen.dart';
 
 class PageViewScreenSix extends StatefulWidget {
   const PageViewScreenSix({super.key});
@@ -31,7 +34,7 @@ class _PageViewScreenSixState extends State<PageViewScreenSix> {
   InfoDialogs info = InfoDialogs(detailDialogs: DetailDialogs());
   List<ReuseableDialog> infoDialogs = [];
   int itemCount = 0;
-  List<SdgsList> list = [];
+  List<UpdatedSdgsList> list = [];
   ScSixUtils isDragged = ScSixUtils();
   final ApiServices _apiServices = ApiServices();
   List<SdgsList> selectedList = [];
@@ -53,7 +56,7 @@ class _PageViewScreenSixState extends State<PageViewScreenSix> {
     var size = MediaQuery.of(context).size;
     infoDialogs = info.getInfoDialogList(context, size);
     return ColorfulSafeArea(
-      color: Colors.white,
+      //   color: Colors.white,
       child: Scaffold(
         body: Padding(
           padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
@@ -115,11 +118,18 @@ class _PageViewScreenSixState extends State<PageViewScreenSix> {
             child: SizedBox(
               child: MyButton(
                   ontap: () {
-                    Navigator.push(context, MaterialPageRoute(
-                      builder: (context) {
-                        return const SelectedScreen();
-                      },
-                    ));
+                    if (sdgListController.selectedSds.length >= 2) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const PortFolioScreen(),
+                          ));
+                    } else {
+                      Fluttertoast.showToast(
+                          gravity: ToastGravity.CENTER,
+                          msg: 'Please Select Atleast 2 or more Goals',
+                          backgroundColor: ColorConstants.buttonColorLight);
+                    }
                   },
                   radius: size.height * 0.04,
                   color: ColorConstants.buttonColor,
@@ -168,222 +178,133 @@ class _PageViewScreenSixState extends State<PageViewScreenSix> {
             children: [
               Flexible(
                   flex: 1,
-                  child: Draggable(
-                    onDragCompleted: () {
-                      setState(() {
-                        isDragged.goal1 = false;
-                        itemCount++;
-                        sdgListController.addSdgs(list[0]);
+                  child: SizedBox(
+                    width: size.width * 0.24,
+                    child: Draggable(
+                      onDragCompleted: () {
+                        setState(() {
+                          isDragged.goal1 = false;
+                          itemCount++;
+                          sdgListController.addSdgs(list[0]);
 
-                        //  print('onDragged Completed');
-                      });
-                    },
-                    feedback: Card(
-                      child: Image.asset(r'assets/images/pgsixcompnent1.png'),
+                          //  print('onDragged Completed');
+                        });
+                      },
+                      feedback: Card(
+                        child: Image.asset(r'assets/images/pgsixcompnent1.png'),
+                      ),
+                      child: InkWell(
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return infoDialogs[0];
+                              },
+                            );
+                          },
+                          child: Card(
+                              elevation: elevation,
+                              child: isDragged.goal1
+                                  ? Image.asset(
+                                      r'assets/images/pgsixcompnent1.png')
+                                  : InkWell(
+                                      onTap: () => setState(() {
+                                        isDragged.goal1 = true;
+                                        itemCount--;
+                                        sdgListController.removeSds(list[0]);
+                                      }),
+                                      child: const UndoImage(
+                                          imageUrl:
+                                              (r'assets/images/pgsixcompnent1.png')),
+                                    ))
+
+                          // :
+                          ),
                     ),
-                    child: InkWell(
-                        onTap: () {
-                          showDialog(
-                            context: context,
-                            builder: (context) {
-                              return infoDialogs[0];
-                            },
-                          );
-                        },
-                        child: Card(
-                            elevation: elevation,
-                            child: isDragged.goal1
-                                ? Image.asset(
-                                    r'assets/images/pgsixcompnent1.png')
-                                : InkWell(
-                                    onTap: () => setState(() {
-                                          isDragged.goal1 = true;
-                                          itemCount--;
-                                          sdgListController.removeSds(list[0]);
-                                        }),
-                                    child: const Icon(Icons.undo)))
-
-                        // :
-                        ),
                   )),
               Flexible(
-                  child: Draggable(
-                onDragCompleted: () {
-                  setState(() {
-                    isDragged.goal2 = false;
-                    itemCount++;
+                  child: SizedBox(
+                width: size.width * 0.24,
+                child: Draggable(
+                  onDragCompleted: () {
+                    setState(() {
+                      isDragged.goal2 = false;
+                      itemCount++;
+                      sdgListController.addSdgs(list[1]);
 
-                    //  print('onDragged Completed');
-                  });
-                },
-                feedback: Card(
-                  child: Image.asset(r'assets/images/pgsixcompnent2.png'),
+                      //  print('onDragged Completed');
+                    });
+                  },
+                  feedback: Card(
+                    child: Image.asset(r'assets/images/pgsixcompnent2.png'),
+                  ),
+                  child: InkWell(
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return infoDialogs[1];
+                          },
+                        );
+                      },
+                      child: Card(
+                          elevation: elevation,
+                          child: isDragged.goal2
+                              ? Image.asset(r'assets/images/pgsixcompnent2.png')
+                              : InkWell(
+                                  onTap: () => setState(() {
+                                        isDragged.goal2 = true;
+                                        itemCount--;
+                                        sdgListController.removeSds(list[1]);
+                                      }),
+                                  child: const UndoImage(
+                                      imageUrl:
+                                          (r'assets/images/pgsixcompnent2.png'))))
+
+                      // :
+                      ),
                 ),
-                child: InkWell(
-                    onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return infoDialogs[1];
-                        },
-                      );
-                    },
-                    child: Card(
-                        elevation: elevation,
-                        child: isDragged.goal2
-                            ? Image.asset(r'assets/images/pgsixcompnent2.png')
-                            : InkWell(
-                                onTap: () => setState(() {
-                                      isDragged.goal2 = true;
-                                      itemCount--;
-                                    }),
-                                child: const Icon(Icons.undo)))
-
-                    // :
-                    ),
               )),
               Flexible(
-                  child: Draggable(
-                onDragCompleted: () {
-                  setState(() {
-                    isDragged.goal3 = false;
-                    itemCount++;
-                  });
-                },
-                feedback: Card(
-                  child: Image.asset(r'assets/images/pgsixcompnent3.png'),
-                ),
-                child: InkWell(
-                    onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return infoDialogs[2];
-                        },
-                      );
-                    },
-                    child: Card(
-                        elevation: elevation,
-                        child: isDragged.goal3
-                            ? Image.asset(r'assets/images/pgsixcompnent3.png')
-                            : InkWell(
-                                onTap: () => setState(() {
-                                      isDragged.goal3 = true;
-                                      itemCount--;
-                                    }),
-                                child: const Icon(Icons.undo)))
+                  child: SizedBox(
+                width: size.width * 0.24,
+                child: Draggable(
+                  onDragCompleted: () {
+                    setState(() {
+                      isDragged.goal3 = false;
+                      itemCount++;
+                      sdgListController.addSdgs(list[2]);
+                    });
+                  },
+                  feedback: Card(
+                    child: Image.asset(r'assets/images/pgsixcompnent3.png'),
+                  ),
+                  child: InkWell(
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return infoDialogs[2];
+                          },
+                        );
+                      },
+                      child: Card(
+                          elevation: elevation,
+                          child: isDragged.goal3
+                              ? Image.asset(r'assets/images/pgsixcompnent3.png')
+                              : InkWell(
+                                  onTap: () => setState(() {
+                                        isDragged.goal3 = true;
+                                        itemCount--;
+                                        sdgListController.removeSds(list[2]);
+                                      }),
+                                  child: const UndoImage(
+                                      imageUrl:
+                                          (r'assets/images/pgsixcompnent3.png'))))
 
-                    // :
-                    ),
-              )),
-            ],
-          ),
-        ),
-        SizedBox(
-          height: space,
-        ),
-        Expanded(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Flexible(
-                  child: Draggable(
-                onDragCompleted: () {
-                  setState(() {
-                    isDragged.goal4 = false;
-                    itemCount++;
-                  });
-                },
-                feedback: Card(
-                  child: Image.asset(r'assets/images/pgsixcompnent4.png'),
+                      // :
+                      ),
                 ),
-                child: InkWell(
-                    onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return infoDialogs[3];
-                        },
-                      );
-                    },
-                    child: Card(
-                        elevation: elevation,
-                        child: isDragged.goal4
-                            ? Image.asset(r'assets/images/pgsixcompnent4.png')
-                            : InkWell(
-                                onTap: () => setState(() {
-                                      isDragged.goal4 = true;
-                                      itemCount--;
-                                    }),
-                                child: const Icon(Icons.undo)))
-
-                    // :
-                    ),
-              )),
-              Flexible(
-                  child: Draggable(
-                onDragCompleted: () {
-                  setState(() {
-                    isDragged.goal5 = false;
-                    itemCount++;
-                  });
-                },
-                feedback: Card(
-                  child: Image.asset(r'assets/images/pgsixcompnent5.png'),
-                ),
-                child: InkWell(
-                    onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return infoDialogs[4];
-                        },
-                      );
-                    },
-                    child: Card(
-                        elevation: elevation,
-                        child: isDragged.goal5
-                            ? Image.asset(r'assets/images/pgsixcompnent5.png')
-                            : InkWell(
-                                onTap: () => setState(() {
-                                      isDragged.goal5 = true;
-                                      itemCount--;
-                                    }),
-                                child: const Icon(Icons.undo)))),
-              )),
-              Flexible(
-                  child: Draggable(
-                onDragCompleted: () {
-                  setState(() {
-                    isDragged.goal6 = false;
-                    itemCount++;
-                  });
-                },
-                feedback: Card(
-                  child: Image.asset(r'assets/images/pgsixcompnent6.png'),
-                ),
-                child: InkWell(
-                    onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return infoDialogs[5];
-                        },
-                      );
-                    },
-                    child: Card(
-                        elevation: elevation,
-                        child: isDragged.goal6
-                            ? Image.asset(r'assets/images/pgsixcompnent6.png')
-                            : InkWell(
-                                onTap: () => setState(() {
-                                      isDragged.goal6 = true;
-                                      itemCount--;
-                                    }),
-                                child: const Icon(Icons.undo)))
-
-                    // :
-                    ),
               )),
             ],
           ),
@@ -396,218 +317,124 @@ class _PageViewScreenSixState extends State<PageViewScreenSix> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Flexible(
-                  child: Draggable(
-                onDragCompleted: () {
-                  setState(() {
-                    isDragged.goal7 = false;
-                    itemCount++;
-                  });
-                },
-                feedback: Card(
-                  child: Image.asset(r'assets/images/pgcomponent7.png'),
-                ),
-                child: InkWell(
-                    onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return infoDialogs[6];
-                        },
-                      );
-                    },
-                    child: Card(
-                        elevation: elevation,
-                        child: isDragged.goal7
-                            ? Image.asset(r'assets/images/pgcomponent7.png')
-                            : InkWell(
-                                onTap: () => setState(() {
-                                      isDragged.goal7 = true;
-                                      itemCount--;
-                                    }),
-                                child: const Icon(Icons.undo)))
+                  child: SizedBox(
+                width: size.width * 0.24,
+                child: Draggable(
+                  onDragCompleted: () {
+                    setState(() {
+                      isDragged.goal4 = false;
+                      itemCount++;
+                      sdgListController.addSdgs(list[3]);
+                    });
+                  },
+                  feedback: Card(
+                    child: Image.asset(r'assets/images/pgsixcompnent4.png'),
+                  ),
+                  child: InkWell(
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return infoDialogs[3];
+                          },
+                        );
+                      },
+                      child: Card(
+                          elevation: elevation,
+                          child: isDragged.goal4
+                              ? Image.asset(r'assets/images/pgsixcompnent4.png')
+                              : InkWell(
+                                  onTap: () => setState(() {
+                                        isDragged.goal4 = true;
+                                        itemCount--;
+                                        sdgListController.removeSds(list[3]);
+                                      }),
+                                  child: const UndoImage(
+                                      imageUrl:
+                                          (r'assets/images/pgsixcompnent4.png'))))
 
-                    // :
-                    ),
+                      // :
+                      ),
+                ),
               )),
               Flexible(
-                  child: Draggable(
-                onDragCompleted: () {
-                  setState(() {
-                    isDragged.goal8 = false;
-                    itemCount++;
-                  });
-                },
-                feedback: Card(
-                  child: Image.asset(r'assets/images/pgcomponent8.png'),
+                  child: SizedBox(
+                width: size.width * 0.24,
+                child: Draggable(
+                  onDragCompleted: () {
+                    setState(() {
+                      isDragged.goal5 = false;
+                      itemCount++;
+                      sdgListController.addSdgs(list[4]);
+                    });
+                  },
+                  feedback: Card(
+                    child: Image.asset(r'assets/images/pgsixcompnent5.png'),
+                  ),
+                  child: InkWell(
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return infoDialogs[4];
+                          },
+                        );
+                      },
+                      child: Card(
+                          elevation: elevation,
+                          child: isDragged.goal5
+                              ? Image.asset(r'assets/images/pgsixcompnent5.png')
+                              : InkWell(
+                                  onTap: () => setState(() {
+                                        isDragged.goal5 = true;
+                                        itemCount--;
+                                        sdgListController.removeSds(list[4]);
+                                      }),
+                                  child: const UndoImage(
+                                      imageUrl:
+                                          (r'assets/images/pgsixcompnent5.png'))))),
                 ),
-                child: InkWell(
-                    onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return infoDialogs[7];
-                        },
-                      );
-                    },
-                    child: Card(
-                        elevation: elevation,
-                        child: isDragged.goal8
-                            ? Image.asset(r'assets/images/pgcomponent8.png')
-                            : InkWell(
-                                onTap: () => setState(() {
-                                      isDragged.goal8 = true;
-                                      itemCount--;
-                                    }),
-                                child: const Icon(Icons.undo)))
-
-                    // :
-                    ),
               )),
               Flexible(
-                  child: Draggable(
-                onDragCompleted: () {
-                  setState(() {
-                    isDragged.goal9 = false;
-                    itemCount++;
-                  });
-                },
-                feedback: Card(
-                  child: Image.asset(r'assets/images/pgcomponent9.png'),
-                ),
-                child: InkWell(
-                    onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return infoDialogs[8];
-                        },
-                      );
-                    },
-                    child: Card(
-                        elevation: elevation,
-                        child: isDragged.goal9
-                            ? Image.asset(r'assets/images/pgcomponent9.png')
-                            : InkWell(
-                                onTap: () => setState(() {
-                                      isDragged.goal9 = true;
-                                      itemCount--;
-                                    }),
-                                child: const Icon(Icons.undo)))
+                  child: SizedBox(
+                width: size.width * 0.24,
+                child: Draggable(
+                  onDragCompleted: () {
+                    setState(() {
+                      isDragged.goal6 = false;
+                      itemCount++;
+                      sdgListController.addSdgs(list[5]);
+                    });
+                  },
+                  feedback: Card(
+                    child: Image.asset(r'assets/images/pgsixcompnent6.png'),
+                  ),
+                  child: InkWell(
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return infoDialogs[5];
+                          },
+                        );
+                      },
+                      child: Card(
+                          elevation: elevation,
+                          child: isDragged.goal6
+                              ? Image.asset(r'assets/images/pgsixcompnent6.png')
+                              : InkWell(
+                                  onTap: () => setState(() {
+                                        isDragged.goal6 = true;
+                                        itemCount--;
+                                        sdgListController.removeSds(list[5]);
+                                      }),
+                                  child: const UndoImage(
+                                      imageUrl:
+                                          (r'assets/images/pgsixcompnent6.png'))))
 
-                    // :
-                    ),
-              )),
-            ],
-          ),
-        ),
-        SizedBox(
-          height: space,
-        ),
-        Expanded(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Flexible(
-                  child: Draggable(
-                onDragCompleted: () {
-                  setState(() {
-                    isDragged.goal10 = false;
-                    itemCount++;
-                  });
-                },
-                feedback: Card(
-                  child: Image.asset(r'assets/images/pgcomponent10.png'),
+                      // :
+                      ),
                 ),
-                child: InkWell(
-                    onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return infoDialogs[9];
-                        },
-                      );
-                    },
-                    child: Card(
-                        elevation: elevation,
-                        child: isDragged.goal10
-                            ? Image.asset(r'assets/images/pgcomponent10.png')
-                            : InkWell(
-                                onTap: () => setState(() {
-                                      isDragged.goal10 = true;
-                                      itemCount--;
-                                    }),
-                                child: const Icon(Icons.undo)))
-
-                    // :
-                    ),
-              )),
-              Flexible(
-                  child: Draggable(
-                onDragCompleted: () {
-                  setState(() {
-                    isDragged.goal11 = false;
-                    itemCount++;
-                  });
-                },
-                feedback: Card(
-                  child: Image.asset(r'assets/images/pgcomponent11.png'),
-                ),
-                child: InkWell(
-                    onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return infoDialogs[10];
-                        },
-                      );
-                    },
-                    child: Card(
-                        elevation: elevation,
-                        child: isDragged.goal11
-                            ? Image.asset(r'assets/images/pgcomponent11.png')
-                            : InkWell(
-                                onTap: () => setState(() {
-                                      isDragged.goal11 = true;
-                                      itemCount--;
-                                    }),
-                                child: const Icon(Icons.undo)))
-
-                    // :
-                    ),
-              )),
-              Flexible(
-                  child: Draggable(
-                onDragCompleted: () {
-                  setState(() {
-                    isDragged.goal12 = false;
-                    itemCount++;
-                  });
-                },
-                feedback: Card(
-                  child: Image.asset(r'assets/images/pgcomponent12.png'),
-                ),
-                child: InkWell(
-                    onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return infoDialogs[11];
-                        },
-                      );
-                    },
-                    child: Card(
-                        elevation: elevation,
-                        child: isDragged.goal12
-                            ? Image.asset(r'assets/images/pgcomponent12.png')
-                            : InkWell(
-                                onTap: () => setState(() {
-                                      isDragged.goal12 = true;
-                                      itemCount--;
-                                    }),
-                                child: const Icon(Icons.undo)))
-
-                    // :
-                    ),
               )),
             ],
           ),
@@ -620,106 +447,127 @@ class _PageViewScreenSixState extends State<PageViewScreenSix> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Flexible(
-                  child: Draggable(
-                onDragCompleted: () {
-                  setState(() {
-                    isDragged.goal13 = false;
-                    itemCount++;
-                  });
-                },
-                feedback: Card(
-                  child: Image.asset(r'assets/images/pgcomponent13.png'),
-                ),
-                child: InkWell(
-                    onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return infoDialogs[12];
-                        },
-                      );
-                    },
-                    child: Card(
-                        elevation: elevation,
-                        child: isDragged.goal13
-                            ? Image.asset(r'assets/images/pgcomponent13.png')
-                            : InkWell(
-                                onTap: () => setState(() {
-                                      isDragged.goal13 = true;
-                                      itemCount--;
-                                    }),
-                                child: const Icon(Icons.undo)))
+                  child: SizedBox(
+                width: size.width * 0.24,
+                child: Draggable(
+                  onDragCompleted: () {
+                    setState(() {
+                      isDragged.goal7 = false;
+                      itemCount++;
+                      sdgListController.addSdgs(list[6]);
+                    });
+                  },
+                  feedback: Card(
+                    child: Image.asset(r'assets/images/pgcomponent7.png'),
+                  ),
+                  child: InkWell(
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return infoDialogs[6];
+                          },
+                        );
+                      },
+                      child: Card(
+                          elevation: elevation,
+                          child: isDragged.goal7
+                              ? Image.asset(r'assets/images/pgcomponent7.png')
+                              : InkWell(
+                                  onTap: () => setState(() {
+                                        isDragged.goal7 = true;
+                                        itemCount--;
+                                        sdgListController.removeSds(list[6]);
+                                      }),
+                                  child: const UndoImage(
+                                      imageUrl:
+                                          (r'assets/images/pgcomponent7.png'))))
 
-                    // :
-                    ),
+                      // :
+                      ),
+                ),
               )),
               Flexible(
-                  child: Draggable(
-                onDragCompleted: () {
-                  setState(() {
-                    isDragged.goal14 = false;
-                    itemCount++;
-                  });
-                },
-                feedback: Card(
-                  child: Image.asset(r'assets/images/pgcomponent14.png'),
-                ),
-                child: InkWell(
-                    onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return infoDialogs[13];
-                        },
-                      );
-                    },
-                    child: Card(
-                        elevation: elevation,
-                        child: isDragged.goal14
-                            ? Image.asset(r'assets/images/pgcomponent14.png')
-                            : InkWell(
-                                onTap: () => setState(() {
-                                      isDragged.goal14 = true;
-                                      itemCount--;
-                                    }),
-                                child: const Icon(Icons.undo)))
+                  child: SizedBox(
+                width: size.width * 0.24,
+                child: Draggable(
+                  onDragCompleted: () {
+                    setState(() {
+                      isDragged.goal8 = false;
+                      itemCount++;
+                      sdgListController.addSdgs(list[7]);
+                    });
+                  },
+                  feedback: Card(
+                    child: Image.asset(r'assets/images/pgcomponent8.png'),
+                  ),
+                  child: InkWell(
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return infoDialogs[7];
+                          },
+                        );
+                      },
+                      child: Card(
+                          elevation: elevation,
+                          child: isDragged.goal8
+                              ? Image.asset(r'assets/images/pgcomponent8.png')
+                              : InkWell(
+                                  onTap: () => setState(() {
+                                        isDragged.goal8 = true;
+                                        itemCount--;
+                                        sdgListController.removeSds(list[7]);
+                                      }),
+                                  child: const UndoImage(
+                                      imageUrl:
+                                          (r'assets/images/pgcomponent8.png'))))
 
-                    // :
-                    ),
+                      // :
+                      ),
+                ),
               )),
               Flexible(
-                  child: Draggable(
-                onDragCompleted: () {
-                  setState(() {
-                    isDragged.goal15 = false;
-                    itemCount++;
-                  });
-                },
-                feedback: Card(
-                  child: Image.asset(r'assets/images/pgcomponent15.png'),
-                ),
-                child: InkWell(
-                    onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return infoDialogs[14];
-                        },
-                      );
-                    },
-                    child: Card(
-                        elevation: elevation,
-                        child: isDragged.goal15
-                            ? Image.asset(r'assets/images/pgcomponent15.png')
-                            : InkWell(
-                                onTap: () => setState(() {
-                                      isDragged.goal15 = true;
-                                      itemCount--;
-                                    }),
-                                child: const Icon(Icons.undo)))
+                  child: SizedBox(
+                width: size.width * 0.24,
+                child: Draggable(
+                  onDragCompleted: () {
+                    setState(() {
+                      isDragged.goal9 = false;
+                      itemCount++;
+                      sdgListController.addSdgs(list[8]);
+                    });
+                  },
+                  feedback: Card(
+                    child: Image.asset(r'assets/images/pgcomponent9.png'),
+                  ),
+                  child: InkWell(
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return infoDialogs[8];
+                          },
+                        );
+                      },
+                      child: Card(
+                          elevation: elevation,
+                          child: isDragged.goal9
+                              ? Image.asset(r'assets/images/pgcomponent9.png')
+                              : InkWell(
+                                  onTap: () => setState(() {
+                                        isDragged.goal9 = true;
+                                        itemCount--;
+                                        sdgListController.removeSds(list[8]);
+                                      }),
+                                  child: const UndoImage(
+                                      imageUrl:
+                                          (r'assets/images/pgcomponent9.png'))))
 
-                    // :
-                    ),
+                      // :
+                      ),
+                ),
               )),
             ],
           ),
@@ -732,96 +580,384 @@ class _PageViewScreenSixState extends State<PageViewScreenSix> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Flexible(
-                  child: Draggable(
-                onDragCompleted: () {
-                  setState(() {
-                    isDragged.goal16 = false;
-                    itemCount++;
-                  });
-                },
-                feedback: Card(
-                  child: Image.asset(r'assets/images/pgcomponent16.png'),
-                ),
-                child: InkWell(
-                    onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return infoDialogs[15];
-                        },
-                      );
-                    },
-                    child: Card(
-                        elevation: elevation,
-                        child: isDragged.goal16
-                            ? Image.asset(r'assets/images/pgcomponent16.png')
-                            : InkWell(
-                                onTap: () => setState(() {
-                                      isDragged.goal16 = true;
-                                      itemCount--;
-                                    }),
-                                child: const Icon(Icons.undo)))
+                  child: SizedBox(
+                width: size.width * 0.24,
+                child: Draggable(
+                  onDragCompleted: () {
+                    setState(() {
+                      isDragged.goal10 = false;
+                      itemCount++;
+                      sdgListController.addSdgs(list[9]);
+                    });
+                  },
+                  feedback: Card(
+                    child: Image.asset(r'assets/images/pgcomponent10.png'),
+                  ),
+                  child: InkWell(
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return infoDialogs[9];
+                          },
+                        );
+                      },
+                      child: Card(
+                          elevation: elevation,
+                          child: isDragged.goal10
+                              ? Image.asset(r'assets/images/pgcomponent10.png')
+                              : InkWell(
+                                  onTap: () => setState(() {
+                                        isDragged.goal10 = true;
+                                        itemCount--;
+                                        sdgListController.removeSds(list[9]);
+                                      }),
+                                  child: const UndoImage(
+                                      imageUrl:
+                                          (r'assets/images/pgcomponent10.png'))))
 
-                    // :
-                    ),
+                      // :
+                      ),
+                ),
               )),
               Flexible(
-                  child: Draggable(
-                onDragCompleted: () {
-                  setState(() {
-                    isDragged.goal17 = false;
-                    itemCount++;
-                  });
-                },
-                feedback: Card(
-                  child: Image.asset(r'assets/images/pgcomponent17.png'),
-                ),
-                child: InkWell(
-                    onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return infoDialogs[16];
-                        },
-                      );
-                    },
-                    child: Card(
-                        elevation: elevation,
-                        child: isDragged.goal17
-                            ? Image.asset(r'assets/images/pgcomponent17.png')
-                            : InkWell(
-                                onTap: () => setState(() {
-                                      isDragged.goal17 = true;
-                                      itemCount--;
-                                    }),
-                                child: const Icon(Icons.undo)))
+                  child: SizedBox(
+                width: size.width * 0.24,
+                child: Draggable(
+                  onDragCompleted: () {
+                    setState(() {
+                      isDragged.goal11 = false;
+                      itemCount++;
+                      sdgListController.addSdgs(list[10]);
+                    });
+                  },
+                  feedback: Card(
+                    child: Image.asset(r'assets/images/pgcomponent11.png'),
+                  ),
+                  child: InkWell(
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return infoDialogs[10];
+                          },
+                        );
+                      },
+                      child: Card(
+                          elevation: elevation,
+                          child: isDragged.goal11
+                              ? Image.asset(r'assets/images/pgcomponent11.png')
+                              : InkWell(
+                                  onTap: () => setState(() {
+                                        isDragged.goal11 = true;
+                                        itemCount--;
+                                        sdgListController.removeSds(list[10]);
+                                      }),
+                                  child: const UndoImage(
+                                      imageUrl:
+                                          (r'assets/images/pgcomponent11.png'))))
 
-                    // :
-                    ),
+                      // :
+                      ),
+                ),
+              )),
+              Flexible(
+                  child: SizedBox(
+                width: size.width * 0.24,
+                child: Draggable(
+                  onDragCompleted: () {
+                    setState(() {
+                      isDragged.goal12 = false;
+                      itemCount++;
+                      sdgListController.addSdgs(list[11]);
+                    });
+                  },
+                  feedback: Card(
+                    child: Image.asset(r'assets/images/pgcomponent12.png'),
+                  ),
+                  child: InkWell(
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return infoDialogs[11];
+                          },
+                        );
+                      },
+                      child: Card(
+                          elevation: elevation,
+                          child: isDragged.goal12
+                              ? Image.asset(r'assets/images/pgcomponent12.png')
+                              : InkWell(
+                                  onTap: () => setState(() {
+                                        isDragged.goal12 = true;
+                                        itemCount--;
+                                        sdgListController.removeSds(list[11]);
+                                      }),
+                                  child: const UndoImage(
+                                      imageUrl:
+                                          (r'assets/images/pgcomponent12.png'))))
+
+                      // :
+                      ),
+                ),
+              )),
+            ],
+          ),
+        ),
+        SizedBox(
+          height: space,
+        ),
+        Expanded(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Flexible(
+                  child: SizedBox(
+                width: size.width * 0.24,
+                child: Draggable(
+                  onDragCompleted: () {
+                    setState(() {
+                      isDragged.goal13 = false;
+                      itemCount++;
+                      sdgListController.addSdgs(list[12]);
+                    });
+                  },
+                  feedback: Card(
+                    child: Image.asset(r'assets/images/pgcomponent13.png'),
+                  ),
+                  child: InkWell(
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return infoDialogs[12];
+                          },
+                        );
+                      },
+                      child: Card(
+                          elevation: elevation,
+                          child: isDragged.goal13
+                              ? Image.asset(r'assets/images/pgcomponent13.png')
+                              : InkWell(
+                                  onTap: () => setState(() {
+                                        isDragged.goal13 = true;
+                                        itemCount--;
+                                        sdgListController.removeSds(list[12]);
+                                      }),
+                                  child: const UndoImage(
+                                      imageUrl:
+                                          (r'assets/images/pgcomponent13.png'))))
+
+                      // :
+                      ),
+                ),
+              )),
+              Flexible(
+                  child: SizedBox(
+                width: size.width * 0.24,
+                child: Draggable(
+                  onDragCompleted: () {
+                    setState(() {
+                      isDragged.goal14 = false;
+                      itemCount++;
+                      sdgListController.addSdgs(list[13]);
+                    });
+                  },
+                  feedback: Card(
+                    child: Image.asset(r'assets/images/pgcomponent14.png'),
+                  ),
+                  child: InkWell(
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return infoDialogs[13];
+                          },
+                        );
+                      },
+                      child: Card(
+                          elevation: elevation,
+                          child: isDragged.goal14
+                              ? Image.asset(r'assets/images/pgcomponent14.png')
+                              : InkWell(
+                                  onTap: () => setState(() {
+                                        isDragged.goal14 = true;
+                                        itemCount--;
+                                        sdgListController.removeSds(list[13]);
+                                      }),
+                                  child: const UndoImage(
+                                      imageUrl:
+                                          (r'assets/images/pgcomponent14.png'))))
+
+                      // :
+                      ),
+                ),
+              )),
+              Flexible(
+                  child: SizedBox(
+                width: size.width * 0.24,
+                child: Draggable(
+                  onDragCompleted: () {
+                    setState(() {
+                      isDragged.goal15 = false;
+                      itemCount++;
+                      sdgListController.addSdgs(list[14]);
+                    });
+                  },
+                  feedback: Card(
+                    child: Image.asset(r'assets/images/pgcomponent15.png'),
+                  ),
+                  child: InkWell(
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return infoDialogs[14];
+                          },
+                        );
+                      },
+                      child: Card(
+                          elevation: elevation,
+                          child: isDragged.goal15
+                              ? Image.asset(r'assets/images/pgcomponent15.png')
+                              : InkWell(
+                                  onTap: () => setState(() {
+                                        isDragged.goal15 = true;
+                                        itemCount--;
+                                        sdgListController.removeSds(list[14]);
+                                      }),
+                                  child: const UndoImage(
+                                      imageUrl:
+                                          (r'assets/images/pgcomponent15.png'))))
+
+                      // :
+                      ),
+                ),
+              )),
+            ],
+          ),
+        ),
+        SizedBox(
+          height: space,
+        ),
+        Expanded(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Flexible(
+                  child: SizedBox(
+                width: size.width * 0.24,
+                child: Draggable(
+                  onDragCompleted: () {
+                    setState(() {
+                      isDragged.goal16 = false;
+                      itemCount++;
+                      sdgListController.addSdgs(list[15]);
+                    });
+                  },
+                  feedback: Card(
+                    child: Image.asset(r'assets/images/pgcomponent16.png'),
+                  ),
+                  child: InkWell(
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return infoDialogs[15];
+                          },
+                        );
+                      },
+                      child: Card(
+                          elevation: elevation,
+                          child: isDragged.goal16
+                              ? Image.asset(r'assets/images/pgcomponent16.png')
+                              : InkWell(
+                                  onTap: () => setState(() {
+                                        isDragged.goal16 = true;
+                                        itemCount--;
+                                        sdgListController.removeSds(list[15]);
+                                      }),
+                                  child: const UndoImage(
+                                      imageUrl:
+                                          (r'assets/images/pgcomponent16.png'))))
+
+                      // :
+                      ),
+                ),
+              )),
+              Flexible(
+                  child: SizedBox(
+                width: size.width * 0.24,
+                child: Draggable(
+                  onDragCompleted: () {
+                    setState(() {
+                      isDragged.goal17 = false;
+                      itemCount++;
+                      sdgListController.addSdgs(list[16]);
+                    });
+                  },
+                  feedback: Card(
+                    child: Image.asset(r'assets/images/pgcomponent17.png'),
+                  ),
+                  child: InkWell(
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return infoDialogs[16];
+                          },
+                        );
+                      },
+                      child: Card(
+                          elevation: elevation,
+                          child: isDragged.goal17
+                              ? Image.asset(r'assets/images/pgcomponent17.png')
+                              : InkWell(
+                                  onTap: () => setState(() {
+                                        isDragged.goal17 = true;
+                                        itemCount--;
+                                        sdgListController.removeSds(list[16]);
+                                      }),
+                                  child: const UndoImage(
+                                      imageUrl:
+                                          (r'assets/images/pgcomponent17.png'))))
+
+                      // :
+                      ),
+                ),
               )),
               Flexible(child: DragTarget(
                 builder: (context, candidateData, rejectedData) {
-                  return Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      GestureDetector(
-                          onTap: (() => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    const ChoosedGoalsScreen(),
-                              ))),
-                          child:
-                              Image.asset(r'assets/images/pgviewbasket.png')),
-                      Positioned(
-                          // top: 30,
-                          // left: 0,
-                          child: Text(
-                        itemCount.toString(),
-                        style: GoogleFonts.lato(
-                            fontSize: 24, fontWeight: FontWeight.bold),
-                      )),
-                    ],
+                  return GestureDetector(
+                    onTap: () {
+                      if (sdgListController.selectedSds.length >= 2) {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ChoosedGoalsScreen(),
+                            ));
+                      } else {
+                        Fluttertoast.showToast(
+                            gravity: ToastGravity.CENTER,
+                            msg: 'Please Select Atleast 2 or more Goals',
+                            backgroundColor: ColorConstants.buttonColorLight);
+                      }
+                    },
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Image.asset(r'assets/images/pgviewbasket.png'),
+                        Positioned(
+                            // top: 30,
+                            // left: 0,
+                            child: Text(
+                          itemCount.toString(),
+                          style: GoogleFonts.lato(
+                              fontSize: 24, fontWeight: FontWeight.bold),
+                        )),
+                      ],
+                    ),
                   );
                 },
               )),

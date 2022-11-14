@@ -25,43 +25,55 @@ class ChoosedRow extends StatelessWidget {
       onTap: ontap,
       child: Container(
         decoration: BoxDecoration(
-            color: Colors.grey.withOpacity(0.1),
+            border:
+                Border.all(color: ColorConstants.buttonColorLight, width: 2),
+            color: Colors.white,
             borderRadius: BorderRadius.circular(size.width * 0.02)),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Flexible(
-              flex: 1,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [Flexible(child: leading)],
-              ),
-            ),
-            SizedBox(
-              width: size.width * 0.010,
-            ),
-            Expanded(
-                flex: 4,
+        child: Padding(
+          padding: EdgeInsets.all(size.height * 0.005),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Flexible(
+                flex: 1,
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      overflow: TextOverflow.visible,
-                      title,
-                      style: tileHeadingStyle(size),
-                    ),
-                    SizedBox(
-                      height: size.height * 0.010,
-                    ),
-                    Text(
-                      overflow: TextOverflow.clip,
-                      subtitle,
-                      style: tileDescriptionStyle(size),
-                    ),
-                  ],
-                )),
-          ],
+                  children: [Flexible(child: leading)],
+                ),
+              ),
+              SizedBox(
+                width: size.width * 0.010,
+              ),
+              Expanded(
+                  flex: 4,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Flexible(
+                        flex: 1,
+                        child: Text(
+                          overflow: TextOverflow.ellipsis,
+                          title,
+                          style: tileHeadingStyle(size),
+                        ),
+                      ),
+                      SizedBox(
+                        height: size.height * 0.007,
+                      ),
+                      Flexible(
+                        flex: 2,
+                        child: Text(
+                          overflow: TextOverflow.ellipsis,
+                          subtitle,
+                          maxLines: 2,
+                          style: tileDescriptionStyle(size),
+                        ),
+                      ),
+                    ],
+                  )),
+            ],
+          ),
         ),
       ),
     );
@@ -70,7 +82,7 @@ class ChoosedRow extends StatelessWidget {
   tileHeadingStyle(Size size) {
     return GoogleFonts.poppins(
         fontWeight: FontWeight.w700,
-        fontSize: size.height * 0.020,
+        fontSize: size.height * 0.018,
         color: ColorConstants.introPageTextColor);
   }
 

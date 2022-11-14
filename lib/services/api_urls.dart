@@ -1,21 +1,18 @@
 class ApiUrls {
-  static const String endPointSignUp =
-      'https://savvy.eigix.net/webservices/signup';
+  static const String baseUrl = 'https://savvy.eigix.net/';
 
-  static const String endPointLogin =
-      'https://savvy.eigix.net/webservices/login';
+  static const String endPointSignUp = 'webservices/signup';
 
-  static const String endPointUpdate =
-      'https://savvy.eigix.net/webservices/update_profile/';
+  static const String endPointLogin = 'webservices/login';
 
-  static const String endPointGetOtp =
-      'https://savvy.eigix.net/webservices/reset_password/';
+  static const String endPointUpdate = 'webservices/update_profile/';
+
+  static const String endPointGetOtp = 'webservices/reset_password/';
+
   static const String endPointChangePassword =
-      'https://savvy.eigix.net/webservices/reset_password_set/';
+      'webservices/reset_password_set/';
 
-  static const String endPointCalculator =
-      'https://savvy.eigix.net/webservices/investment_calculator/';
+  static const String endPointCalculator = 'webservices/investment_calculator/';
 
-  static const String endPointGetAllSdgs =
-      'https://savvy.eigix.net/webservices/get_sdgs';
+  static const String endPointGetAllSdgs = 'webservices/get_sdgs';
 }

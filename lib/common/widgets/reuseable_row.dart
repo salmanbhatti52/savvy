@@ -1,5 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class ReuseableRow extends StatelessWidget {
   const ReuseableRow({
@@ -19,26 +19,34 @@ class ReuseableRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Expanded(flex: 1, child: sideContainer),
+        SizedBox(
+          width: size.width * 0.02,
+        ),
         Expanded(
             flex: 60,
             child: Container(
               color: color,
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Flexible(
                     flex: 1,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Flexible(flex: 4, child: image),
-                        const Flexible(flex: 1, child: SizedBox()),
+                        Flexible(flex: 6, child: image),
+                        //  const Flexible(flex: 1, child: SizedBox()),
                       ],
                     ),
+                  ),
+                  SizedBox(
+                    width: size.width * 0.005,
                   ),
                   Expanded(flex: 5, child: tileText),
                   Flexible(flex: 1, child: dropDownButton),
