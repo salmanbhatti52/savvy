@@ -67,7 +67,7 @@ class PageViewScreenFour extends StatelessWidget {
   }
 
   Widget svgImage(Size size) {
-    return Image.asset(r'assets/images/pngpnf.png');
+    return Image.asset(r'assets/images/Group 1670.png');
   }
 
   descriptonText(Size size) {

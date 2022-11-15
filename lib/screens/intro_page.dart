@@ -10,11 +10,33 @@ import 'package:savvy/screens/dialouges/not_found_sdg.dart';
 import 'package:savvy/screens/features/updateuser_screen.dart';
 import 'package:savvy/screens/page_view_Screens/page_view.dart';
 import 'package:savvy/utils/color_constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class IntroPage extends StatelessWidget {
-  IntroPage({super.key});
+class IntroPage extends StatefulWidget {
+  const IntroPage({super.key});
   static const String screenName = 'Intro';
+
+  @override
+  State<IntroPage> createState() => _IntroPageState();
+}
+
+class _IntroPageState extends State<IntroPage> {
   final getName = Get.put(IntroPageController());
+  String userName = '';
+
+  @override
+  void initState() {
+    print('intro page int');
+    super.initState();
+    getUserName();
+  }
+
+  void getUserName() async {
+    print('intro page getusername');
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    userName = pref.getString('UserName').toString();
+    print(userName);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +71,7 @@ class IntroPage extends StatelessWidget {
                     left: size.width * 0.22,
                     // right: 200,
                     child: Text(
-                      getName.getUserName(),
+                      userName,
                       style: GoogleFonts.firaSans(
                           fontSize: size.height * 0.030,
                           fontWeight: FontWeight.w400,
@@ -146,24 +168,6 @@ class IntroPage extends StatelessWidget {
   }
 
   // AppBar _buldAppBar() {
-  //   return AppBar(
-  //     elevation: 0,
-  //     leading: Builder(
-  //       builder: (context) {
-  //         return IconButton(
-  //             onPressed: () {
-  //               Scaffold.of(context).openDrawer();
-  //             },
-  //             icon: const Icon(
-  //               Icons.menu_open,
-  //               color: Colors.green,
-  //             ));
-  //       },
-  //     ),
-  //     backgroundColor: Colors.transparent,
-  //   );
-  // }
-
   _buildDrawer(BuildContext context, User? user) {
     return Drawer(
       backgroundColor: ColorConstants.buttonColor,
