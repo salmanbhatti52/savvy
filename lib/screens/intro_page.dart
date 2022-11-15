@@ -1,8 +1,10 @@
 import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:savvy/common/widgets/custom_button.dart';
+import 'package:savvy/controllers/intro_page_controller.dart';
 import 'package:savvy/models/user.dart';
 import 'package:savvy/screens/dialouges/not_found_sdg.dart';
 import 'package:savvy/screens/features/updateuser_screen.dart';
@@ -10,8 +12,9 @@ import 'package:savvy/screens/page_view_Screens/page_view.dart';
 import 'package:savvy/utils/color_constants.dart';
 
 class IntroPage extends StatelessWidget {
-  const IntroPage({super.key});
+  IntroPage({super.key});
   static const String screenName = 'Intro';
+  final getName = Get.put(IntroPageController());
 
   @override
   Widget build(BuildContext context) {
@@ -34,9 +37,25 @@ class IntroPage extends StatelessWidget {
       children: [
         Flexible(
             flex: 6,
-            child: SvgPicture.asset(
-              r'assets/svgs/intropagesvg.svg',
-              fit: BoxFit.fitWidth,
+            child: Stack(
+              // alignment: Alignment.center,
+              children: [
+                SvgPicture.asset(
+                  r'assets/svgs/intropagesvg.svg',
+                  fit: BoxFit.fitWidth,
+                ),
+                Positioned(
+                    top: size.height * 0.12,
+                    left: size.width * 0.22,
+                    // right: 200,
+                    child: Text(
+                      getName.getUserName(),
+                      style: GoogleFonts.firaSans(
+                          fontSize: size.height * 0.030,
+                          fontWeight: FontWeight.w400,
+                          color: ColorConstants.introPageTextColor),
+                    )),
+              ],
             )),
         Flexible(
           flex: 6,

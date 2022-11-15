@@ -2,9 +2,11 @@ import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:http/http.dart';
+import 'package:http/http.dart' as http;
 import 'package:savvy/common/widgets/loader.dart';
+import 'package:savvy/controllers/intro_page_controller.dart';
 import 'package:savvy/models/create_user.dart';
 import 'package:savvy/screens/intro_page.dart';
 import 'package:savvy/screens/login_page.dart';
@@ -29,6 +31,7 @@ class _SignUpPageState extends State<SignUpPage> {
   final ApiServices _apiServices = ApiServices();
   final _formKey = GlobalKey<FormState>();
   bool isClicked = true;
+  final userNameController = Get.put(IntroPageController());
 
   @override
   void initState() {
@@ -230,15 +233,17 @@ class _SignUpPageState extends State<SignUpPage> {
             isClicked = false;
           });
           if (_formKey.currentState!.validate()) {
-            Response response = await _apiServices.signUpWithApi(CreateUser(
-                onesignalId: "",
-                fullName: _nameController.text,
-                userEmail: _emailController.text,
-                userPassword: _passwordController.text,
-                notificationSwitch: "yes"));
+            http.Response response = await _apiServices.signUpWithApi(
+                CreateUser(
+                    onesignalId: "",
+                    fullName: _nameController.text,
+                    userEmail: _emailController.text,
+                    userPassword: _passwordController.text,
+                    notificationSwitch: "yes"));
 
             if (response.statusCode == 200 && mounted) {
               Navigator.popAndPushNamed(context, IntroPage.screenName);
+              userNameController.setUserName(_nameController.text);
               showToast('User Created Successfully');
             } else {
               setState(() {

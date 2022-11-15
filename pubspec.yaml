@@ -53,6 +53,7 @@ dependencies:
   url_launcher: ^6.1.6
   get: ^4.6.5
   form_validator: ^1.0.3
+  shared_preferences: ^2.0.15
 
 dev_dependencies:
   change_app_package_name: ^0.1.3

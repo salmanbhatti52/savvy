@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
@@ -5,7 +7,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'package:savvy/common/widgets/reuseable_row.dart';
-import 'package:savvy/screens/post_page_view_screens/select_plan_screen.dart';
+import 'package:savvy/screens/page_view_Screens/page_view_screen_six.dart';
 import 'package:savvy/services/api_urls.dart';
 import 'package:savvy/utils/dialog_const.dart';
 import 'package:savvy/utils/portfolio_screen_utils.dart';
@@ -16,19 +18,19 @@ import '../../utils/color_constants.dart';
 
 class PortFolioScreen extends StatefulWidget {
   const PortFolioScreen({super.key});
+  static const String screenName = '/PortfolioScreen';
 
   @override
   State<PortFolioScreen> createState() => _PortFolioScreenState();
 }
 
 class _PortFolioScreenState extends State<PortFolioScreen> {
+  Random random = Random();
   late Size size;
   int selected = 0;
   int itemIndex = -1;
   int sepratorIndex = 0;
   final sdgListController = Get.put(SdgsListController());
-
-//Random random = Random();
   List<Color> tileColors = [
     DialogConst.firstColor,
     DialogConst.secondColor,
@@ -58,7 +60,6 @@ class _PortFolioScreenState extends State<PortFolioScreen> {
   @override
   Widget build(BuildContext context) {
     leading = portfolioUtils.tileImages;
-    //  print('build is Called');
     size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: _buildAppBar(),
@@ -154,7 +155,8 @@ class _PortFolioScreenState extends State<PortFolioScreen> {
         ontap: () {
           Navigator.push(context, MaterialPageRoute(
             builder: (context) {
-              return const SelectPlanScreen();
+              sdgListController.selectedSds = [];
+              return const PageViewScreenSix();
             },
           ));
         },
@@ -164,7 +166,7 @@ class _PortFolioScreenState extends State<PortFolioScreen> {
         width: size.width * 0.6,
         spreadRadius: size.height * 0.002,
         child: Text(
-          '''Let's Go''',
+          '''RESELECT SDG'S''',
           style: GoogleFonts.poppins(
             color: Colors.white,
             fontSize: size.height * 0.025,
@@ -175,12 +177,16 @@ class _PortFolioScreenState extends State<PortFolioScreen> {
   Widget pieChart() {
     return PieChart(
       animationDuration: const Duration(seconds: 1),
-      colorList: const [
-        Color(0xFFDCF0E5),
-        Color(0xFFC9BAF2),
-        Color(0xFF016654),
-        Color(0xFF202445),
-        Color(0xFF02E0A3),
+      colorList: [
+        Color(int.parse(list[random.nextInt(list.length)].colorCode)),
+        Color(int.parse(list[random.nextInt(list.length)].colorCode)),
+        Color(int.parse(list[random.nextInt(list.length)].colorCode)),
+        Color(int.parse(list[random.nextInt(list.length)].colorCode)),
+        Color(int.parse(list[random.nextInt(list.length)].colorCode)),
+        Color(int.parse(list[random.nextInt(list.length)].colorCode)),
+        Color(int.parse(list[random.nextInt(list.length)].colorCode)),
+        Color(int.parse(list[random.nextInt(list.length)].colorCode)),
+        Color(int.parse(list[random.nextInt(list.length)].colorCode)),
       ],
       chartValuesOptions: const ChartValuesOptions(
         showChartValuesInPercentage: true,
@@ -197,6 +203,10 @@ class _PortFolioScreenState extends State<PortFolioScreen> {
         'three': 20,
         'four': 20,
         'five': 20,
+        'six': 20,
+        'seven': 20,
+        'eight': 20,
+        'nine': 20,
       },
       chartRadius: size.height * 0.20,
       chartType: ChartType.ring,
@@ -353,191 +363,12 @@ class _PortFolioScreenState extends State<PortFolioScreen> {
                 setState(() {
                   itemIndex = index;
                 });
-
                 //print(itemIndex.toString());
               },
               child: const Icon(
                   Icons.expand_more_sharp)) // child: MyExpansionTile(
-          //     key: Key(index.toString()),
-          //     initiallyExpanded: index == selected,
-          //     onExpansionChanged: (newstate) {
-          //       if (newstate) {
-          //         setState(() {
-          //           const Duration(seconds: 20000);
 
-          //           selected = index;
-          //         });
-          //       } else {
-          //         setState(() {
-          //           selected = -1;
-          //         });
-          //       }
-          //     },
-          //     // sideContainer: const SizedBox(),
-          //     image: Container(
-          //       color: Colors.purple,
-          //       width: 40,
-          //       child: Row(
-          //         mainAxisAlignment: MainAxisAlignment.start,
-          //         children: [
-          //           Expanded(
-          //             child: Container(
-          //               color: Colors.red,
-          //               width: 10,
-          //             ),
-          //           ),
-          //           const Icon(
-          //             Icons.add,
-          //             size: 10,
-          //           )
-          //         ],
-          //       ),
-          //     ),
-          //     tileText: const Text('DEWTWETA'),
-          //     color: index % 2 == 0 ? Colors.white : Colors.grey.withOpacity(0.1),
-          //     child: Container(
-          //       height: size.height * 0.067,
-          //       width: size.width,
-          //       color: tileColors[index],
-          //     )),
           ),
     );
   }
 }
-
-
-
-//  MyExpansionTile(
-//             sideContainer: Container(color: Colors.white),
-//             image: const Icon(Icons.add),
-//             tileText: const Text('okay'),
-//             child: SizedBox(
-//               height: 40,
-//               width: size.width,
-//             )),
-
-// Widget _title() {
-//   return Container(
-//     color: Colors.transparent,
-//     child: Row(
-//       children: [
-//         Flexible(
-//             flex: 4,
-//             child: Container(
-//               //  color: Colors.orange,
-//               child: Row(
-//                 mainAxisAlignment: MainAxisAlignment.end,
-//                 children: [
-//                   Flexible(
-//                       child: SizedBox(
-//                           height: 27,
-//                           width: 60,
-//                           child: SvgPicture.asset(
-//                               'assets/svgs/appnamelandingpg.svg')))
-//                 ],
-//               ),
-//             )),
-//         Flexible(
-//             flex: 3,
-//             child: Row(
-//               mainAxisAlignment: MainAxisAlignment.end,
-//               children: [
-//                 Column(
-//                   mainAxisAlignment: MainAxisAlignment.center,
-//                   children: [
-//                     const Icon(Icons.read_more),
-//                     SizedBox(
-//                       height: size.height * 0.010,
-//                     )
-//                   ],
-//                 ),
-//                 const SizedBox(
-//                   width: 5,
-//                 )
-//               ],
-//             )),
-//       ],
-//     ),
-//   );
-// }
-
-// return SingleChildScrollView(
-//       child: SizedBox(
-//         child: Row(
-//           children: [
-//             Flexible(
-//                 flex: 1,
-//                 child: Container(
-//                   color: Colors.red,
-//                   width: 6,
-//                   height: 100,
-//                 )),
-//             Flexible(
-//               flex: 60,
-//               child: ExpansionTileCard(
-//                 title: const Text('No Poverty'),
-//                 leading: SizedBox(
-//                     height: 150,
-//                     width: 45,
-//                     child: Align(
-//                         alignment: Alignment.topCenter,
-//                         child:
-//                             Image.asset(r'assets/images/selecteditem2.png'))),
-//                 children: [
-//                   Container(
-//                     height: 50,
-//                     width: size.width,
-//                     color: Colors.red,
-//                   )
-//                 ],
-//               ),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-
-// chart.PieChart(chart.PieChartData(
-//               centerSpaceRadius: 30,
-//               //startDegreeOffset: 10,
-//               centerSpaceColor: Colors.white,
-
-//               sectionsSpace: 0,
-//               sections: [
-//                 chart.PieChartSectionData(
-//                     color: Colors.pink,
-//                     badgeWidget: const Text('okay'),
-//                     radius: 70,
-//                     borderSide:
-//                         const BorderSide(color: Colors.white, width: 5)),
-//                 chart.PieChartSectionData(
-//                     color: Colors.pink,
-//                     badgeWidget: const Text('okay'),
-//                     radius: 70,
-//                     borderSide:
-//                         const BorderSide(color: Colors.white, width: 5)),
-//                 chart.PieChartSectionData(
-//                     color: Colors.pink,
-//                     badgeWidget: const Text('okay'),
-//                     radius: 70,
-//                     borderSide:
-//                         const BorderSide(color: Colors.white, width: 5)),
-//                 chart.PieChartSectionData(
-//                     color: Colors.pink,
-//                     badgeWidget: const Text('okay'),
-//                     radius: 70,
-//                     borderSide:
-//                         const BorderSide(color: Colors.white, width: 5)),
-//                 chart.PieChartSectionData(
-//                     color: Colors.pink,
-//                     badgeWidget: const Text('okay'),
-//                     radius: 70,
-//                     borderSide:
-//                         const BorderSide(color: Colors.white, width: 3)),
-//               ],
-//               borderData: chart.FlBorderData(
-//                   border: Border.all(
-//                       // strokeAlign: StrokeAlign.inside,
-//                       color: Colors.black,
-//                       width: 6,
-//                       style: BorderStyle.solid)))),

@@ -9,15 +9,13 @@ import 'package:savvy/screens/dialouges/dialog_controller/detail_dialogs.dart';
 import 'package:savvy/screens/dialouges/dialog_controller/info_dialogs.dart';
 import 'package:savvy/screens/dialouges/info_dialog.dart';
 import 'package:savvy/screens/dialouges/reuseabel_info_dialog.dart';
-import 'package:savvy/screens/post_page_view_screens/portfolio_screen.dart';
+import 'package:savvy/screens/post_page_view_screens/chosed_goals_screen.dart';
 import 'package:savvy/services/api_services.dart';
 import 'package:savvy/utils/pgviewscreensixutils/Sc_six_utils.dart';
 
 import '../../common/widgets/custom_button.dart';
-import '../../models/sdgs_models/sdgs_list.dart';
 import '../../models/sdgs_models/update_sdgs_list.dart';
 import '../../utils/color_constants.dart';
-import '../post_page_view_screens/chosed_goals_Screen.dart';
 
 class PageViewScreenSix extends StatefulWidget {
   const PageViewScreenSix({super.key});
@@ -37,7 +35,7 @@ class _PageViewScreenSixState extends State<PageViewScreenSix> {
   List<UpdatedSdgsList> list = [];
   ScSixUtils isDragged = ScSixUtils();
   final ApiServices _apiServices = ApiServices();
-  List<SdgsList> selectedList = [];
+  List<UpdatedSdgsList> selectedList = [];
   final sdgListController = Get.put(SdgsListController());
 
   @override
@@ -56,7 +54,7 @@ class _PageViewScreenSixState extends State<PageViewScreenSix> {
     var size = MediaQuery.of(context).size;
     infoDialogs = info.getInfoDialogList(context, size);
     return ColorfulSafeArea(
-      //   color: Colors.white,
+      color: Colors.white,
       child: Scaffold(
         body: Padding(
           padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
@@ -118,16 +116,13 @@ class _PageViewScreenSixState extends State<PageViewScreenSix> {
             child: SizedBox(
               child: MyButton(
                   ontap: () {
-                    if (sdgListController.selectedSds.length >= 2) {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const PortFolioScreen(),
-                          ));
+                    if (sdgListController.selectedSds.length >= 5) {
+                      Navigator.pushNamed(
+                          context, ChoosedGoalsScreen.screenName);
                     } else {
                       Fluttertoast.showToast(
                           gravity: ToastGravity.CENTER,
-                          msg: 'Please Select Atleast 2 or more Goals',
+                          msg: 'Please Select Atleast 5 or more Goals',
                           backgroundColor: ColorConstants.buttonColorLight);
                     }
                   },
@@ -182,13 +177,22 @@ class _PageViewScreenSixState extends State<PageViewScreenSix> {
                     width: size.width * 0.24,
                     child: Draggable(
                       onDragCompleted: () {
-                        setState(() {
-                          isDragged.goal1 = false;
-                          itemCount++;
-                          sdgListController.addSdgs(list[0]);
+                        // selectedList = sdgListController.getSelectedSdgs();
 
-                          //  print('onDragged Completed');
-                        });
+                        // var contain = selectedList.where(
+                        //   (element) => element.systemSdgsId == '1',
+                        // );
+                        var contain = isContains('1');
+
+                        if (contain.isEmpty) {
+                          setState(() {
+                            isDragged.goal1 = false;
+                            itemCount++;
+                            sdgListController.addSdgs(list[0]);
+                          });
+                        } else {
+                          showToast();
+                        }
                       },
                       feedback: Card(
                         child: Image.asset(r'assets/images/pgsixcompnent1.png'),
@@ -227,13 +231,16 @@ class _PageViewScreenSixState extends State<PageViewScreenSix> {
                 width: size.width * 0.24,
                 child: Draggable(
                   onDragCompleted: () {
-                    setState(() {
-                      isDragged.goal2 = false;
-                      itemCount++;
-                      sdgListController.addSdgs(list[1]);
-
-                      //  print('onDragged Completed');
-                    });
+                    var contain = isContains('2');
+                    if (contain.isEmpty) {
+                      setState(() {
+                        isDragged.goal2 = false;
+                        itemCount++;
+                        sdgListController.addSdgs(list[1]);
+                      });
+                    } else {
+                      showToast();
+                    }
                   },
                   feedback: Card(
                     child: Image.asset(r'assets/images/pgsixcompnent2.png'),
@@ -270,11 +277,16 @@ class _PageViewScreenSixState extends State<PageViewScreenSix> {
                 width: size.width * 0.24,
                 child: Draggable(
                   onDragCompleted: () {
-                    setState(() {
-                      isDragged.goal3 = false;
-                      itemCount++;
-                      sdgListController.addSdgs(list[2]);
-                    });
+                    var contain = isContains('3');
+                    if (contain.isEmpty) {
+                      setState(() {
+                        isDragged.goal3 = false;
+                        itemCount++;
+                        sdgListController.addSdgs(list[2]);
+                      });
+                    } else {
+                      showToast();
+                    }
                   },
                   feedback: Card(
                     child: Image.asset(r'assets/images/pgsixcompnent3.png'),
@@ -321,11 +333,16 @@ class _PageViewScreenSixState extends State<PageViewScreenSix> {
                 width: size.width * 0.24,
                 child: Draggable(
                   onDragCompleted: () {
-                    setState(() {
-                      isDragged.goal4 = false;
-                      itemCount++;
-                      sdgListController.addSdgs(list[3]);
-                    });
+                    var contain = isContains('4');
+                    if (contain.isEmpty) {
+                      setState(() {
+                        isDragged.goal4 = false;
+                        itemCount++;
+                        sdgListController.addSdgs(list[3]);
+                      });
+                    } else {
+                      showToast();
+                    }
                   },
                   feedback: Card(
                     child: Image.asset(r'assets/images/pgsixcompnent4.png'),
@@ -362,11 +379,16 @@ class _PageViewScreenSixState extends State<PageViewScreenSix> {
                 width: size.width * 0.24,
                 child: Draggable(
                   onDragCompleted: () {
-                    setState(() {
-                      isDragged.goal5 = false;
-                      itemCount++;
-                      sdgListController.addSdgs(list[4]);
-                    });
+                    var contain = isContains('5');
+                    if (contain.isEmpty) {
+                      setState(() {
+                        isDragged.goal5 = false;
+                        itemCount++;
+                        sdgListController.addSdgs(list[4]);
+                      });
+                    } else {
+                      showToast();
+                    }
                   },
                   feedback: Card(
                     child: Image.asset(r'assets/images/pgsixcompnent5.png'),
@@ -400,11 +422,16 @@ class _PageViewScreenSixState extends State<PageViewScreenSix> {
                 width: size.width * 0.24,
                 child: Draggable(
                   onDragCompleted: () {
-                    setState(() {
-                      isDragged.goal6 = false;
-                      itemCount++;
-                      sdgListController.addSdgs(list[5]);
-                    });
+                    var contain = isContains('6');
+                    if (contain.isEmpty) {
+                      setState(() {
+                        isDragged.goal6 = false;
+                        itemCount++;
+                        sdgListController.addSdgs(list[5]);
+                      });
+                    } else {
+                      showToast();
+                    }
                   },
                   feedback: Card(
                     child: Image.asset(r'assets/images/pgsixcompnent6.png'),
@@ -451,11 +478,16 @@ class _PageViewScreenSixState extends State<PageViewScreenSix> {
                 width: size.width * 0.24,
                 child: Draggable(
                   onDragCompleted: () {
-                    setState(() {
-                      isDragged.goal7 = false;
-                      itemCount++;
-                      sdgListController.addSdgs(list[6]);
-                    });
+                    var contain = isContains('7');
+                    if (contain.isEmpty) {
+                      setState(() {
+                        isDragged.goal7 = false;
+                        itemCount++;
+                        sdgListController.addSdgs(list[6]);
+                      });
+                    } else {
+                      showToast();
+                    }
                   },
                   feedback: Card(
                     child: Image.asset(r'assets/images/pgcomponent7.png'),
@@ -492,11 +524,16 @@ class _PageViewScreenSixState extends State<PageViewScreenSix> {
                 width: size.width * 0.24,
                 child: Draggable(
                   onDragCompleted: () {
-                    setState(() {
-                      isDragged.goal8 = false;
-                      itemCount++;
-                      sdgListController.addSdgs(list[7]);
-                    });
+                    var contain = isContains('8');
+                    if (contain.isEmpty) {
+                      setState(() {
+                        isDragged.goal8 = false;
+                        itemCount++;
+                        sdgListController.addSdgs(list[7]);
+                      });
+                    } else {
+                      showToast();
+                    }
                   },
                   feedback: Card(
                     child: Image.asset(r'assets/images/pgcomponent8.png'),
@@ -533,11 +570,16 @@ class _PageViewScreenSixState extends State<PageViewScreenSix> {
                 width: size.width * 0.24,
                 child: Draggable(
                   onDragCompleted: () {
-                    setState(() {
-                      isDragged.goal9 = false;
-                      itemCount++;
-                      sdgListController.addSdgs(list[8]);
-                    });
+                    var contain = isContains('9');
+                    if (contain.isEmpty) {
+                      setState(() {
+                        isDragged.goal9 = false;
+                        itemCount++;
+                        sdgListController.addSdgs(list[8]);
+                      });
+                    } else {
+                      showToast();
+                    }
                   },
                   feedback: Card(
                     child: Image.asset(r'assets/images/pgcomponent9.png'),
@@ -584,11 +626,16 @@ class _PageViewScreenSixState extends State<PageViewScreenSix> {
                 width: size.width * 0.24,
                 child: Draggable(
                   onDragCompleted: () {
-                    setState(() {
-                      isDragged.goal10 = false;
-                      itemCount++;
-                      sdgListController.addSdgs(list[9]);
-                    });
+                    var contain = isContains('10');
+                    if (contain.isEmpty) {
+                      setState(() {
+                        isDragged.goal10 = false;
+                        itemCount++;
+                        sdgListController.addSdgs(list[9]);
+                      });
+                    } else {
+                      showToast();
+                    }
                   },
                   feedback: Card(
                     child: Image.asset(r'assets/images/pgcomponent10.png'),
@@ -625,11 +672,16 @@ class _PageViewScreenSixState extends State<PageViewScreenSix> {
                 width: size.width * 0.24,
                 child: Draggable(
                   onDragCompleted: () {
-                    setState(() {
-                      isDragged.goal11 = false;
-                      itemCount++;
-                      sdgListController.addSdgs(list[10]);
-                    });
+                    var contain = isContains('11');
+                    if (contain.isEmpty) {
+                      setState(() {
+                        isDragged.goal11 = false;
+                        itemCount++;
+                        sdgListController.addSdgs(list[10]);
+                      });
+                    } else {
+                      showToast();
+                    }
                   },
                   feedback: Card(
                     child: Image.asset(r'assets/images/pgcomponent11.png'),
@@ -666,11 +718,16 @@ class _PageViewScreenSixState extends State<PageViewScreenSix> {
                 width: size.width * 0.24,
                 child: Draggable(
                   onDragCompleted: () {
-                    setState(() {
-                      isDragged.goal12 = false;
-                      itemCount++;
-                      sdgListController.addSdgs(list[11]);
-                    });
+                    var contain = isContains('12');
+                    if (contain.isEmpty) {
+                      setState(() {
+                        isDragged.goal12 = false;
+                        itemCount++;
+                        sdgListController.addSdgs(list[11]);
+                      });
+                    } else {
+                      showToast();
+                    }
                   },
                   feedback: Card(
                     child: Image.asset(r'assets/images/pgcomponent12.png'),
@@ -717,11 +774,16 @@ class _PageViewScreenSixState extends State<PageViewScreenSix> {
                 width: size.width * 0.24,
                 child: Draggable(
                   onDragCompleted: () {
-                    setState(() {
-                      isDragged.goal13 = false;
-                      itemCount++;
-                      sdgListController.addSdgs(list[12]);
-                    });
+                    var contain = isContains('13');
+                    if (contain.isEmpty) {
+                      setState(() {
+                        isDragged.goal13 = false;
+                        itemCount++;
+                        sdgListController.addSdgs(list[12]);
+                      });
+                    } else {
+                      showToast();
+                    }
                   },
                   feedback: Card(
                     child: Image.asset(r'assets/images/pgcomponent13.png'),
@@ -758,11 +820,16 @@ class _PageViewScreenSixState extends State<PageViewScreenSix> {
                 width: size.width * 0.24,
                 child: Draggable(
                   onDragCompleted: () {
-                    setState(() {
-                      isDragged.goal14 = false;
-                      itemCount++;
-                      sdgListController.addSdgs(list[13]);
-                    });
+                    var contain = isContains('14');
+                    if (contain.isEmpty) {
+                      setState(() {
+                        isDragged.goal14 = false;
+                        itemCount++;
+                        sdgListController.addSdgs(list[13]);
+                      });
+                    } else {
+                      showToast();
+                    }
                   },
                   feedback: Card(
                     child: Image.asset(r'assets/images/pgcomponent14.png'),
@@ -799,11 +866,16 @@ class _PageViewScreenSixState extends State<PageViewScreenSix> {
                 width: size.width * 0.24,
                 child: Draggable(
                   onDragCompleted: () {
-                    setState(() {
-                      isDragged.goal15 = false;
-                      itemCount++;
-                      sdgListController.addSdgs(list[14]);
-                    });
+                    var contain = isContains('15');
+                    if (contain.isEmpty) {
+                      setState(() {
+                        isDragged.goal15 = false;
+                        itemCount++;
+                        sdgListController.addSdgs(list[14]);
+                      });
+                    } else {
+                      showToast();
+                    }
                   },
                   feedback: Card(
                     child: Image.asset(r'assets/images/pgcomponent15.png'),
@@ -850,11 +922,16 @@ class _PageViewScreenSixState extends State<PageViewScreenSix> {
                 width: size.width * 0.24,
                 child: Draggable(
                   onDragCompleted: () {
-                    setState(() {
-                      isDragged.goal16 = false;
-                      itemCount++;
-                      sdgListController.addSdgs(list[15]);
-                    });
+                    var contain = isContains('16');
+                    if (contain.isEmpty) {
+                      setState(() {
+                        isDragged.goal16 = false;
+                        itemCount++;
+                        sdgListController.addSdgs(list[15]);
+                      });
+                    } else {
+                      showToast();
+                    }
                   },
                   feedback: Card(
                     child: Image.asset(r'assets/images/pgcomponent16.png'),
@@ -891,11 +968,16 @@ class _PageViewScreenSixState extends State<PageViewScreenSix> {
                 width: size.width * 0.24,
                 child: Draggable(
                   onDragCompleted: () {
-                    setState(() {
-                      isDragged.goal17 = false;
-                      itemCount++;
-                      sdgListController.addSdgs(list[16]);
-                    });
+                    var contain = isContains('17');
+                    if (contain.isEmpty) {
+                      setState(() {
+                        isDragged.goal17 = false;
+                        itemCount++;
+                        sdgListController.addSdgs(list[16]);
+                      });
+                    } else {
+                      showToast();
+                    }
                   },
                   feedback: Card(
                     child: Image.asset(r'assets/images/pgcomponent17.png'),
@@ -929,35 +1011,17 @@ class _PageViewScreenSixState extends State<PageViewScreenSix> {
               )),
               Flexible(child: DragTarget(
                 builder: (context, candidateData, rejectedData) {
-                  return GestureDetector(
-                    onTap: () {
-                      if (sdgListController.selectedSds.length >= 2) {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const ChoosedGoalsScreen(),
-                            ));
-                      } else {
-                        Fluttertoast.showToast(
-                            gravity: ToastGravity.CENTER,
-                            msg: 'Please Select Atleast 2 or more Goals',
-                            backgroundColor: ColorConstants.buttonColorLight);
-                      }
-                    },
-                    child: Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        Image.asset(r'assets/images/pgviewbasket.png'),
-                        Positioned(
-                            // top: 30,
-                            // left: 0,
-                            child: Text(
-                          itemCount.toString(),
-                          style: GoogleFonts.lato(
-                              fontSize: 24, fontWeight: FontWeight.bold),
-                        )),
-                      ],
-                    ),
+                  return Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Image.asset(r'assets/images/pgviewbasket.png'),
+                      Positioned(
+                          child: Text(
+                        itemCount.toString(),
+                        style: GoogleFonts.lato(
+                            fontSize: 24, fontWeight: FontWeight.bold),
+                      )),
+                    ],
                   );
                 },
               )),
@@ -966,5 +1030,21 @@ class _PageViewScreenSixState extends State<PageViewScreenSix> {
         ),
       ],
     );
+  }
+
+  List<UpdatedSdgsList> isContains(String id) {
+    selectedList = sdgListController.getSelectedSdgs();
+
+    List<UpdatedSdgsList> contain = selectedList
+        .where(
+          (element) => element.systemSdgsId == id,
+        )
+        .toList();
+
+    return contain;
+  }
+
+  showToast() {
+    Fluttertoast.showToast(msg: 'Item Already Exists');
   }
 }

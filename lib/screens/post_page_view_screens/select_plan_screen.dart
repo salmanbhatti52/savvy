@@ -9,7 +9,7 @@ import 'package:http/http.dart';
 import 'package:savvy/models/invesment_model.dart';
 import 'package:savvy/screens/blogscreens/blog_screen_one.dart';
 import 'package:savvy/screens/login_page.dart';
-import 'package:savvy/screens/post_page_view_screens/temp_screen.dart';
+import 'package:savvy/screens/post_page_view_screens/portfolio_screen.dart';
 import 'package:savvy/services/api_services.dart';
 
 import '../../utils/color_constants.dart';
@@ -17,6 +17,7 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 
 class SelectPlanScreen extends StatefulWidget {
   const SelectPlanScreen({super.key});
+  static const String screenName = '/SelectPlanScreen';
 
   @override
   State<SelectPlanScreen> createState() => _SelectPlanScreenState();
@@ -69,9 +70,7 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
           });
         }
       },
-      endDrawer: Theme(
-          data: Theme.of(context).copyWith(canvasColor: Colors.black),
-          child: myEndDrawer()),
+      endDrawer: myEndDrawer(),
       appBar: _buildAppBar(),
       body: selectedPlanBody(),
     );
@@ -607,7 +606,8 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
                   Flexible(
                       child: InkWell(
                     onTap: () {
-                      Navigator.popAndPushNamed(context, TempScreen.screenName);
+                      Navigator.popAndPushNamed(
+                          context, PortFolioScreen.screenName);
                     },
                     child: Text(
                       'PORTFOLIO',

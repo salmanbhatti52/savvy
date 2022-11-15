@@ -121,7 +121,7 @@ class _ResetScreenState extends State<ResetScreen> {
         ontap: () {
           Navigator.push(context, MaterialPageRoute(
             builder: (context) {
-              return const IntroPage();
+              return IntroPage();
             },
           ));
         },

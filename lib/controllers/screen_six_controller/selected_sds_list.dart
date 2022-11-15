@@ -4,6 +4,7 @@ import '../../models/sdgs_models/update_sdgs_list.dart';
 
 class SdgsListController extends GetxController {
   List<UpdatedSdgsList> selectedSds = [];
+  List<String> sdgsColors = [];
 
   void addSdgs(UpdatedSdgsList item) {
     selectedSds.add(item);
@@ -15,5 +16,11 @@ class SdgsListController extends GetxController {
 
   List<UpdatedSdgsList> getSelectedSdgs() {
     return selectedSds;
+  }
+
+  void getColors() {
+    for (int i = 0; i <= selectedSds.length; i++) {
+      sdgsColors.add(selectedSds[i].colorCode);
+    }
   }
 }

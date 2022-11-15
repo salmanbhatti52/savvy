@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
+import 'package:savvy/screens/intro_page.dart';
 import 'package:savvy/screens/landing_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -15,8 +17,20 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(seconds: 3),
-        () => Navigator.popAndPushNamed(context, LandingPage.screenName));
+    navigateTo();
+  }
+
+  Future<void> navigateTo() async {
+    print("@@@@@@@@@@");
+    SharedPreferences pref = await SharedPreferences.getInstance();
+
+    if (pref.getBool("loggedIn") == true) {
+      Timer(const Duration(seconds: 3),
+          () => Navigator.pushNamed(context, IntroPage.screenName));
+    } else {
+      Timer(const Duration(seconds: 3),
+          () => Navigator.pushNamed(context, LandingPage.screenName));
+    }
   }
 
   @override

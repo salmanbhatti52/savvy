@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -13,6 +15,7 @@ import 'package:savvy/screens/intro_page.dart';
 import 'package:savvy/screens/signup_page.dart';
 import 'package:savvy/services/api_services.dart';
 import 'package:savvy/utils/color_constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -218,6 +221,7 @@ class _LoginPageState extends State<LoginPage> {
         setState(() {
           isClicked = false;
         });
+        SharedPreferences pref = await SharedPreferences.getInstance();
 
         if (_loginFormKey.currentState!.validate()) {
           Response response = await _apiServices.loginWithApi(Loginuser(
@@ -229,6 +233,13 @@ class _LoginPageState extends State<LoginPage> {
 
           if (response.statusCode == 200 && mounted) {
             Navigator.popAndPushNamed(context, IntroPage.screenName);
+            pref.setBool('loggedIn', true);
+            var data = jsonDecode(response.body);
+            String userName = data["data"]["user"]["full_name"];
+            pref.setString('UserName', userName);
+            // print(userName);
+
+            // print(pref.getBool('loggedIn'));
             showToast('Login Successfull');
           } else {
             setState(() {

@@ -4,9 +4,12 @@ import 'package:savvy/screens/blogscreens/blog_screen_one.dart';
 import 'package:savvy/screens/intro_page.dart';
 import 'package:savvy/screens/landing_page.dart';
 import 'package:savvy/screens/login_page.dart';
+import 'package:savvy/screens/post_page_view_screens/chosed_goals_screen.dart';
+import 'package:savvy/screens/post_page_view_screens/portfolio_screen.dart';
+import 'package:savvy/screens/post_page_view_screens/select_plan_screen.dart';
 import 'package:savvy/screens/post_page_view_screens/selected_screen.dart';
-import 'package:savvy/screens/post_page_view_screens/temp_screen.dart';
 import 'package:savvy/screens/signup_page.dart';
+import 'package:savvy/screens/splash_screen.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
@@ -27,14 +30,13 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: Colors.white,
         ),
         debugShowCheckedModeBanner: false,
-        home: const SignUpPage(),
+        home: const SplashScreen(),
         routes: {
-          TempScreen.screenName: (context) => const TempScreen(),
           LandingPage.screenName: (context) {
             return const LandingPage();
           },
           IntroPage.screenName: (context) {
-            return const IntroPage();
+            return IntroPage();
           },
           LoginPage.screenName: (context) {
             return const LoginPage();
@@ -47,7 +49,11 @@ class MyApp extends StatelessWidget {
           },
           BlogScreen.screenName: (context) {
             return const BlogScreen();
-          }
+          },
+          ChoosedGoalsScreen.screenName: (context) =>
+              const ChoosedGoalsScreen(),
+          PortFolioScreen.screenName: (context) => const PortFolioScreen(),
+          SelectPlanScreen.screenName: (context) => const SelectPlanScreen(),
         });
   }
 }

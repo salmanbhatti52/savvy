@@ -19,6 +19,8 @@ import '../../utils/color_constants.dart';
 class ChoosedGoalsScreen extends StatefulWidget {
   const ChoosedGoalsScreen({super.key});
 
+  static const String screenName = '/ChoosedScreen';
+
   @override
   State<ChoosedGoalsScreen> createState() => _ChoosedGoalsScreenState();
 }
@@ -121,11 +123,7 @@ class _ChoosedGoalsScreenState extends State<ChoosedGoalsScreen> {
             child: SizedBox(
               child: MyButton(
                   ontap: () {
-                    Navigator.push(context, MaterialPageRoute(
-                      builder: (context) {
-                        return const SelectedScreen();
-                      },
-                    ));
+                    Navigator.pushNamed(context, SelectedScreen.screenName);
                   },
                   radius: size.height * 0.04,
                   color: ColorConstants.buttonColor,

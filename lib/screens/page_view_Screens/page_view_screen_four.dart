@@ -14,7 +14,7 @@ class PageViewScreenFour extends StatelessWidget {
     var size = MediaQuery.of(context).size;
 
     return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         Flexible(flex: 2, child: svgImage(size)),
         Expanded(flex: 1, child: descriptonText(size)),
@@ -67,7 +67,7 @@ class PageViewScreenFour extends StatelessWidget {
   }
 
   Widget svgImage(Size size) {
-    return Image.asset(r'assets/images/pgscreenfour.png');
+    return Image.asset(r'assets/images/pngpnf.png');
   }
 
   descriptonText(Size size) {

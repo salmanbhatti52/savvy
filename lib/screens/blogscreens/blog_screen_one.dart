@@ -1,9 +1,13 @@
-import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:savvy/screens/blogscreens/bolg_detail_screen.dart';
+import 'package:savvy/screens/post_page_view_screens/select_plan_screen.dart';
+import 'package:savvy/screens/post_page_view_screens/selected_screen.dart';
 import 'package:savvy/utils/color_constants.dart';
+
+import '../login_page.dart';
 
 class BlogScreen extends StatefulWidget {
   const BlogScreen({super.key});
@@ -13,16 +17,31 @@ class BlogScreen extends StatefulWidget {
 }
 
 class _BlogScreenState extends State<BlogScreen> {
+  Color sytemUiOverlayColor = Colors.white;
+
   late Size size;
 
   @override
   Widget build(BuildContext context) {
     size = MediaQuery.of(context).size;
-    return ColorfulSafeArea(
-        color: Colors.white,
-        child: Scaffold(
-          body: _buildBody(),
-        ));
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: _buildAppBar(),
+      endDrawer: myEndDrawer(),
+      onEndDrawerChanged: (isOpened) {
+        if (isOpened == true) {
+          setState(() {
+            sytemUiOverlayColor = const Color(0xFFCBF6E8);
+          });
+        } else {
+          setState(() {
+            sytemUiOverlayColor = Colors.white;
+          });
+        }
+      },
+      drawerEnableOpenDragGesture: false,
+      body: _buildBody(),
+    );
   }
 
   Widget _buildBody() {
@@ -32,7 +51,6 @@ class _BlogScreenState extends State<BlogScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Flexible(flex: 1, child: _titleRow()),
           Flexible(
               flex: 1,
               child: Text(
@@ -52,32 +70,186 @@ class _BlogScreenState extends State<BlogScreen> {
     );
   }
 
-  Widget _titleRow() {
-    var title = SizedBox(
-        height: 30, child: SvgPicture.asset(r'assets/svgs/appnamesvg.svg'));
-    var icon = Icon(
-      Icons.menu,
-      size: size.height * 0.040,
-    );
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        Expanded(
-            flex: 3,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [Flexible(child: title)],
-            )),
-        Expanded(
-            flex: 2,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [Flexible(child: icon)],
-            )),
+  AppBar _buildAppBar() {
+    return AppBar(
+      systemOverlayStyle: SystemUiOverlayStyle(
+        statusBarColor: sytemUiOverlayColor,
+        statusBarIconBrightness: Brightness.dark,
+      ),
+      elevation: 0,
+      backgroundColor: Colors.transparent,
+      centerTitle: true,
+      title: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          SizedBox(
+              height: size.height * 0.0257,
+              child: SvgPicture.asset('assets/svgs/appnamelandingpg.svg')),
+        ],
+      ),
+      actions: [
+        Builder(builder: (context) {
+          return InkWell(
+            onTap: () {
+              Scaffold.of(context).openEndDrawer();
+            },
+            child: Icon(
+              Icons.menu,
+              size: size.height * 0.030,
+              color: ColorConstants.introPageTextColor,
+            ),
+          );
+        }),
+        SizedBox(
+          width: size.width * 0.040,
+        )
       ],
+    );
+  }
+
+  // Widget _titleRow() {
+  //   var title = SizedBox(
+  //       height: 30, child: SvgPicture.asset(r'assets/svgs/appnamesvg.svg'));
+  //   var icon = GestureDetector(
+  //     onTap: () => Scaffold.of(context).openEndDrawer(),
+  //     child: Icon(
+  //       Icons.menu,
+  //       size: size.height * 0.040,
+  //     ),
+  //   );
+  //   return Row(
+  //     crossAxisAlignment: CrossAxisAlignment.center,
+  //     mainAxisAlignment: MainAxisAlignment.end,
+  //     children: [
+  //       Expanded(
+  //           flex: 3,
+  //           child: Row(
+  //             mainAxisAlignment: MainAxisAlignment.end,
+  //             crossAxisAlignment: CrossAxisAlignment.end,
+  //             children: [Flexible(child: title)],
+  //           )),
+  //       Expanded(
+  //           flex: 2,
+  //           child: Column(
+  //             mainAxisAlignment: MainAxisAlignment.start,
+  //             crossAxisAlignment: CrossAxisAlignment.end,
+  //             children: [Flexible(child: icon)],
+  //           )),
+  //     ],
+  //   );
+  // }
+
+  Widget myEndDrawer() {
+    return Container(
+      width: size.width,
+      height: size.height,
+      color: const Color(0xFFCBF6E8),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          const Flexible(flex: 1, child: SizedBox()),
+          Flexible(
+              flex: 3,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Flexible(
+                      flex: 2,
+                      child: Builder(builder: (context) {
+                        return IconButton(
+                          icon: const Icon(Icons.close),
+                          onPressed: () {
+                            Scaffold.of(context).closeEndDrawer();
+                          },
+                        );
+                      })),
+                  SizedBox(
+                    width: size.width * 0.020,
+                  )
+                ],
+              )),
+          Flexible(
+              flex: 1,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Flexible(
+                    child: SizedBox(
+                        height: size.height * 0.027,
+                        child: SvgPicture.asset(
+                            'assets/svgs/appnamelandingpg.svg')),
+                  ),
+                ],
+              )),
+          SizedBox(
+            height: size.height * 0.060,
+          ),
+          Flexible(
+              flex: 10,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Flexible(child: Builder(builder: (context) {
+                    return InkWell(
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(
+                          builder: (context) {
+                            return const SelectedScreen();
+                          },
+                        ));
+                      },
+                      child: Text(
+                        'MY IMPACT',
+                        style: _drawerTextStyle(),
+                      ),
+                    );
+                  })),
+                  Flexible(
+                      child: InkWell(
+                    onTap: () {
+                      Navigator.popAndPushNamed(
+                          context, SelectPlanScreen.screenName);
+                    },
+                    child: Text(
+                      'PORTFOLIO',
+                      style: _drawerTextStyle(),
+                    ),
+                  )),
+                  Flexible(
+                      child: InkWell(
+                    onTap: () {
+                      Navigator.popAndPushNamed(context, BlogScreen.screenName);
+                    },
+                    child: Text(
+                      'LEARN',
+                      style: _drawerTextStyle(),
+                    ),
+                  )),
+                  Flexible(
+                      child: InkWell(
+                    onTap: () {
+                      Navigator.popAndPushNamed(context, LoginPage.screenName);
+                    },
+                    child: Text(
+                      'Logout',
+                      style: _drawerTextStyle(),
+                    ),
+                  )),
+                  const Flexible(
+                    child: SizedBox(),
+                  ),
+                ],
+              )),
+          Expanded(
+              flex: 8,
+              child: Image.asset(
+                r'assets/images/drawerpng.png',
+                fit: BoxFit.fitWidth,
+              )),
+        ],
+      ),
     );
   }
 
@@ -221,5 +393,12 @@ class _BlogScreenState extends State<BlogScreen> {
         color: ColorConstants.introPageTextColor,
         fontSize: size.height * 0.025,
         fontWeight: FontWeight.w400);
+  }
+
+  _drawerTextStyle() {
+    return GoogleFonts.firaSans(
+        color: ColorConstants.introPageTextColor,
+        fontSize: size.height * 0.040,
+        fontWeight: FontWeight.w300);
   }
 }
