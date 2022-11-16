@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -29,18 +31,21 @@ class _IntroPageState extends State<IntroPage> {
     //  print('intro page int');
     super.initState();
     getUserName();
+    Timer(const Duration(microseconds: 500), () => setState(() {}));
   }
 
+  //   pref.setString('UserName', userName);
+
   void getUserName() async {
-//print('intro page getusername');
     SharedPreferences pref = await SharedPreferences.getInstance();
-    userName = pref.getString('UserName').toString();
-    //  print(userName);
+    String userNamee = pref.getString('UserName').toString();
+    debugPrint("introPage UserName  $userName");
+    userName = userNamee;
   }
 
   @override
   Widget build(BuildContext context) {
-    print(userName);
+    debugPrint(userName);
     var size = MediaQuery.of(context).size;
     var user = ModalRoute.of(context)!.settings.arguments as User?;
 

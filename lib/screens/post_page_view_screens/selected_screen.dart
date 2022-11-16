@@ -71,8 +71,8 @@ class _SelectedScreenState extends State<SelectedScreen> {
     for (int i = 0; i < list.length; i++) {
       chartMap[i.toString()] = 100 / list.length;
       colorList.add(Color(int.parse(list[i].colorCode)));
-      debugPrint(chartMap[i.toString()].toString());
-      debugPrint((100 / list.length).toString());
+      // debugPrint(chartMap[i.toString()].toString());
+      // debugPrint((100 / list.length).toString());
     }
     return chartMap;
   }

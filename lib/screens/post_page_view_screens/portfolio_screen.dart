@@ -54,12 +54,26 @@ class _PortFolioScreenState extends State<PortFolioScreen> {
   PortfolioUtils portfolioUtils = PortfolioUtils();
   List<String> leading = [];
   late List<UpdatedSdgsList> list;
+  List<Color> colorList = [];
   Color sytemUiOverlayColor = Colors.white;
+  Map<String, double> pieChartMap = {};
 
   @override
   void initState() {
     super.initState();
     list = sdgListController.selectedSds;
+    pieChartMap = adToMap();
+  }
+
+  Map<String, double> adToMap() {
+    Map<String, double> chartMap = {};
+    for (int i = 0; i < list.length; i++) {
+      chartMap[i.toString()] = 100 / list.length;
+      colorList.add(Color(int.parse(list[i].colorCode)));
+      // debugPrint(chartMap[i.toString()].toString());
+      // debugPrint((100 / list.length).toString());
+    }
+    return chartMap;
   }
 
   @override
@@ -174,17 +188,7 @@ class _PortFolioScreenState extends State<PortFolioScreen> {
   Widget pieChart() {
     return PieChart(
       animationDuration: const Duration(seconds: 1),
-      colorList: [
-        Color(int.parse(list[random.nextInt(list.length)].colorCode)),
-        Color(int.parse(list[random.nextInt(list.length)].colorCode)),
-        Color(int.parse(list[random.nextInt(list.length)].colorCode)),
-        Color(int.parse(list[random.nextInt(list.length)].colorCode)),
-        Color(int.parse(list[random.nextInt(list.length)].colorCode)),
-        Color(int.parse(list[random.nextInt(list.length)].colorCode)),
-        Color(int.parse(list[random.nextInt(list.length)].colorCode)),
-        Color(int.parse(list[random.nextInt(list.length)].colorCode)),
-        Color(int.parse(list[random.nextInt(list.length)].colorCode)),
-      ],
+      colorList: colorList,
       chartValuesOptions: const ChartValuesOptions(
         showChartValuesInPercentage: true,
         // chartValueBackgroundColor: Colors.white,
@@ -194,17 +198,7 @@ class _PortFolioScreenState extends State<PortFolioScreen> {
             TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
       ),
       legendOptions: const LegendOptions(showLegends: false),
-      dataMap: const {
-        'one': 20,
-        'two': 20,
-        'three': 20,
-        'four': 20,
-        'five': 20,
-        'six': 20,
-        'seven': 20,
-        'eight': 20,
-        'nine': 20,
-      },
+      dataMap: pieChartMap,
       chartRadius: size.height * 0.20,
       chartType: ChartType.ring,
       ringStrokeWidth: size.height * 0.085,

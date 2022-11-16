@@ -1,12 +1,16 @@
 import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:form_validator/form_validator.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart';
 import 'package:savvy/common/widgets/custom_button.dart';
 import 'package:savvy/common/widgets/otp_screen_textfeild.dart';
 import 'package:savvy/common/widgets/round_icon_button.dart';
 import 'package:savvy/screens/features/reset_screen.dart';
 import 'package:savvy/utils/color_constants.dart';
+
+import '../../services/api_services.dart';
 
 class OtpScreen extends StatefulWidget {
   const OtpScreen({super.key});
@@ -17,6 +21,7 @@ class OtpScreen extends StatefulWidget {
 
 class _OtpScreenState extends State<OtpScreen> {
   late TextEditingController _emailController;
+  final ApiServices _apiServices = ApiServices();
 
   @override
   void initState() {
@@ -114,12 +119,16 @@ class _OtpScreenState extends State<OtpScreen> {
 
   Widget _actionButton() {
     return MyButton(
-        ontap: () {
-          Navigator.push(context, MaterialPageRoute(
-            builder: (context) {
-              return const ResetScreen();
-            },
-          ));
+        ontap: () async {
+          Response response = await _apiServices
+              .getOtpWithApi(_emailController.text.toString());
+
+          if (response.statusCode == 200 && mounted) {
+            Navigator.pushNamed(context, ResetScreen.screenName);
+            Fluttertoast.showToast(msg: 'Otp Sent to EmailAddress');
+          } else {
+            Fluttertoast.showToast(msg: 'Something went Wrong');
+          }
         },
         radius: size.width * 0.07,
         color: ColorConstants.buttonColorLight,

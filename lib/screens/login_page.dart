@@ -240,15 +240,11 @@ class _LoginPageState extends State<LoginPage> {
           var data = jsonDecode(response.body);
           String userName = data["data"]["user"]["full_name"];
           pref.setString('UserName', userName);
-          //print(userName);
+          debugPrint("loginpageuser name   $userName");
 
           if (response.statusCode == 200 && mounted) {
             Navigator.popAndPushNamed(context, IntroPage.screenName);
             pref.setBool('loggedIn', true);
-
-            // print(userName);
-
-            // print(pref.getBool('loggedIn'));
             showToast('Login Successfull');
           } else {
             setState(() {

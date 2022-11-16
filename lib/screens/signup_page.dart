@@ -206,7 +206,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       Flexible(
                         child: SignUpPageTextFeild(
                             controller: _passwordController,
-                            hintText: 'Enter Passwored',
+                            hintText: 'Enter Min 5 Character',
                             validator: ValidationBuilder()
                                 .minLength(5)
                                 .maxLength(50)

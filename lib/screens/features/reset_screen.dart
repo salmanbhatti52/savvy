@@ -11,6 +11,7 @@ import '../../utils/color_constants.dart';
 class ResetScreen extends StatefulWidget {
   const ResetScreen({super.key, this.userId});
   final String? userId;
+  static const String screenName = '/ResetScreen';
 
   @override
   State<ResetScreen> createState() => _ResetScreenState();
@@ -121,7 +122,7 @@ class _ResetScreenState extends State<ResetScreen> {
         ontap: () {
           Navigator.push(context, MaterialPageRoute(
             builder: (context) {
-              return IntroPage();
+              return const IntroPage();
             },
           ));
         },

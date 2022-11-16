@@ -3,8 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:savvy/screens/blogscreens/bolg_detail_screen.dart';
+import 'package:savvy/screens/post_page_view_screens/portfolio_screen.dart';
 import 'package:savvy/screens/post_page_view_screens/select_plan_screen.dart';
-import 'package:savvy/screens/post_page_view_screens/selected_screen.dart';
 import 'package:savvy/utils/color_constants.dart';
 
 import '../login_page.dart';
@@ -25,7 +25,7 @@ class _BlogScreenState extends State<BlogScreen> {
   Widget build(BuildContext context) {
     size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: Colors.white,
+      //   backgroundColor: Colors.white,
       appBar: _buildAppBar(),
       endDrawer: myEndDrawer(),
       onEndDrawerChanged: (isOpened) {
@@ -194,11 +194,8 @@ class _BlogScreenState extends State<BlogScreen> {
                   Flexible(child: Builder(builder: (context) {
                     return InkWell(
                       onTap: () {
-                        Navigator.push(context, MaterialPageRoute(
-                          builder: (context) {
-                            return const SelectedScreen();
-                          },
-                        ));
+                        Navigator.pushNamed(
+                            context, SelectPlanScreen.screenName);
                       },
                       child: Text(
                         'MY IMPACT',
@@ -210,7 +207,7 @@ class _BlogScreenState extends State<BlogScreen> {
                       child: InkWell(
                     onTap: () {
                       Navigator.popAndPushNamed(
-                          context, SelectPlanScreen.screenName);
+                          context, PortFolioScreen.screenName);
                     },
                     child: Text(
                       'PORTFOLIO',
@@ -220,7 +217,7 @@ class _BlogScreenState extends State<BlogScreen> {
                   Flexible(
                       child: InkWell(
                     onTap: () {
-                      Navigator.popAndPushNamed(context, BlogScreen.screenName);
+                      Scaffold.of(context).closeEndDrawer();
                     },
                     child: Text(
                       'LEARN',

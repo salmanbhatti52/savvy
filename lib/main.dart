@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:savvy/screens/blogscreens/blog_screen_one.dart';
+import 'package:savvy/screens/features/reset_screen.dart';
 import 'package:savvy/screens/intro_page.dart';
 import 'package:savvy/screens/landing_page.dart';
 import 'package:savvy/screens/login_page.dart';
@@ -54,6 +55,7 @@ class MyApp extends StatelessWidget {
               const ChoosedGoalsScreen(),
           PortFolioScreen.screenName: (context) => const PortFolioScreen(),
           SelectPlanScreen.screenName: (context) => const SelectPlanScreen(),
+          ResetScreen.screenName: (context) => const ResetScreen(),
         });
   }
 }

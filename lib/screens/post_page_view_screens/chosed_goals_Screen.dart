@@ -1,4 +1,6 @@
 // ignore: file_names
+import 'dart:async';
+
 import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,6 +13,7 @@ import 'package:savvy/screens/dialouges/info_dialog.dart';
 import 'package:savvy/screens/dialouges/not_found_sdg.dart';
 import 'package:savvy/screens/post_page_view_screens/selected_screen.dart';
 import 'package:savvy/services/api_urls.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../common/widgets/custom_button.dart';
 import '../../controllers/screen_six_controller/selected_sds_list.dart';
@@ -33,10 +36,14 @@ class _ChoosedGoalsScreenState extends State<ChoosedGoalsScreen> {
   late List<UpdatedSdgsList> list;
   DetailDialogs detailDialogs = DetailDialogs();
 
+  String userName = '';
+
   @override
   void initState() {
     super.initState();
     list = sdgListController.selectedSds;
+    getUserName();
+    Timer(const Duration(microseconds: 500), () => setState(() {}));
   }
 
   @override
@@ -61,7 +68,7 @@ class _ChoosedGoalsScreenState extends State<ChoosedGoalsScreen> {
           Flexible(
               flex: 1,
               child: Text(
-                'Nice work, Ellen. ',
+                'Nice work, $userName ',
                 style: tileHeadingStyle(),
               )),
           Flexible(
@@ -244,6 +251,13 @@ class _ChoosedGoalsScreenState extends State<ChoosedGoalsScreen> {
           subtitle: list[index].description,
           leading: Image.network(ApiUrls.baseUrl + list[index].image)),
     );
+  }
+
+  void getUserName() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String userNamee = pref.getString('UserName').toString();
+    debugPrint("introPage UserName  $userNamee");
+    userName = userNamee;
   }
 }
 
