@@ -244,7 +244,7 @@ class _LoginPageState extends State<LoginPage> {
 
           if (response.statusCode == 200 && mounted) {
             Navigator.popAndPushNamed(context, IntroPage.screenName);
-            pref.setBool('loggedIn', true);
+            //    pref.setBool('loggedIn', true);
             showToast('Login Successfull');
           } else {
             setState(() {

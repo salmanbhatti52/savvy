@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -12,6 +14,7 @@ import 'package:savvy/screens/intro_page.dart';
 import 'package:savvy/screens/login_page.dart';
 import 'package:savvy/services/api_services.dart';
 import 'package:form_validator/form_validator.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../common/widgets/custom_button.dart';
 import '../common/widgets/text_feilds.dart';
 import '../utils/color_constants.dart';
@@ -232,6 +235,9 @@ class _SignUpPageState extends State<SignUpPage> {
           setState(() {
             isClicked = false;
           });
+
+          SharedPreferences pref = await SharedPreferences.getInstance();
+
           if (_formKey.currentState!.validate()) {
             http.Response response = await _apiServices.signUpWithApi(
                 CreateUser(
@@ -240,6 +246,11 @@ class _SignUpPageState extends State<SignUpPage> {
                     userEmail: _emailController.text,
                     userPassword: _passwordController.text,
                     notificationSwitch: "yes"));
+            var data = jsonDecode(response.body);
+
+            String userName = data["data"]["user"]["full_name"];
+            pref.setString('UserName', userName);
+            debugPrint("loginpageuser name   $userName");
 
             if (response.statusCode == 200 && mounted) {
               Navigator.popAndPushNamed(context, IntroPage.screenName);
