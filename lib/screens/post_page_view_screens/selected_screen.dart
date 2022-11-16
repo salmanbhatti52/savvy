@@ -30,6 +30,7 @@ class SelectedScreen extends StatefulWidget {
 
 class _SelectedScreenState extends State<SelectedScreen> {
   Color sytemUiOverlayColor = Colors.white;
+  List<Color> colorList = [];
 
   Random random = Random();
   late Size size;
@@ -62,23 +63,24 @@ class _SelectedScreenState extends State<SelectedScreen> {
   void initState() {
     super.initState();
     list = sdgListController.selectedSds;
-    //  adToMap();
+    pieChartMap = adToMap();
   }
 
-  // Map<String, double> adToMap() {
-  //   Map<String, double> chartMap = {};
+  Map<String, double> adToMap() {
+    Map<String, double> chartMap = {};
+    for (int i = 0; i < list.length; i++) {
+      chartMap[i.toString()] = 100 / list.length;
+      colorList.add(Color(int.parse(list[i].colorCode)));
+      debugPrint(chartMap[i.toString()].toString());
+      debugPrint((100 / list.length).toString());
+    }
+    return chartMap;
+  }
 
-  //   for (int i = 0; i < list.length; i++) {
-  //     pieChartMap[list[i].toString()] =
-  //         double.parse(list[i].systemSdgsId) / 100;
-  //     print(pieChartMap[list[i].toString()]);
-  //     print("@@@@@${double.parse(list[i].systemSdgsId)}");
-  //  return chartMap;
-  // }
-  // }
   @override
   Widget build(BuildContext context) {
     leading = portfolioUtils.tileImages;
+    //print(pieChartMap[]);
     size = MediaQuery.of(context).size;
     return Scaffold(
       endDrawer: myEndDrawer(),
@@ -187,17 +189,7 @@ class _SelectedScreenState extends State<SelectedScreen> {
   Widget pieChart() {
     return PieChart(
       animationDuration: const Duration(seconds: 1),
-      colorList: [
-        Color(int.parse(list[random.nextInt(list.length)].colorCode)),
-        Color(int.parse(list[random.nextInt(list.length)].colorCode)),
-        Color(int.parse(list[random.nextInt(list.length)].colorCode)),
-        Color(int.parse(list[random.nextInt(list.length)].colorCode)),
-        Color(int.parse(list[random.nextInt(list.length)].colorCode)),
-        Color(int.parse(list[random.nextInt(list.length)].colorCode)),
-        Color(int.parse(list[random.nextInt(list.length)].colorCode)),
-        Color(int.parse(list[random.nextInt(list.length)].colorCode)),
-        Color(int.parse(list[random.nextInt(list.length)].colorCode)),
-      ],
+      colorList: colorList,
       chartValuesOptions: const ChartValuesOptions(
         showChartValuesInPercentage: true,
         // chartValueBackgroundColor: Colors.white,
@@ -207,13 +199,7 @@ class _SelectedScreenState extends State<SelectedScreen> {
             TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
       ),
       legendOptions: const LegendOptions(showLegends: false),
-      dataMap: const {
-        '1': 20,
-        '2': 20,
-        '3': 20,
-        '4': 20,
-        '5': 20,
-      },
+      dataMap: pieChartMap,
       chartRadius: size.height * 0.20,
       chartType: ChartType.ring,
       ringStrokeWidth: size.height * 0.085,

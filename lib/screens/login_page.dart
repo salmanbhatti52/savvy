@@ -223,6 +223,8 @@ class _LoginPageState extends State<LoginPage> {
   Widget _loginButton() {
     return MyButton(
       ontap: () async {
+        FocusScope.of(context).unfocus();
+
         setState(() {
           isClicked = false;
         });
