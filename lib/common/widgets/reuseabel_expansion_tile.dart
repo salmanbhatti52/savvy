@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class MyExpansionTile extends StatelessWidget {
   const MyExpansionTile({
     Key? key,
-    this.sideContainer,
+    required this.sideContainer,
     required this.image,
     required this.tileText,
     this.dropDownButton,
@@ -14,7 +14,7 @@ class MyExpansionTile extends StatelessWidget {
     this.initiallyExpanded = false,
   }) : super(key: key);
 
-  final Widget? sideContainer;
+  final Widget sideContainer;
   final Widget image;
   final Widget tileText;
   final Widget? dropDownButton;
@@ -25,24 +25,28 @@ class MyExpansionTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+    return Column(
       children: [
-        //Expanded(flex: 1, child: sideContainer),
-        Expanded(
-            flex: 60,
-            child: ExpansionTile(
-              initiallyExpanded: initiallyExpanded,
-              title: tileText,
-              maintainState: false,
-              onExpansionChanged: onExpansionChanged,
-              leading: image,
-              backgroundColor: color,
-              collapsedBackgroundColor: color,
-              children: [
-                child,
-              ],
-            )),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Flexible(flex: 1, child: sideContainer),
+            Expanded(
+                flex: 60,
+                child: ExpansionTile(
+                  initiallyExpanded: initiallyExpanded,
+                  title: tileText,
+                  maintainState: false,
+                  onExpansionChanged: onExpansionChanged,
+                  leading: image,
+                  backgroundColor: color,
+                  collapsedBackgroundColor: color,
+                  children: [
+                    child,
+                  ],
+                )),
+          ],
+        ),
       ],
     );
   }

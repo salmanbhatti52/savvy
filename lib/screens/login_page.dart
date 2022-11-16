@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -42,6 +43,10 @@ class _LoginPageState extends State<LoginPage> {
   late Size size;
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor: Colors.white,
+      statusBarIconBrightness: Brightness.dark,
+    ));
     size = MediaQuery.of(context).size;
     var viewinset = MediaQuery.of(context).viewInsets.bottom;
     return ColorfulSafeArea(
@@ -230,13 +235,15 @@ class _LoginPageState extends State<LoginPage> {
               onesignalId: ""));
           debugPrint(_emailController.text);
           debugPrint(_passwordController.text);
+          var data = jsonDecode(response.body);
+          String userName = data["data"]["user"]["full_name"];
+          pref.setString('UserName', userName);
+          //print(userName);
 
           if (response.statusCode == 200 && mounted) {
             Navigator.popAndPushNamed(context, IntroPage.screenName);
             pref.setBool('loggedIn', true);
-            var data = jsonDecode(response.body);
-            String userName = data["data"]["user"]["full_name"];
-            pref.setString('UserName', userName);
+
             // print(userName);
 
             // print(pref.getBool('loggedIn'));

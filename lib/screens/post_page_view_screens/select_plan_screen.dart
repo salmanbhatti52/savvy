@@ -11,6 +11,7 @@ import 'package:savvy/screens/blogscreens/blog_screen_one.dart';
 import 'package:savvy/screens/login_page.dart';
 import 'package:savvy/screens/post_page_view_screens/portfolio_screen.dart';
 import 'package:savvy/services/api_services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../utils/color_constants.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
@@ -626,8 +627,15 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
                   )),
                   Flexible(
                       child: InkWell(
-                    onTap: () {
-                      Navigator.popAndPushNamed(context, LoginPage.screenName);
+                    onTap: () async {
+                      SharedPreferences pref =
+                          await SharedPreferences.getInstance();
+                      pref.setBool('loggedIn', false);
+                      print(pref.getBool('loggedIn'));
+                      if (mounted) {
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, LoginPage.screenName, (route) => false);
+                      }
                     },
                     child: Text(
                       'Logout',

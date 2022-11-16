@@ -6,15 +6,19 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pie_chart/pie_chart.dart';
-import 'package:savvy/common/widgets/reuseable_row.dart';
 import 'package:savvy/screens/page_view_Screens/page_view_screen_six.dart';
+import 'package:savvy/screens/post_page_view_screens/select_plan_screen.dart';
 import 'package:savvy/services/api_urls.dart';
 import 'package:savvy/utils/dialog_const.dart';
 import 'package:savvy/utils/portfolio_screen_utils.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../common/widgets/custom_button.dart';
+import '../../common/widgets/reuseabel_expansion_tile.dart';
 import '../../controllers/screen_six_controller/selected_sds_list.dart';
 import '../../models/sdgs_models/update_sdgs_list.dart';
 import '../../utils/color_constants.dart';
+import '../blogscreens/blog_screen_one.dart';
+import '../login_page.dart';
 
 class PortFolioScreen extends StatefulWidget {
   const PortFolioScreen({super.key});
@@ -27,8 +31,8 @@ class PortFolioScreen extends StatefulWidget {
 class _PortFolioScreenState extends State<PortFolioScreen> {
   Random random = Random();
   late Size size;
-  int selected = 0;
-  int itemIndex = -1;
+  int selected = -1;
+  // int itemIndex = -1;
   int sepratorIndex = 0;
   final sdgListController = Get.put(SdgsListController());
   List<Color> tileColors = [
@@ -50,6 +54,7 @@ class _PortFolioScreenState extends State<PortFolioScreen> {
   PortfolioUtils portfolioUtils = PortfolioUtils();
   List<String> leading = [];
   late List<UpdatedSdgsList> list;
+  Color sytemUiOverlayColor = Colors.white;
 
   @override
   void initState() {
@@ -62,6 +67,18 @@ class _PortFolioScreenState extends State<PortFolioScreen> {
     leading = portfolioUtils.tileImages;
     size = MediaQuery.of(context).size;
     return Scaffold(
+      endDrawer: myEndDrawer(),
+      onDrawerChanged: (isOpened) {
+        if (isOpened == true) {
+          setState(() {
+            sytemUiOverlayColor = const Color(0xFFCBF6E8);
+          });
+        } else {
+          setState(() {
+            sytemUiOverlayColor = Colors.white;
+          });
+        }
+      },
       appBar: _buildAppBar(),
       body: _portfolioBody(),
     );
@@ -120,29 +137,9 @@ class _PortFolioScreenState extends State<PortFolioScreen> {
               key: Key('builder ${selected.toString()}'),
               itemBuilder: _itemBuilder,
               separatorBuilder: (context, index) {
-                if (itemIndex == index) {
-                  //  print("seprator index$index");
-                  return Container(
-                    height: size.height * 0.080,
-                    width: size.width,
-                    color: Color(int.parse(list[index].colorCode)),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        overflow: TextOverflow.fade,
-                        list[index].description.toString(),
-                        style: GoogleFonts.poppins(
-                            color: Colors.black,
-                            fontSize: size.height * 0.020,
-                            fontWeight: FontWeight.w400),
-                      ),
-                    ),
-                  );
-                } else {
-                  return const Divider(
-                    height: 4,
-                  );
-                }
+                return const SizedBox(
+                  height: 5,
+                );
               },
             )),
         Flexible(flex: 1, child: acitionButton()),
@@ -334,41 +331,250 @@ class _PortFolioScreenState extends State<PortFolioScreen> {
   //   );
   // }
 
-  Widget _itemBuilder(BuildContext context, int index) {
-    return SizedBox(
-      height: size.height * 0.070,
-      width: size.width,
-      child: ReuseableRow(
-          color: Colors.white,
-          sideContainer: Container(
-            color: Color(int.parse(list[index].colorCode)),
-            // width: 10,
-          ),
-          image: SizedBox(
-              height: size.height * 0.20,
-              width: size.width * 0.10,
-              child: Image.network(
-                ApiUrls.baseUrl + list[index].image,
-                fit: BoxFit.scaleDown,
-              )),
-          tileText: Text(
-            "${list[index].systemSdgsId}. ${list[index].title}",
-            style: GoogleFonts.poppins(
-                color: ColorConstants.landingPageTitleColor,
-                fontSize: size.height * 0.020),
-          ),
-          dropDownButton: GestureDetector(
-              onTap: () {
-                debugPrint('ontap');
-                setState(() {
-                  itemIndex = index;
-                });
-                //print(itemIndex.toString());
-              },
-              child: const Icon(
-                  Icons.expand_more_sharp)) // child: MyExpansionTile(
+  // Widget _itemBuilder(BuildContext context, int index) {
+  //   return SizedBox(
+  //     height: size.height * 0.070,
+  //     width: size.width,
+  //     child: ReuseableRow(
+  //         color: Colors.white,
+  //         sideContainer: Container(
+  //           color: Color(int.parse(list[index].colorCode)),
+  //           // width: 10,
+  //         ),
+  //         image: SizedBox(
+  //             height: size.height * 0.20,
+  //             width: size.width * 0.10,
+  //             child: Image.network(
+  //               ApiUrls.baseUrl + list[index].image,
+  //               fit: BoxFit.scaleDown,
+  //             )),
+  //         tileText: Text(
+  //           "${list[index].systemSdgsId}. ${list[index].title}",
+  //           style: GoogleFonts.poppins(
+  //               color: ColorConstants.landingPageTitleColor,
+  //               fontSize: size.height * 0.020),
+  //         ),
+  //         dropDownButton: GestureDetector(
+  //             onTap: () {
+  //               debugPrint('ontap');
+  //               setState(() {
+  //                 itemIndex = index;
+  //               });
+  //               //print(itemIndex.toString());
+  //             },
+  //             child: const Icon(
+  //                 Icons.expand_more_sharp)) // child: MyExpansionTile(
 
+  //         ),
+  //   );
+  // }
+  Widget _itemBuilder(BuildContext context, int index) {
+    return MyExpansionTile(
+        key: Key(index.toString()), //attention
+        initiallyExpanded: index == selected,
+        onExpansionChanged: (newState) {
+          if (newState) {
+            setState(() {
+              const Duration(seconds: 20000);
+              selected = index;
+            });
+          } else {
+            setState(() {
+              selected = -1;
+            });
+          }
+        },
+        sideContainer: Container(
+          width: 10,
+          height: size.height * 0.08,
+          color: Color(int.parse(list[index].colorCode)),
+        ),
+        image: SizedBox(
+          height: size.height * 0.20,
+          width: size.width * 0.10,
+          child: Image.network(
+            ApiUrls.baseUrl + list[index].image,
+            fit: BoxFit.scaleDown,
           ),
+        ),
+        tileText: Text(
+          "${list[index].systemSdgsId}. ${list[index].title}",
+          style: GoogleFonts.poppins(
+              color: ColorConstants.landingPageTitleColor,
+              fontSize: size.height * 0.020),
+        ),
+        child: Container(
+          color: Color(int.parse(list[index].colorCode)),
+          height: 70,
+          width: size.width,
+          child: Text(
+            overflow: TextOverflow.fade,
+            list[index].description.toString(),
+            style: GoogleFonts.poppins(
+                color: Colors.black,
+                fontSize: size.height * 0.020,
+                fontWeight: FontWeight.w400),
+          ),
+        ));
+    // // return SizedBox(
+    // //   height: size.height * 0.070,
+    // //   width: size.width,
+    // //   child: ReuseableRow(
+    // //       color: Colors.white,
+    // //       sideContainer: Container(
+    // //         color: Color(int.parse(list[index].colorCode)),
+    // //         // width: 10,
+    // //       ),
+    // //       image: SizedBox(
+    // //           height: size.height * 0.20,
+    // //           width: size.width * 0.10,
+    // //           child: Image.network(
+    // //             ApiUrls.baseUrl + list[index].image,
+    // //             fit: BoxFit.scaleDown,
+    // //           )),
+    // //       tileText: Text(
+    // //         "${list[index].systemSdgsId}. ${list[index].title}",
+    // //         style: GoogleFonts.poppins(
+    // //             color: ColorConstants.landingPageTitleColor,
+    // //             fontSize: size.height * 0.020),
+    // //       ),
+    // //       dropDownButton: GestureDetector(
+    // //           onTap: () {
+    // //             debugPrint('ontap');
+    // //             setState(() {
+    // //               itemIndex = index;
+    // //             });
+    // //             //print(itemIndex.toString());
+    // //           },
+    // //           child: const Icon(
+    // //               Icons.expand_more_sharp)) // child: MyExpansionTile(
+
+    // //       ),
+    // );
+  }
+
+  Widget myEndDrawer() {
+    return Container(
+      width: size.width,
+      height: size.height,
+      color: const Color(0xFFCBF6E8),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          const Flexible(flex: 1, child: SizedBox()),
+          Flexible(
+              flex: 3,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Flexible(
+                      flex: 2,
+                      child: Builder(builder: (context) {
+                        return IconButton(
+                          icon: const Icon(Icons.close),
+                          onPressed: () {
+                            Scaffold.of(context).closeEndDrawer();
+                          },
+                        );
+                      })),
+                  SizedBox(
+                    width: size.width * 0.020,
+                  )
+                ],
+              )),
+          Flexible(
+              flex: 1,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Flexible(
+                    child: SizedBox(
+                        height: size.height * 0.027,
+                        child: SvgPicture.asset(
+                            'assets/svgs/appnamelandingpg.svg')),
+                  ),
+                ],
+              )),
+          SizedBox(
+            height: size.height * 0.060,
+          ),
+          Flexible(
+              flex: 10,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Flexible(child: Builder(builder: (context) {
+                    return InkWell(
+                      onTap: () {
+                        Navigator.pushNamed(
+                            context, SelectPlanScreen.screenName);
+                        Scaffold.of(context).closeEndDrawer();
+                      },
+                      child: Text(
+                        'MY IMPACT',
+                        style: _textStyle(),
+                      ),
+                    );
+                  })),
+                  Flexible(
+                      child: InkWell(
+                    onTap: () {
+                      Navigator.popAndPushNamed(
+                          context, PortFolioScreen.screenName);
+                    },
+                    child: Text(
+                      'PORTFOLIO',
+                      style: _textStyle(),
+                    ),
+                  )),
+                  Flexible(
+                      child: InkWell(
+                    onTap: () {
+                      Navigator.popAndPushNamed(context, BlogScreen.screenName);
+                    },
+                    child: Text(
+                      'LEARN',
+                      style: _textStyle(),
+                    ),
+                  )),
+                  Flexible(
+                      child: InkWell(
+                    onTap: () async {
+                      SharedPreferences pref =
+                          await SharedPreferences.getInstance();
+                      pref.setBool('loggedIn', false);
+                      print(pref.getBool('loggedIn'));
+                      if (mounted) {
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, LoginPage.screenName, (route) => false);
+                      }
+                    },
+                    child: Text(
+                      'Logout',
+                      style: _textStyle(),
+                    ),
+                  )),
+                  const Flexible(
+                    child: SizedBox(),
+                  ),
+                ],
+              )),
+          Expanded(
+              flex: 8,
+              child: Image.asset(
+                r'assets/images/drawerpng.png',
+                fit: BoxFit.fitWidth,
+              )),
+        ],
+      ),
     );
+  }
+
+  _textStyle() {
+    return GoogleFonts.firaSans(
+        color: ColorConstants.introPageTextColor,
+        fontSize: size.height * 0.040,
+        fontWeight: FontWeight.w300);
   }
 }

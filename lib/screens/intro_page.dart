@@ -26,20 +26,21 @@ class _IntroPageState extends State<IntroPage> {
 
   @override
   void initState() {
-    print('intro page int');
+    //  print('intro page int');
     super.initState();
     getUserName();
   }
 
   void getUserName() async {
-    print('intro page getusername');
+//print('intro page getusername');
     SharedPreferences pref = await SharedPreferences.getInstance();
     userName = pref.getString('UserName').toString();
-    print(userName);
+    //  print(userName);
   }
 
   @override
   Widget build(BuildContext context) {
+    print(userName);
     var size = MediaQuery.of(context).size;
     var user = ModalRoute.of(context)!.settings.arguments as User?;
 
@@ -69,9 +70,8 @@ class _IntroPageState extends State<IntroPage> {
                 Positioned(
                     top: size.height * 0.12,
                     left: size.width * 0.22,
-                    // right: 200,
                     child: Text(
-                      userName,
+                      'Hello $userName',
                       style: GoogleFonts.firaSans(
                           fontSize: size.height * 0.030,
                           fontWeight: FontWeight.w400,

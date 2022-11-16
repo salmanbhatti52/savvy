@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
             return const LandingPage();
           },
           IntroPage.screenName: (context) {
-            return IntroPage();
+            return const IntroPage();
           },
           LoginPage.screenName: (context) {
             return const LoginPage();
