@@ -34,7 +34,7 @@ class _PortFolioScreenState extends State<PortFolioScreen> {
   int selected = -1;
   // int itemIndex = -1;
   int sepratorIndex = 0;
-  final sdgListController = Get.put(SdgsListController());
+  final controller = Get.find<SdgsListController>();
   List<Color> tileColors = [
     DialogConst.firstColor,
     DialogConst.secondColor,
@@ -61,7 +61,7 @@ class _PortFolioScreenState extends State<PortFolioScreen> {
   @override
   void initState() {
     super.initState();
-    list = sdgListController.selectedSds;
+    list = controller.selectedSds;
     pieChartMap = adToMap();
   }
 
@@ -82,7 +82,7 @@ class _PortFolioScreenState extends State<PortFolioScreen> {
     size = MediaQuery.of(context).size;
     return Scaffold(
       endDrawer: myEndDrawer(),
-      onDrawerChanged: (isOpened) {
+      onEndDrawerChanged: (isOpened) {
         if (isOpened == true) {
           setState(() {
             sytemUiOverlayColor = const Color(0xFFCBF6E8);
@@ -100,8 +100,8 @@ class _PortFolioScreenState extends State<PortFolioScreen> {
 
   AppBar _buildAppBar() {
     return AppBar(
-      systemOverlayStyle: const SystemUiOverlayStyle(
-        statusBarColor: Colors.white,
+      systemOverlayStyle: SystemUiOverlayStyle(
+        statusBarColor: sytemUiOverlayColor,
         statusBarIconBrightness: Brightness.dark,
       ),
       elevation: 0,
@@ -166,7 +166,7 @@ class _PortFolioScreenState extends State<PortFolioScreen> {
         ontap: () {
           Navigator.push(context, MaterialPageRoute(
             builder: (context) {
-              sdgListController.selectedSds = [];
+              controller.selectedSds = [];
               return const PageViewScreenSix();
             },
           ));
@@ -538,7 +538,8 @@ class _PortFolioScreenState extends State<PortFolioScreen> {
                       SharedPreferences pref =
                           await SharedPreferences.getInstance();
                       pref.setBool('loggedIn', false);
-                      print(pref.getBool('loggedIn'));
+                      controller.selectedSds = [];
+                      // print(pref.getBool('loggedIn'));
                       if (mounted) {
                         Navigator.pushNamedAndRemoveUntil(
                             context, LoginPage.screenName, (route) => false);

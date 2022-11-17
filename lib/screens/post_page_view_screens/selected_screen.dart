@@ -29,7 +29,6 @@ class SelectedScreen extends StatefulWidget {
 }
 
 class _SelectedScreenState extends State<SelectedScreen> {
-  Color sytemUiOverlayColor = Colors.white;
   List<Color> colorList = [];
 
   Random random = Random();
@@ -37,7 +36,7 @@ class _SelectedScreenState extends State<SelectedScreen> {
   int selected = -1;
   //int itemIndex = -1;
   int sepratorIndex = 0;
-  final sdgListController = Get.put(SdgsListController());
+  final controller = Get.find<SdgsListController>();
   Map<String, double> pieChartMap = {};
   // List<Color> tileColors = [
   //   DialogConst.firstColor,
@@ -58,11 +57,12 @@ class _SelectedScreenState extends State<SelectedScreen> {
   PortfolioUtils portfolioUtils = PortfolioUtils();
   List<String> leading = [];
   late List<UpdatedSdgsList> list;
-
+  Color sytemUiOverlayColor = Colors.white;
+  Color safeAreaColor = Colors.white;
   @override
   void initState() {
     super.initState();
-    list = sdgListController.selectedSds;
+    list = controller.selectedSds;
     pieChartMap = adToMap();
   }
 
@@ -84,7 +84,7 @@ class _SelectedScreenState extends State<SelectedScreen> {
     size = MediaQuery.of(context).size;
     return Scaffold(
       endDrawer: myEndDrawer(),
-      onDrawerChanged: (isOpened) {
+      onEndDrawerChanged: (isOpened) {
         if (isOpened == true) {
           setState(() {
             sytemUiOverlayColor = const Color(0xFFCBF6E8);
@@ -102,8 +102,8 @@ class _SelectedScreenState extends State<SelectedScreen> {
 
   AppBar _buildAppBar() {
     return AppBar(
-      systemOverlayStyle: const SystemUiOverlayStyle(
-        statusBarColor: Colors.white,
+      systemOverlayStyle: SystemUiOverlayStyle(
+        statusBarColor: sytemUiOverlayColor,
         statusBarIconBrightness: Brightness.dark,
       ),
       elevation: 0,
@@ -398,7 +398,8 @@ class _SelectedScreenState extends State<SelectedScreen> {
                       SharedPreferences pref =
                           await SharedPreferences.getInstance();
                       pref.setBool('loggedIn', false);
-                      print(pref.getBool('loggedIn'));
+                      controller.selectedSds = [];
+                      //  print(pref.getBool('loggedIn'));
                       if (mounted) {
                         Navigator.pushNamedAndRemoveUntil(
                             context, LoginPage.screenName, (route) => false);

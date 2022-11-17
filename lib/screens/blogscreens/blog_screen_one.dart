@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:savvy/screens/blogscreens/bolg_detail_screen.dart';
 import 'package:savvy/screens/post_page_view_screens/portfolio_screen.dart';
 import 'package:savvy/screens/post_page_view_screens/select_plan_screen.dart';
 import 'package:savvy/utils/color_constants.dart';
 
+import '../../controllers/screen_six_controller/selected_sds_list.dart';
 import '../login_page.dart';
 
 class BlogScreen extends StatefulWidget {
@@ -18,6 +20,7 @@ class BlogScreen extends StatefulWidget {
 
 class _BlogScreenState extends State<BlogScreen> {
   Color sytemUiOverlayColor = Colors.white;
+  final controller = Get.find<SdgsListController>();
 
   late Size size;
 
@@ -217,7 +220,7 @@ class _BlogScreenState extends State<BlogScreen> {
                   Flexible(
                       child: InkWell(
                     onTap: () {
-                      Scaffold.of(context).closeEndDrawer();
+                      Navigator.pop(context);
                     },
                     child: Text(
                       'LEARN',
@@ -227,7 +230,9 @@ class _BlogScreenState extends State<BlogScreen> {
                   Flexible(
                       child: InkWell(
                     onTap: () {
-                      Navigator.popAndPushNamed(context, LoginPage.screenName);
+                      controller.selectedSds = [];
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, LoginPage.screenName, (route) => false);
                     },
                     child: Text(
                       'Logout',

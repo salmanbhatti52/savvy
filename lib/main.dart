@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:savvy/screens/blogscreens/blog_screen_one.dart';
 import 'package:savvy/screens/features/reset_screen.dart';
 import 'package:savvy/screens/intro_page.dart';
@@ -12,7 +13,11 @@ import 'package:savvy/screens/post_page_view_screens/selected_screen.dart';
 import 'package:savvy/screens/signup_page.dart';
 import 'package:savvy/screens/splash_screen.dart';
 
+import 'controllers/screen_six_controller/selected_sds_list.dart';
+
 void main() {
+  Get.put(SdgsListController());
+
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.white,
     statusBarIconBrightness: Brightness.dark,

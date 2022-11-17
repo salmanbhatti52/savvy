@@ -38,7 +38,7 @@ class ChoosedRow extends StatelessWidget {
                 children: [
                   Flexible(child: leading),
                   Expanded(
-                      flex: 5,
+                      flex: 7,
                       child: Text(
                         title,
                         style: tileHeadingStyle(size),
@@ -76,14 +76,14 @@ class ChoosedRow extends StatelessWidget {
   tileHeadingStyle(Size size) {
     return GoogleFonts.poppins(
         fontWeight: FontWeight.w600,
-        fontSize: size.height * 0.015,
+        fontSize: size.height * 0.016,
         color: ColorConstants.introPageTextColor);
   }
 
   tileDescriptionStyle(Size size) {
     return GoogleFonts.poppins(
         color: ColorConstants.introPageTextColor,
-        fontSize: size.height * 0.018);
+        fontSize: size.height * 0.020);
   }
 }
 // Row(

@@ -58,6 +58,12 @@ class _PageViewScreenSixState extends State<PageViewScreenSix> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    sdgListController.selectedSds = [];
+  }
+
+  @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     infoDialogs = info.getInfoDialogList(context, size);
@@ -363,7 +369,7 @@ class _PageViewScreenSixState extends State<PageViewScreenSix> {
                         onDragCompleted: () {
                           if (itemCount < 5) {
                             var contain = isContains('4');
-                            if (contain.isEmpty && list.length <= 5) {
+                            if (contain.isEmpty) {
                               setState(() {
                                 isDragged.goal4 = false;
                                 itemCount++;
@@ -416,7 +422,7 @@ class _PageViewScreenSixState extends State<PageViewScreenSix> {
                         onDragCompleted: () {
                           if (itemCount < 5) {
                             var contain = isContains('5');
-                            if (contain.isEmpty && list.length <= 5) {
+                            if (contain.isEmpty) {
                               setState(() {
                                 isDragged.goal5 = false;
                                 itemCount++;
@@ -1172,11 +1178,10 @@ class _PageViewScreenSixState extends State<PageViewScreenSix> {
   }
 
   showToast() {
-    Fluttertoast.showToast(
-        msg: 'Item Already Exists Or You Have Reached Max Limit');
+    Fluttertoast.showToast(msg: 'Item Already Exists');
   }
 
   maxItemsReachedToast() {
-    Fluttertoast.showToast(msg: 'Max items Already ');
+    Fluttertoast.showToast(msg: 'Bucket Full');
   }
 }

@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:http/http.dart';
+import 'package:http/http.dart' as http;
+import 'package:savvy/controllers/screen_six_controller/selected_sds_list.dart';
 import 'package:savvy/models/invesment_model.dart';
 import 'package:savvy/screens/blogscreens/blog_screen_one.dart';
 import 'package:savvy/screens/login_page.dart';
@@ -33,6 +35,7 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
   List<String> otherItems = [];
   final ApiServices _apiServices = ApiServices();
   Color sytemUiOverlayColor = Colors.white;
+  final controller = Get.find<SdgsListController>();
 
   List<String> years = [
     '1 Year',
@@ -130,7 +133,7 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
           Flexible(
             flex: 1,
             child: Text(
-              'your potential planet impact'.toUpperCase(),
+              'your potential planet impact',
               style: GoogleFonts.raleway(
                 fontWeight: FontWeight.bold,
                 color: ColorConstants.introPageTextColor,
@@ -403,7 +406,7 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
     );
   }
 
-  planValue(Response response) {
+  planValue(http.Response response) {
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
       Investment investment = Investment.fromMap(data);
@@ -417,7 +420,7 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
         onChangeEnd: (value) async {
           if (yearsPlan > 0 && initialInvestment >= 0) {
             if (permonthInvestment >= 0) {
-              Response response = await _apiServices.calculatePlan(
+              http.Response response = await _apiServices.calculatePlan(
                   yearsPlan.toString(), initialInvestment, permonthInvestment);
 
               planValue(response);
@@ -472,7 +475,7 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
       onChangeEnd: (value) async {
         if (yearsPlan > 0 && initialInvestment >= 0) {
           if (permonthInvestment >= 0) {
-            Response response = await _apiServices.calculatePlan(
+            http.Response response = await _apiServices.calculatePlan(
                 yearsPlan.toString(), initialInvestment, permonthInvestment);
 
             planValue(response);
@@ -631,7 +634,8 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
                       SharedPreferences pref =
                           await SharedPreferences.getInstance();
                       pref.setBool('loggedIn', false);
-                      print(pref.getBool('loggedIn'));
+                      controller.selectedSds = [];
+                      // print(pref.getBool('loggedIn'));
                       if (mounted) {
                         Navigator.pushNamedAndRemoveUntil(
                             context, LoginPage.screenName, (route) => false);
@@ -712,7 +716,7 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
 
           //  print(yearsPlan.toString());
           dropDownIndex = years.indexOf(value);
-          Response response = await _apiServices.calculatePlan(
+          http.Response response = await _apiServices.calculatePlan(
               yearsPlan.toString(), initialInvestment, permonthInvestment);
           planValue(response);
           otherItems.add(planList[dropDownIndex].co2);

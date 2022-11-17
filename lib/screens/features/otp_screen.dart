@@ -1,12 +1,16 @@
+import 'dart:convert';
+
 import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:form_validator/form_validator.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:http/http.dart';
+import 'package:http/http.dart' as http;
 import 'package:savvy/common/widgets/custom_button.dart';
 import 'package:savvy/common/widgets/otp_screen_textfeild.dart';
 import 'package:savvy/common/widgets/round_icon_button.dart';
+import 'package:savvy/controllers/reset_password_controllers/user_id_controller.dart';
 import 'package:savvy/screens/features/reset_screen.dart';
 import 'package:savvy/utils/color_constants.dart';
 
@@ -22,6 +26,8 @@ class OtpScreen extends StatefulWidget {
 class _OtpScreenState extends State<OtpScreen> {
   late TextEditingController _emailController;
   final ApiServices _apiServices = ApiServices();
+  final iDController = Get.put(UserIdController());
+  bool isNotLoading = true;
 
   @override
   void initState() {
@@ -120,13 +126,25 @@ class _OtpScreenState extends State<OtpScreen> {
   Widget _actionButton() {
     return MyButton(
         ontap: () async {
-          Response response = await _apiServices
+          FocusScope.of(context).unfocus();
+          setState(() {
+            isNotLoading = false;
+          });
+          http.Response response = await _apiServices
               .getOtpWithApi(_emailController.text.toString());
 
           if (response.statusCode == 200 && mounted) {
             Navigator.pushNamed(context, ResetScreen.screenName);
+            var data = jsonDecode(response.body);
+            String userId = data["data"]["users_customers_id"];
+
+            iDController.setUserId(userId);
+
             Fluttertoast.showToast(msg: 'Otp Sent to EmailAddress');
           } else {
+            setState(() {
+              isNotLoading = true;
+            });
             Fluttertoast.showToast(msg: 'Something went Wrong');
           }
         },
@@ -135,11 +153,13 @@ class _OtpScreenState extends State<OtpScreen> {
         height: size.height * 0.06,
         width: size.width * 0.6,
         spreadRadius: 0,
-        child: Text(
-          'RESET PASSWORD',
-          style: GoogleFonts.poppins(
-              fontSize: size.height * 0.02, color: Colors.white),
-        ));
+        child: isNotLoading
+            ? Text(
+                'RESET PASSWORD',
+                style: GoogleFonts.poppins(
+                    fontSize: size.height * 0.02, color: Colors.white),
+              )
+            : const CircularProgressIndicator());
   }
 
   Widget _textFeild() {

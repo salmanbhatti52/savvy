@@ -246,13 +246,12 @@ class _SignUpPageState extends State<SignUpPage> {
                     userEmail: _emailController.text,
                     userPassword: _passwordController.text,
                     notificationSwitch: "yes"));
-            var data = jsonDecode(response.body);
-
-            String userName = data["data"]["user"]["full_name"];
-            pref.setString('UserName', userName);
-            debugPrint("loginpageuser name   $userName");
 
             if (response.statusCode == 200 && mounted) {
+              var data = jsonDecode(response.body);
+              String userName = data["data"]["user"]["full_name"];
+              pref.setString('UserName', userName);
+              debugPrint("loginpageuser name   $userName");
               Navigator.popAndPushNamed(context, IntroPage.screenName);
               userNameController.setUserName(_nameController.text);
               showToast('User Created Successfully');

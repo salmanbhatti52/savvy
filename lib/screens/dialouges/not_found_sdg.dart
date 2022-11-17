@@ -55,20 +55,21 @@ class SdgDialog extends StatelessWidget {
                         fontSize: size.height * 0.015),
                   ),
                 ),
-                Flexible(
-                    child: Text(
-                  '(SDG 8,9,10,15,16,17 are not selectable)',
-                  style: GoogleFonts.lato(fontSize: size.height * 0.017),
-                )),
+                SizedBox(
+                  height: size.height * 0.010,
+                ),
                 Expanded(
                   flex: 4,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
+                      const Expanded(
+                          child:
+                              Text('(SDG 8,9,10,15,16,17 are not selectable)')),
                       SizedBox(
                           height: size.height * 0.15,
-                          width: size.width * 0.40,
+                          width: size.width * 0.30,
                           child: Image.asset(r'assets/images/notfoundsdg.png'))
                     ],
                   ),

@@ -1,8 +1,13 @@
 import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as http;
 import 'package:savvy/common/widgets/otp_screen_textfeild.dart';
+import 'package:savvy/controllers/reset_password_controllers/user_id_controller.dart';
 import 'package:savvy/screens/intro_page.dart';
+import 'package:savvy/services/api_services.dart';
 
 import '../../common/widgets/custom_button.dart';
 import '../../common/widgets/round_icon_button.dart';
@@ -22,9 +27,20 @@ class _ResetScreenState extends State<ResetScreen> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
+  final iDController = Get.find<UserIdController>();
+
+  final ApiServices _apiServices = ApiServices();
   @override
   void initState() {
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _otpController.dispose();
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
   }
 
   late Size size;
@@ -119,12 +135,20 @@ class _ResetScreenState extends State<ResetScreen> {
 
   Widget _actionButton() {
     return MyButton(
-        ontap: () {
-          Navigator.push(context, MaterialPageRoute(
-            builder: (context) {
-              return const IntroPage();
-            },
-          ));
+        ontap: () async {
+          String id = iDController.getUserId();
+          print('id at reset screen $id');
+          http.Response response = await _apiServices.resetPasswordWithApi(
+              id,
+              _otpController.text,
+              _passwordController.text,
+              _confirmPasswordController.text);
+
+          if (response.statusCode == 200 && mounted) {
+            Navigator.popAndPushNamed(context, IntroPage.screenName);
+          } else {
+            Fluttertoast.showToast(msg: 'Something went Wrong');
+          }
         },
         radius: size.width * 0.07,
         color: ColorConstants.buttonColorLight,

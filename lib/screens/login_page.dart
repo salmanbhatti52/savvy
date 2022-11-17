@@ -163,7 +163,7 @@ class _LoginPageState extends State<LoginPage> {
                       Flexible(
                         child: SignUpPageTextFeild(
                             controller: _passwordController,
-                            hintText: '8 characters',
+                            hintText: 'Minimum 5 Characters',
                             validator: _passwordValidate,
                             autofocus: false,
                             labelText: '',
