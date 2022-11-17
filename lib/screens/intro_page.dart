@@ -7,9 +7,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:savvy/common/widgets/custom_button.dart';
 import 'package:savvy/controllers/intro_page_controller.dart';
-import 'package:savvy/models/user.dart';
 import 'package:savvy/screens/dialouges/not_found_sdg.dart';
-import 'package:savvy/screens/features/updateuser_screen.dart';
 import 'package:savvy/screens/page_view_Screens/page_view.dart';
 import 'package:savvy/utils/color_constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -47,12 +45,12 @@ class _IntroPageState extends State<IntroPage> {
   Widget build(BuildContext context) {
     debugPrint(userName);
     var size = MediaQuery.of(context).size;
-    var user = ModalRoute.of(context)!.settings.arguments as User?;
+    // var user = ModalRoute.of(context)!.settings.arguments as User?;
 
     return ColorfulSafeArea(
       color: Colors.white,
       child: Scaffold(
-        drawer: _buildDrawer(context, user),
+        //    drawer: _buildDrawer(context, user),
         //   appBar: _buldAppBar(),
         body: Center(child: introPageBody(size, context)),
       ),
@@ -173,26 +171,26 @@ class _IntroPageState extends State<IntroPage> {
   }
 
   // AppBar _buldAppBar() {
-  _buildDrawer(BuildContext context, User? user) {
-    return Drawer(
-      backgroundColor: ColorConstants.buttonColor,
-      child: Column(
-        children: [
-          ListTile(
-            leading: const Icon(Icons.settings),
-            title: const Text("Update Info"),
-            onTap: () {
-              Navigator.push(context, MaterialPageRoute(
-                builder: (context) {
-                  return UpdateScreen(
-                    user: user,
-                  );
-                },
-              ));
-            },
-          ),
-        ],
-      ),
-    );
-  }
+  // _buildDrawer(BuildContext context, User? user) {
+  //   return Drawer(
+  //     backgroundColor: ColorConstants.buttonColor,
+  //     child: Column(
+  //       children: [
+  //         ListTile(
+  //           leading: const Icon(Icons.settings),
+  //           title: const Text("Update Info"),
+  //           onTap: () {
+  //             Navigator.push(context, MaterialPageRoute(
+  //               builder: (context) {
+  //                 return UpdateScreen(
+  //                   user: user,
+  //                 );
+  //               },
+  //             ));
+  //           },
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 }

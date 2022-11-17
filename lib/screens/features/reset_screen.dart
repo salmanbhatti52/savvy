@@ -137,7 +137,7 @@ class _ResetScreenState extends State<ResetScreen> {
     return MyButton(
         ontap: () async {
           String id = iDController.getUserId();
-          print('id at reset screen $id');
+          // print('id at reset screen $id');
           http.Response response = await _apiServices.resetPasswordWithApi(
               id,
               _otpController.text,

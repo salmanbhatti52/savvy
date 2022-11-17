@@ -15,7 +15,7 @@ class ApiServices {
       body: jsonEncode(user.toMap()),
     );
 
-    print(signUpResponse.statusCode.toString());
+    // print(signUpResponse.statusCode.toString());
 
     return signUpResponse;
   }
