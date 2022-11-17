@@ -36,7 +36,7 @@ class SdgDialog extends StatelessWidget {
                 Flexible(
                   flex: 2,
                   child: Text(
-                    'There is no fund that aligns with this SDG for the moment. ',
+                    'There is no fund that aligns with this SDG for the moment.',
                     style: GoogleFonts.lato(
                         color: ColorConstants.buttonColorLight,
                         fontSize: size.height * 0.018),
@@ -55,6 +55,11 @@ class SdgDialog extends StatelessWidget {
                         fontSize: size.height * 0.015),
                   ),
                 ),
+                Flexible(
+                    child: Text(
+                  '(SDG 8,9,10,15,16,17 are not selectable)',
+                  style: GoogleFonts.lato(fontSize: size.height * 0.017),
+                )),
                 Expanded(
                   flex: 4,
                   child: Row(

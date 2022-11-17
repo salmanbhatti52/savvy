@@ -130,7 +130,7 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
           Flexible(
             flex: 1,
             child: Text(
-              'YOUR PLANET IMPACT',
+              'your potential planet impact'.toUpperCase(),
               style: GoogleFonts.raleway(
                 fontWeight: FontWeight.bold,
                 color: ColorConstants.introPageTextColor,
@@ -165,9 +165,9 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
 
   Widget pageSlider() {
     List<String> title = [
-      'C02 Emissions Avoided',
-      'Waste',
-      'Renewable Energy Generated',
+      'C02 Emissions Avoided' '  ,KG',
+      'Waste Avoided' ' ,KG',
+      'Renewable Energy Generated' '  ,MW',
     ];
     List<String> svgsPath = [
       (r'assets/svgs/planpagsvg.svg'),

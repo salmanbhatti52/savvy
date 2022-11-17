@@ -31,47 +31,41 @@ class ChoosedRow extends StatelessWidget {
             borderRadius: BorderRadius.circular(size.width * 0.02)),
         child: Padding(
           padding: EdgeInsets.all(size.height * 0.005),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
+          child: Column(
             children: [
-              Flexible(
-                flex: 1,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [Flexible(child: leading)],
-                ),
-              ),
-              SizedBox(
-                width: size.width * 0.010,
-              ),
               Expanded(
-                  flex: 4,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Flexible(
-                        flex: 1,
-                        child: Text(
-                          overflow: TextOverflow.ellipsis,
-                          title,
-                          style: tileHeadingStyle(size),
-                        ),
-                      ),
-                      SizedBox(
-                        height: size.height * 0.007,
-                      ),
-                      Flexible(
-                        flex: 2,
-                        child: Text(
-                          overflow: TextOverflow.ellipsis,
-                          subtitle,
-                          maxLines: 2,
-                          style: tileDescriptionStyle(size),
-                        ),
-                      ),
-                    ],
-                  )),
+                  child: Row(
+                children: [
+                  Flexible(child: leading),
+                  Expanded(
+                      flex: 5,
+                      child: Text(
+                        title,
+                        style: tileHeadingStyle(size),
+                      )),
+                  Flexible(
+                    flex: 1,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Flexible(
+                            child:
+                                Image.asset(r'assets/images/chosedscitem.png')),
+                      ],
+                    ),
+                  ),
+                ],
+              )),
+              Expanded(
+                  child: Row(
+                children: [
+                  Flexible(
+                      child: Text(
+                    subtitle,
+                    style: tileDescriptionStyle(size),
+                  ))
+                ],
+              )),
             ],
           ),
         ),
@@ -81,14 +75,74 @@ class ChoosedRow extends StatelessWidget {
 
   tileHeadingStyle(Size size) {
     return GoogleFonts.poppins(
-        fontWeight: FontWeight.w700,
-        fontSize: size.height * 0.018,
+        fontWeight: FontWeight.w600,
+        fontSize: size.height * 0.015,
         color: ColorConstants.introPageTextColor);
   }
 
   tileDescriptionStyle(Size size) {
     return GoogleFonts.poppins(
         color: ColorConstants.introPageTextColor,
-        fontSize: size.height * 0.022);
+        fontSize: size.height * 0.018);
   }
 }
+// Row(
+//             crossAxisAlignment: CrossAxisAlignment.center,
+//             children: [
+//               Expanded(
+//                 child: Column(
+//                   children: [
+//                     Flexible(
+//                         child: Row(
+//                       mainAxisAlignment: MainAxisAlignment.end,
+//                       children: const [Icon(Icons.add)],
+//                     )),
+//                     Flexible(
+//                       child: Row(
+//                         children: [
+//                           Flexible(
+//                             flex: 1,
+//                             child: Column(
+//                               mainAxisAlignment: MainAxisAlignment.center,
+//                               children: [Flexible(child: leading)],
+//                             ),
+//                           ),
+//                           SizedBox(
+//                             width: size.width * 0.010,
+//                           ),
+//                           Expanded(
+//                               flex: 4,
+//                               child: Column(
+//                                 crossAxisAlignment: CrossAxisAlignment.start,
+//                                 mainAxisAlignment: MainAxisAlignment.center,
+//                                 children: [
+//                                   Flexible(
+//                                     flex: 1,
+//                                     child: Text(
+//                                       overflow: TextOverflow.ellipsis,
+//                                       title,
+//                                       style: tileHeadingStyle(size),
+//                                     ),
+//                                   ),
+//                                   SizedBox(
+//                                     height: size.height * 0.007,
+//                                   ),
+//                                   Flexible(
+//                                     flex: 2,
+//                                     child: Text(
+//                                       overflow: TextOverflow.ellipsis,
+//                                       subtitle,
+//                                       maxLines: 2,
+//                                       style: tileDescriptionStyle(size),
+//                                     ),
+//                                   ),
+//                                 ],
+//                               )),
+//                         ],
+//                       ),
+//                     ),
+//                   ],
+//                 ),
+//               ),
+//             ],
+//           ),

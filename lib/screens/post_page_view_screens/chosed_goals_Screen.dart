@@ -159,7 +159,7 @@ class _ChoosedGoalsScreenState extends State<ChoosedGoalsScreen> {
   tileDescriptionStyle() {
     return GoogleFonts.poppins(
         color: ColorConstants.introPageTextColor,
-        fontSize: size.height * 0.025);
+        fontSize: size.height * 0.020);
   }
 
   Widget _itemBuilder(BuildContext context, int index) {

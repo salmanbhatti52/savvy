@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -237,14 +235,15 @@ class _LoginPageState extends State<LoginPage> {
               onesignalId: ""));
           debugPrint(_emailController.text);
           debugPrint(_passwordController.text);
-          var data = jsonDecode(response.body);
-          String userName = data["data"]["user"]["full_name"];
-          pref.setString('UserName', userName);
-          debugPrint("loginpageuser name   $userName");
+          //  pref.setBool("loggedIn", true);
+          //   var data = jsonDecode(response.body);
+          // String userName = data["data"]["user"]["full_name"];
+          // pref.setString('UserName', userName);
+          // debugPrint("loginpageuser name   $userName");
 
           if (response.statusCode == 200 && mounted) {
             Navigator.popAndPushNamed(context, IntroPage.screenName);
-            //    pref.setBool('loggedIn', true);
+            pref.setBool('loggedIn', true);
             showToast('Login Successfull');
           } else {
             setState(() {
