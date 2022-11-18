@@ -134,7 +134,7 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
           Flexible(
             flex: 1,
             child: Text(
-              'your potential planet impact',
+              'your planet impact'.toUpperCase(),
               style: GoogleFonts.raleway(
                 fontWeight: FontWeight.bold,
                 color: ColorConstants.introPageTextColor,
@@ -341,7 +341,7 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
                               icon: Icon(
                                 Icons.info,
                                 color: ColorConstants.introPageTextColor,
-                                size: size.height * 0.015,
+                                size: size.height * 0.025,
                               ),
                             ),
                           ),
@@ -480,7 +480,7 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
       activeColor: ColorConstants.buttonColorLight,
       thumbColor: ColorConstants.buttonColorLight,
       min: 0.0,
-      max: 100000,
+      max: 2000,
       value: permonthInvestment,
       divisions: 50,
       onChanged: (value) {
@@ -720,9 +720,13 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
   infoDialog() {
     Alert(
       context: context,
-      closeIcon: const Icon(
-        Icons.close,
-        color: Colors.white,
+      closeIcon: Container(
+        decoration: BoxDecoration(
+            color: Colors.white, borderRadius: BorderRadius.circular(8)),
+        child: const Icon(
+          Icons.close,
+          color: Colors.black,
+        ),
       ),
       style: AlertStyle(
           overlayColor: Colors.transparent,

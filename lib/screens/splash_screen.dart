@@ -21,15 +21,14 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> navigateTo() async {
-    print("@@@@@@@@@@");
     SharedPreferences pref = await SharedPreferences.getInstance();
 
     if (pref.getBool("loggedIn") == true) {
       Timer(const Duration(seconds: 3),
-          () => Navigator.pushNamed(context, IntroPage.screenName));
+          () => Navigator.popAndPushNamed(context, IntroPage.screenName));
     } else {
       Timer(const Duration(seconds: 3),
-          () => Navigator.pushNamed(context, LandingPage.screenName));
+          () => Navigator.popAndPushNamed(context, LandingPage.screenName));
     }
   }
 

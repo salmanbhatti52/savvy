@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: Colors.white,
         ),
         debugShowCheckedModeBanner: false,
-        home: const LandingPage(),
+        home: const SplashScreen(),
         routes: {
           LandingPage.screenName: (context) {
             return const LandingPage();

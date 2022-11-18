@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -73,6 +75,7 @@ class _LoginPageState extends State<LoginPage> {
           Flexible(flex: 7, child: _textFeilds()),
           Flexible(flex: 2, child: _loginButton()),
           const Flexible(flex: 1, child: SizedBox()),
+          // const Flexible(flex: 1, child: SizedBox()),
           Flexible(
               flex: 1,
               child: Text(
@@ -236,14 +239,19 @@ class _LoginPageState extends State<LoginPage> {
           debugPrint(_emailController.text);
           debugPrint(_passwordController.text);
           //  pref.setBool("loggedIn", true);
-          //   var data = jsonDecode(response.body);
-          // String userName = data["data"]["user"]["full_name"];
-          // pref.setString('UserName', userName);
-          // debugPrint("loginpageuser name   $userName");
+          var data = jsonDecode(response.body);
+          String userName = data["data"]["user"]["full_name"];
+          pref.setString('UserName', userName);
+          debugPrint("loginpageuser name   $userName");
 
           if (response.statusCode == 200 && mounted) {
             Navigator.popAndPushNamed(context, IntroPage.screenName);
             pref.setBool('loggedIn', true);
+            var data = jsonDecode(response.body);
+            String userName = data["data"]["user"]["full_name"];
+            pref.setString('LoggedInUserName', userName);
+            debugPrint("loginpageuser name   $userName");
+
             showToast('Login Successfull');
           } else {
             setState(() {

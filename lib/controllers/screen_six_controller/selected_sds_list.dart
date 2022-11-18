@@ -10,7 +10,7 @@ class SdgsListController extends GetxController {
   var isLoaded = false.obs;
 
   void isListLoaded() {
-    print('isLoaded is Called');
+    // print('isLoaded is Called');
     Timer(
       const Duration(seconds: 3),
       () => isLoaded.value = true,

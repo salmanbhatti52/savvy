@@ -36,9 +36,16 @@ class _IntroPageState extends State<IntroPage> {
 
   void getUserName() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
-    String userNamee = pref.getString('UserName').toString();
-    debugPrint("introPage UserName  $userName");
-    userName = userNamee;
+    String? signedUpUserName = pref.getString('UserName');
+    String? loggedInUserNmae = pref.getString('LoggedInUserName');
+
+    if (signedUpUserName != null) {
+      userName = signedUpUserName;
+    } else if (loggedInUserNmae != null) {
+      userName = loggedInUserNmae;
+    } else {
+      userName = '';
+    }
   }
 
   @override
