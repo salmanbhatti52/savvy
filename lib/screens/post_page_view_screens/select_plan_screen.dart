@@ -335,7 +335,9 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
                           ),
                           Flexible(
                             child: IconButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                infoDialog();
+                              },
                               icon: Icon(
                                 Icons.info,
                                 color: ColorConstants.introPageTextColor,
