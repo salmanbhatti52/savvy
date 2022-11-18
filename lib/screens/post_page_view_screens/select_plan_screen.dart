@@ -7,6 +7,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:savvy/controllers/screen_six_controller/selected_sds_list.dart';
 import 'package:savvy/models/invesment_model.dart';
 import 'package:savvy/screens/blogscreens/blog_screen_one.dart';
@@ -329,6 +330,19 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
                                     ),
                                   ),
                           ),
+                          SizedBox(
+                            width: size.width * 0.007,
+                          ),
+                          Flexible(
+                            child: IconButton(
+                              onPressed: () {},
+                              icon: Icon(
+                                Icons.info,
+                                color: ColorConstants.introPageTextColor,
+                                size: size.height * 0.015,
+                              ),
+                            ),
+                          ),
                         ],
                       )),
                 ],
@@ -464,9 +478,9 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
       activeColor: ColorConstants.buttonColorLight,
       thumbColor: ColorConstants.buttonColorLight,
       min: 0.0,
-      max: 5000.0,
+      max: 100000,
       value: permonthInvestment,
-      divisions: 200,
+      divisions: 50,
       onChanged: (value) {
         setState(() {
           permonthInvestment = value;
@@ -499,44 +513,6 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
       },
     );
   }
-
-  // Widget yearSlider() {
-  //   return Slider.adaptive(
-  //     inactiveColor: Colors.grey,
-  //     activeColor: ColorConstants.buttonColorLight,
-  //     thumbColor: ColorConstants.buttonColorLight,
-  //     min: 0.0,
-  //     max: 15.0,
-  //     onChangeEnd: (value) async {
-  //       if (yearsPlan > 0 && initialInvestment >= 0) {
-  //         if (permonthInvestment >= 0) {
-  //           Response response = await _apiServices.calculatePlan(
-  //               yearsPlan.toString(), initialInvestment, permonthInvestment);
-
-  //           planValue(response);
-  //         }
-  //       } else {
-  //         Fluttertoast.showToast(
-  //           msg: 'Years Must Be Selected',
-  //         );
-  //         setState(() {
-  //           permonthInvestment = 0;
-  //           initialInvestment = 0;
-  //           yearsPlan = 0;
-  //           planList = [];
-  //           otherItems = [];
-  //         });
-  //       }
-  //     },
-  //     value: yearsPlan .toDouble(),
-  //     divisions: 15,
-  //     onChanged: (value) {
-  //       setState(() {
-  //         yearsPlan = value;
-  //       });
-  //     },
-  //   );
-  // }
 
   myTextStyle() {
     return GoogleFonts.poppins(
@@ -737,5 +713,28 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
         color: Colors.transparent,
       ),
     );
+  }
+
+  infoDialog() {
+    Alert(
+      context: context,
+      closeIcon: const Icon(
+        Icons.close,
+        color: Colors.white,
+      ),
+      style: AlertStyle(
+          overlayColor: Colors.transparent,
+          constraints: BoxConstraints.tight(size),
+          backgroundColor: ColorConstants.introPageTextColor,
+          isButtonVisible: false,
+          descTextAlign: TextAlign.justify,
+          alertAlignment: const Alignment(-1, -0.50),
+          descStyle: GoogleFonts.lato(
+              color: Colors.white, fontSize: size.height * 0.015)),
+      // closeIcon: const Icon(Icons.close),
+
+      desc:
+          'All Investments involve a degree of risk.The value of an investment may go down as well as up and you may not get back the money you invested.it should not be assumed that the value of investments always rises.',
+    ).show();
   }
 }
