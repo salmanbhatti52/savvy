@@ -18,6 +18,7 @@ import '../../services/api_urls.dart';
 import '../../utils/color_constants.dart';
 import '../../utils/portfolio_screen_utils.dart';
 import '../blogscreens/blog_screen_one.dart';
+import '../features/delete_my_account.dart';
 import '../login_page.dart';
 
 class SelectedScreen extends StatefulWidget {
@@ -71,8 +72,6 @@ class _SelectedScreenState extends State<SelectedScreen> {
     for (int i = 0; i < list.length; i++) {
       chartMap[i.toString()] = 100 / list.length;
       colorList.add(Color(int.parse(list[i].colorCode)));
-      // debugPrint(chartMap[i.toString()].toString());
-      // debugPrint((100 / list.length).toString());
     }
     return chartMap;
   }
@@ -271,41 +270,6 @@ class _SelectedScreenState extends State<SelectedScreen> {
                 fontWeight: FontWeight.w400),
           ),
         ));
-    // // return SizedBox(
-    // //   height: size.height * 0.070,
-    // //   width: size.width,
-    // //   child: ReuseableRow(
-    // //       color: Colors.white,
-    // //       sideContainer: Container(
-    // //         color: Color(int.parse(list[index].colorCode)),
-    // //         // width: 10,
-    // //       ),
-    // //       image: SizedBox(
-    // //           height: size.height * 0.20,
-    // //           width: size.width * 0.10,
-    // //           child: Image.network(
-    // //             ApiUrls.baseUrl + list[index].image,
-    // //             fit: BoxFit.scaleDown,
-    // //           )),
-    // //       tileText: Text(
-    // //         "${list[index].systemSdgsId}. ${list[index].title}",
-    // //         style: GoogleFonts.poppins(
-    // //             color: ColorConstants.landingPageTitleColor,
-    // //             fontSize: size.height * 0.020),
-    // //       ),
-    // //       dropDownButton: GestureDetector(
-    // //           onTap: () {
-    // //             debugPrint('ontap');
-    // //             setState(() {
-    // //               itemIndex = index;
-    // //             });
-    // //             //print(itemIndex.toString());
-    // //           },
-    // //           child: const Icon(
-    // //               Icons.expand_more_sharp)) // child: MyExpansionTile(
-
-    // //       ),
-    // );
   }
 
   Widget myEndDrawer() {
@@ -410,8 +374,15 @@ class _SelectedScreenState extends State<SelectedScreen> {
                       style: _textStyle(),
                     ),
                   )),
-                  const Flexible(
-                    child: SizedBox(),
+                  Flexible(
+                    child: GestureDetector(
+                      onTap: () => Navigator.pushNamed(
+                          context, DeleteMyAccount.screenName),
+                      child: Text(
+                        '(Delete My Account)',
+                        style: deleteAccountStyle(),
+                      ),
+                    ),
                   ),
                 ],
               )),
@@ -432,28 +403,11 @@ class _SelectedScreenState extends State<SelectedScreen> {
         fontSize: size.height * 0.040,
         fontWeight: FontWeight.w300);
   }
-}
 
-// if (itemIndex == index) {
-//                   //  print("seprator index$index");
-//                   return Container(
-//                     height: size.height * 0.080,
-//                     width: size.width,
-//                     color: Color(int.parse(list[index].colorCode)),
-//                     child: Padding(
-//                       padding: const EdgeInsets.all(8.0),
-                      // child: Text(
-                      //   overflow: TextOverflow.fade,
-                      //   list[index].description.toString(),
-                      //   style: GoogleFonts.poppins(
-                      //       color: Colors.black,
-                      //       fontSize: size.height * 0.020,
-                      //       fontWeight: FontWeight.w400),
-                      // ),
-//                     ),
-//                   );
-//                 } else {
-//                   return const Divider(
-//                     height: 4,
-//                   );
-//                 }
+  deleteAccountStyle() {
+    return GoogleFonts.firaSans(
+        color: ColorConstants.introPageTextColor,
+        fontSize: size.height * 0.017,
+        fontWeight: FontWeight.w300);
+  }
+}

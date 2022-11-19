@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:savvy/screens/blogscreens/blog_screen_one.dart';
+import 'package:savvy/screens/features/delete_my_account.dart';
 import 'package:savvy/screens/features/reset_screen.dart';
 import 'package:savvy/screens/intro_page.dart';
 import 'package:savvy/screens/landing_page.dart';
@@ -21,7 +22,6 @@ void main() {
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.white,
     statusBarIconBrightness: Brightness.dark,
-    //  statusBarBrightness: Brightness.dark,
   ));
   runApp(const MyApp());
 }
@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
         home: const SplashScreen(),
         routes: {
           LandingPage.screenName: (context) {
-            return const LandingPage();
+            return const LoginPage();
           },
           IntroPage.screenName: (context) {
             return const IntroPage();
@@ -61,6 +61,7 @@ class MyApp extends StatelessWidget {
           PortFolioScreen.screenName: (context) => const PortFolioScreen(),
           SelectPlanScreen.screenName: (context) => const SelectPlanScreen(),
           ResetScreen.screenName: (context) => const ResetScreen(),
+          DeleteMyAccount.screenName: (context) => const DeleteMyAccount(),
         });
   }
 }

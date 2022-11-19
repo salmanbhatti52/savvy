@@ -31,6 +31,15 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _passwordController = TextEditingController();
   final ApiServices _apiServices = ApiServices();
   final _loginFormKey = GlobalKey<FormState>();
+  bool isClicked = true;
+  late Size size;
+  bool socialLoginEnable = false;
+
+  @override
+  void initState() {
+    super.initState();
+    socialLoginEnabled();
+  }
 
   @override
   void dispose() {
@@ -39,8 +48,6 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
-  bool isClicked = true;
-  late Size size;
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
@@ -77,14 +84,19 @@ class _LoginPageState extends State<LoginPage> {
           const Flexible(flex: 1, child: SizedBox()),
           // const Flexible(flex: 1, child: SizedBox()),
           Flexible(
+            flex: 1,
+            child: socialLoginEnable
+                ? Text(
+                    'OR',
+                    style: GoogleFonts.lato(
+                        color: const Color(0xFF5D407B),
+                        fontSize: size.height * 0.017),
+                  )
+                : const SizedBox(),
+          ),
+          Flexible(
               flex: 1,
-              child: Text(
-                'OR',
-                style: GoogleFonts.lato(
-                    color: const Color(0xFF5D407B),
-                    fontSize: size.height * 0.017),
-              )),
-          Flexible(flex: 1, child: _signInWith()),
+              child: socialLoginEnable ? _signInWith() : const SizedBox()),
           const Flexible(flex: 1, child: SizedBox()),
           Flexible(flex: 1, child: _signInText()),
           const Flexible(flex: 2, child: SizedBox()),
@@ -358,4 +370,39 @@ class _LoginPageState extends State<LoginPage> {
     }
     return null;
   }
+
+  void socialLoginEnabled() async {
+    Response response = await _apiServices.getSocialLogin();
+    var data = jsonDecode(response.body);
+    String yesOrNo = data["data"];
+    if (yesOrNo == 'No') {
+      setState(() {
+        socialLoginEnable = false;
+      });
+    } else {
+      setState(() {
+        socialLoginEnable = true;
+      });
+    }
+  }
+
+  // void testSocialLoginEnable() async {
+  //   String yesOrNo = 'yes';
+
+  //   Timer(const Duration(seconds: 5), () {
+  //     yesOrNo = 'yes';
+  //     print(yesOrNo);
+  //     print(socialLoginEnable);
+  //   });
+
+  //   if (yesOrNo == 'No') {
+  //     setState(() {
+  //       socialLoginEnable = false;
+  //     });
+  //   } else {
+  //     setState(() {
+  //       socialLoginEnable = true;
+  //     });
+  //   }
+
 }

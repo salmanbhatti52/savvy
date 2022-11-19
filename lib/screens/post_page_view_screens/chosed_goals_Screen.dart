@@ -210,6 +210,11 @@ class _ChoosedGoalsScreenState extends State<ChoosedGoalsScreen> {
                   return detailDialogs.goal6Dialog();
                 },
               );
+            } else if (list[index].systemSdgsId == '7') {
+              showDialog(
+                context: context,
+                builder: (context) => detailDialogs.goal7Dialog(),
+              );
             } else if (list[index].systemSdgsId == '11') {
               showDialog(
                 context: context,

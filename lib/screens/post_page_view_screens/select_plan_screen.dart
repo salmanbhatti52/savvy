@@ -19,6 +19,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../utils/color_constants.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 
+import '../features/delete_my_account.dart';
+
 class SelectPlanScreen extends StatefulWidget {
   const SelectPlanScreen({super.key});
   static const String screenName = '/SelectPlanScreen';
@@ -624,8 +626,15 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
                       style: _textStyle(),
                     ),
                   )),
-                  const Flexible(
-                    child: SizedBox(),
+                  Flexible(
+                    child: GestureDetector(
+                      onTap: () => Navigator.pushNamed(
+                          context, DeleteMyAccount.screenName),
+                      child: Text(
+                        '(Delete My Account)',
+                        style: deleteAccountStyle(),
+                      ),
+                    ),
                   ),
                 ],
               )),
@@ -742,5 +751,12 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
       desc:
           'All Investments involve a degree of risk.The value of an investment may go down as well as up and you may not get back the money you invested.it should not be assumed that the value of investments always rises.',
     ).show();
+  }
+
+  deleteAccountStyle() {
+    return GoogleFonts.firaSans(
+        color: ColorConstants.introPageTextColor,
+        fontSize: size.height * 0.017,
+        fontWeight: FontWeight.w300);
   }
 }

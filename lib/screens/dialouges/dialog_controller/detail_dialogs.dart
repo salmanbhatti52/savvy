@@ -221,4 +221,19 @@ and Governance (ESG) rating.''',
         returns: '36.96%',
         pastRetruns: '35.44%');
   }
+
+  goal7Dialog() {
+    return const ReuseableTabDialog(
+        description:
+            '''This fund provides exposure to publically traded companies 
+that are actively engaged in the global clean energy industry. 
+Companies included in the fund consist of those who supply key
+components, provide clean energy related services, manufacture 
+original equipments and those who produce clean power..''',
+        dialogTitle: '7. Affordable and Clean Energy',
+        fundNameDescrip: 'L&G Clean Energy UCITS ETF ',
+        thisYear: '-9.58%',
+        returns: '1.45%',
+        pastRetruns: 'N/a');
+  }
 }

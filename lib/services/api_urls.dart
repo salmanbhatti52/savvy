@@ -15,4 +15,5 @@ class ApiUrls {
   static const String endPointCalculator = 'webservices/investment_calculator/';
 
   static const String endPointGetAllSdgs = 'webservices/get_sdgs';
+  static const String endPointSocialLogin = 'webservices/show_social_login';
 }

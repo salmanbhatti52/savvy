@@ -88,4 +88,11 @@ class ApiServices {
       throw Exception();
     }
   }
+
+  Future<http.Response> getSocialLogin() async {
+    http.Response response = await http
+        .get(Uri.parse(ApiUrls.baseUrl + ApiUrls.endPointSocialLogin));
+
+    return response;
+  }
 }

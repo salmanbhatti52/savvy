@@ -135,6 +135,10 @@ for all.''',
         goalTitle: 'Goal 6',
       ),
       ReuseableDialog(
+        onButtonTap: () => showDialog(
+          context: context,
+          builder: (context) => detailDialogs.goal7Dialog(),
+        ),
         onTapClose: () {
           Navigator.pop(context);
         },

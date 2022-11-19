@@ -18,6 +18,7 @@ import '../../controllers/screen_six_controller/selected_sds_list.dart';
 import '../../models/sdgs_models/update_sdgs_list.dart';
 import '../../utils/color_constants.dart';
 import '../blogscreens/blog_screen_one.dart';
+import '../features/delete_my_account.dart';
 import '../login_page.dart';
 
 class PortFolioScreen extends StatefulWidget {
@@ -550,8 +551,15 @@ class _PortFolioScreenState extends State<PortFolioScreen> {
                       style: _textStyle(),
                     ),
                   )),
-                  const Flexible(
-                    child: SizedBox(),
+                  Flexible(
+                    child: GestureDetector(
+                      onTap: () => Navigator.pushNamed(
+                          context, DeleteMyAccount.screenName),
+                      child: Text(
+                        '(Delete My Account)',
+                        style: deleteAccountStyle(),
+                      ),
+                    ),
                   ),
                 ],
               )),
@@ -564,6 +572,13 @@ class _PortFolioScreenState extends State<PortFolioScreen> {
         ],
       ),
     );
+  }
+
+  deleteAccountStyle() {
+    return GoogleFonts.firaSans(
+        color: ColorConstants.introPageTextColor,
+        fontSize: size.height * 0.017,
+        fontWeight: FontWeight.w300);
   }
 
   _textStyle() {

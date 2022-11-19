@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:savvy/screens/blogscreens/bolg_detail_screen.dart';
+import 'package:savvy/screens/features/delete_my_account.dart';
 import 'package:savvy/screens/post_page_view_screens/portfolio_screen.dart';
 import 'package:savvy/screens/post_page_view_screens/select_plan_screen.dart';
 import 'package:savvy/utils/color_constants.dart';
@@ -111,38 +112,6 @@ class _BlogScreenState extends State<BlogScreen> {
     );
   }
 
-  // Widget _titleRow() {
-  //   var title = SizedBox(
-  //       height: 30, child: SvgPicture.asset(r'assets/svgs/appnamesvg.svg'));
-  //   var icon = GestureDetector(
-  //     onTap: () => Scaffold.of(context).openEndDrawer(),
-  //     child: Icon(
-  //       Icons.menu,
-  //       size: size.height * 0.040,
-  //     ),
-  //   );
-  //   return Row(
-  //     crossAxisAlignment: CrossAxisAlignment.center,
-  //     mainAxisAlignment: MainAxisAlignment.end,
-  //     children: [
-  //       Expanded(
-  //           flex: 3,
-  //           child: Row(
-  //             mainAxisAlignment: MainAxisAlignment.end,
-  //             crossAxisAlignment: CrossAxisAlignment.end,
-  //             children: [Flexible(child: title)],
-  //           )),
-  //       Expanded(
-  //           flex: 2,
-  //           child: Column(
-  //             mainAxisAlignment: MainAxisAlignment.start,
-  //             crossAxisAlignment: CrossAxisAlignment.end,
-  //             children: [Flexible(child: icon)],
-  //           )),
-  //     ],
-  //   );
-  // }
-
   Widget myEndDrawer() {
     return Container(
       width: size.width,
@@ -239,8 +208,15 @@ class _BlogScreenState extends State<BlogScreen> {
                       style: _drawerTextStyle(),
                     ),
                   )),
-                  const Flexible(
-                    child: SizedBox(),
+                  Flexible(
+                    child: GestureDetector(
+                      onTap: () => Navigator.pushNamed(
+                          context, DeleteMyAccount.screenName),
+                      child: Text(
+                        '(Delete My Account)',
+                        style: deleteAccountStyle(),
+                      ),
+                    ),
                   ),
                 ],
               )),
@@ -401,6 +377,13 @@ class _BlogScreenState extends State<BlogScreen> {
     return GoogleFonts.firaSans(
         color: ColorConstants.introPageTextColor,
         fontSize: size.height * 0.040,
+        fontWeight: FontWeight.w300);
+  }
+
+  deleteAccountStyle() {
+    return GoogleFonts.firaSans(
+        color: ColorConstants.introPageTextColor,
+        fontSize: size.height * 0.017,
         fontWeight: FontWeight.w300);
   }
 }

@@ -35,10 +35,12 @@ class _SignUpPageState extends State<SignUpPage> {
   final _formKey = GlobalKey<FormState>();
   bool isClicked = true;
   final userNameController = Get.put(IntroPageController());
+  bool socialLoginEnable = false;
 
   @override
   void initState() {
     super.initState();
+    socialLoginEnabled();
     _nameController = TextEditingController();
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
@@ -86,13 +88,17 @@ class _SignUpPageState extends State<SignUpPage> {
           //const Flexible(flex: 1, child: SizedBox()),
           Flexible(
               flex: 1,
-              child: Text(
-                'OR',
-                style: GoogleFonts.poppins(
-                    color: const Color(0xFF5D407B),
-                    fontSize: size.height * 0.017),
-              )),
-          Flexible(flex: 1, child: _signInWith()),
+              child: socialLoginEnable
+                  ? Text(
+                      'OR',
+                      style: GoogleFonts.poppins(
+                          color: const Color(0xFF5D407B),
+                          fontSize: size.height * 0.017),
+                    )
+                  : const SizedBox()),
+          Flexible(
+              flex: 1,
+              child: socialLoginEnable ? _signInWith() : const SizedBox()),
           Flexible(flex: 1, child: _policyText()),
           Flexible(flex: 1, child: _signInText()),
           const Flexible(flex: 2, child: SizedBox()),
@@ -362,17 +368,18 @@ class _SignUpPageState extends State<SignUpPage> {
     return null;
   }
 
-  // String? _emailValidate(String? value) {
-  //   if (value!.isEmpty) {
-  //     return 'please enter email';
-  //   }
-  //   return null;
-  // }
-
-  // String? _passwordValidate(String? value) {
-  //   if (value!.isEmpty && value.length < 5) {
-  //     return 'please enter password';
-  //   }
-  //   return null;
-  // }
+  void socialLoginEnabled() async {
+    http.Response response = await _apiServices.getSocialLogin();
+    var data = jsonDecode(response.body);
+    String yesOrNo = data["data"];
+    if (yesOrNo == 'No') {
+      setState(() {
+        socialLoginEnable = false;
+      });
+    } else {
+      setState(() {
+        socialLoginEnable = true;
+      });
+    }
+  }
 }
