@@ -68,6 +68,7 @@ class DetailDialog {
                     Flexible(
                       flex: 4,
                       child: Text(
+                        overflow: TextOverflow.clip,
                         textAlign: TextAlign.justify,
                         description,
                         style: textStyleTwoo(size),
