@@ -30,7 +30,7 @@ class SelectedScreen extends StatefulWidget {
 }
 
 class _SelectedScreenState extends State<SelectedScreen> {
-  List<Color> colorList = [];
+  // List<Color> colorList = [];
 
   Random random = Random();
   late Size size;
@@ -60,6 +60,13 @@ class _SelectedScreenState extends State<SelectedScreen> {
   late List<UpdatedSdgsList> list;
   Color sytemUiOverlayColor = Colors.white;
   Color safeAreaColor = Colors.white;
+  List<Color> colorList = [
+    const Color(0xFFDCD4F8),
+    const Color(0xFFCBF6E8),
+    const Color(0xFF4267AB),
+    const Color(0xFF58E5AA),
+    const Color(0xFf016653),
+  ];
   @override
   void initState() {
     super.initState();
@@ -188,7 +195,13 @@ class _SelectedScreenState extends State<SelectedScreen> {
   Widget pieChart() {
     return PieChart(
       animationDuration: const Duration(seconds: 1),
-      colorList: colorList,
+      colorList: const [
+        Color(0xFFDCD4F8),
+        Color(0xFFCBF6E8),
+        Color(0xFF4267AB),
+        Color(0xFF58E5AA),
+        Color(0xFf016653),
+      ],
       chartValuesOptions: const ChartValuesOptions(
         showChartValuesInPercentage: true,
         // chartValueBackgroundColor: Colors.white,
@@ -239,10 +252,7 @@ class _SelectedScreenState extends State<SelectedScreen> {
           }
         },
         sideContainer: Container(
-          width: 10,
-          height: size.height * 0.08,
-          color: Color(int.parse(list[index].colorCode)),
-        ),
+            width: 10, height: size.height * 0.08, color: colorList[index]),
         image: SizedBox(
           height: size.height * 0.20,
           width: size.width * 0.10,
@@ -258,16 +268,20 @@ class _SelectedScreenState extends State<SelectedScreen> {
               fontSize: size.height * 0.020),
         ),
         child: Container(
-          color: Color(int.parse(list[index].colorCode)),
-          height: 70,
+          color: colorList[index],
+          height: size.height * 0.085,
           width: size.width,
-          child: Text(
-            overflow: TextOverflow.fade,
-            list[index].description.toString(),
-            style: GoogleFonts.poppins(
-                color: Colors.black,
-                fontSize: size.height * 0.020,
-                fontWeight: FontWeight.w400),
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+                horizontal: size.width * 0.040, vertical: size.height * 0.005),
+            child: Text(
+              overflow: TextOverflow.fade,
+              list[index].description.toString(),
+              style: GoogleFonts.poppins(
+                  color: Colors.black,
+                  fontSize: size.height * 0.020,
+                  fontWeight: FontWeight.w400),
+            ),
           ),
         ));
   }

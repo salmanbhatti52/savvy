@@ -9,7 +9,6 @@ import 'package:pie_chart/pie_chart.dart';
 import 'package:savvy/screens/page_view_Screens/page_view_screen_six.dart';
 import 'package:savvy/screens/post_page_view_screens/select_plan_screen.dart';
 import 'package:savvy/services/api_urls.dart';
-import 'package:savvy/utils/dialog_const.dart';
 import 'package:savvy/utils/portfolio_screen_utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../common/widgets/custom_button.dart';
@@ -36,28 +35,20 @@ class _PortFolioScreenState extends State<PortFolioScreen> {
   // int itemIndex = -1;
   int sepratorIndex = 0;
   final controller = Get.find<SdgsListController>();
-  List<Color> tileColors = [
-    DialogConst.firstColor,
-    DialogConst.secondColor,
-    DialogConst.thirdColor,
-    DialogConst.fourthColor,
-    DialogConst.fifthColor,
-    DialogConst.sixthColor,
-    DialogConst.seventhColor,
-    DialogConst.eighthColor,
-    DialogConst.ninthColor,
-    DialogConst.tenthColor,
-    DialogConst.eleventhColor,
-    DialogConst.twelthColor,
-    DialogConst.thirtenColor,
-    DialogConst.fourtenthColor,
-  ];
+
   PortfolioUtils portfolioUtils = PortfolioUtils();
   List<String> leading = [];
   late List<UpdatedSdgsList> list;
-  List<Color> colorList = [];
+  // List<Color> colorList = [];
   Color sytemUiOverlayColor = Colors.white;
   Map<String, double> pieChartMap = {};
+  List<Color> colorList = [
+    const Color(0xFFDCD4F8),
+    const Color(0xFFCBF6E8),
+    const Color(0xFF4267AB),
+    const Color(0xFF58E5AA),
+    const Color(0xFf016653),
+  ];
 
   @override
   void initState() {
@@ -223,146 +214,6 @@ class _PortFolioScreenState extends State<PortFolioScreen> {
     );
   }
 
-  // Widget selectedList() {
-  //   return Column(
-  //     children: [
-  //       Flexible(
-  //         child: SingleChildScrollView(
-  //           child: MyExpansionTile(
-  //             sideContainer: Container(color: Colors.red),
-  //             image: Image.asset(r'assets/images/selecteditem2.png'),
-  //             tileText: const Text('Savvy App'),
-  //             color: Colors.grey[300],
-  //             child: Container(
-  //               color: Colors.orange,
-  //               height: 20,
-  //               width: 100,
-  //             ),
-  //           ),
-  //         ),
-  //       ),
-  //       Flexible(
-  //         child: SingleChildScrollView(
-  //           child: MyExpansionTile(
-  //             sideContainer: Container(
-  //               color: Colors.red,
-  //               height: 60,
-  //             ),
-  //             image: Image.asset(r'assets/images/selecteditem2.png'),
-  //             tileText: const Text('Savvy App'),
-  //             color: Colors.grey[300],
-  //             child: Container(
-  //               color: Colors.orange,
-  //               height: 20,
-  //               width: 100,
-  //             ),
-  //           ),
-  //         ),
-  //       ),
-  //       const SizedBox(
-  //         height: 5,
-  //       ),
-  //       Flexible(
-  //         child: SingleChildScrollView(
-  //           child: MyExpansionTile(
-  //             sideContainer: Container(color: Colors.red),
-  //             image: Image.asset(r'assets/images/selecteditem2.png'),
-  //             tileText: const Text('Savvy App'),
-  //             color: Colors.grey[300],
-  //             child: Container(
-  //               color: Colors.orange,
-  //               height: 20,
-  //               width: 100,
-  //             ),
-  //           ),
-  //         ),
-  //       ),
-  //       Flexible(
-  //         child: SingleChildScrollView(
-  //           child: MyExpansionTile(
-  //             sideContainer: Container(color: Colors.red),
-  //             image: Image.asset(r'assets/images/selecteditem2.png'),
-  //             tileText: const Text('Savvy App'),
-  //             color: Colors.grey[300],
-  //             child: Container(
-  //               color: Colors.orange,
-  //               height: 20,
-  //               width: 100,
-  //             ),
-  //           ),
-  //         ),
-  //       ),
-  //       Flexible(
-  //         child: SingleChildScrollView(
-  //           child: MyExpansionTile(
-  //             sideContainer: Container(color: Colors.red),
-  //             image: Image.asset(r'assets/images/selecteditem2.png'),
-  //             tileText: const Text('Savvy App'),
-  //             color: Colors.grey[300],
-  //             child: Container(
-  //               color: Colors.orange,
-  //               height: 20,
-  //               width: 100,
-  //             ),
-  //           ),
-  //         ),
-  //       ),
-  //       Flexible(
-  //         child: SingleChildScrollView(
-  //           child: MyExpansionTile(
-  //             sideContainer: Container(color: Colors.red),
-  //             image: Image.asset(r'assets/images/selecteditem2.png'),
-  //             tileText: const Text('Savvy App'),
-  //             color: Colors.grey[300],
-  //             child: Container(
-  //               color: Colors.orange,
-  //               height: 20,
-  //               width: 100,
-  //             ),
-  //           ),
-  //         ),
-  //       ),
-  //     ],
-  //   );
-  // }
-
-  // Widget _itemBuilder(BuildContext context, int index) {
-  //   return SizedBox(
-  //     height: size.height * 0.070,
-  //     width: size.width,
-  //     child: ReuseableRow(
-  //         color: Colors.white,
-  //         sideContainer: Container(
-  //           color: Color(int.parse(list[index].colorCode)),
-  //           // width: 10,
-  //         ),
-  //         image: SizedBox(
-  //             height: size.height * 0.20,
-  //             width: size.width * 0.10,
-  //             child: Image.network(
-  //               ApiUrls.baseUrl + list[index].image,
-  //               fit: BoxFit.scaleDown,
-  //             )),
-  //         tileText: Text(
-  //           "${list[index].systemSdgsId}. ${list[index].title}",
-  //           style: GoogleFonts.poppins(
-  //               color: ColorConstants.landingPageTitleColor,
-  //               fontSize: size.height * 0.020),
-  //         ),
-  //         dropDownButton: GestureDetector(
-  //             onTap: () {
-  //               debugPrint('ontap');
-  //               setState(() {
-  //                 itemIndex = index;
-  //               });
-  //               //print(itemIndex.toString());
-  //             },
-  //             child: const Icon(
-  //                 Icons.expand_more_sharp)) // child: MyExpansionTile(
-
-  //         ),
-  //   );
-  // }
   Widget _itemBuilder(BuildContext context, int index) {
     return MyExpansionTile(
         key: Key(index.toString()), //attention
@@ -382,7 +233,7 @@ class _PortFolioScreenState extends State<PortFolioScreen> {
         sideContainer: Container(
           width: 10,
           height: size.height * 0.08,
-          color: Color(int.parse(list[index].colorCode)),
+          color: colorList[index],
         ),
         image: SizedBox(
           height: size.height * 0.20,
@@ -399,53 +250,22 @@ class _PortFolioScreenState extends State<PortFolioScreen> {
               fontSize: size.height * 0.020),
         ),
         child: Container(
-          color: Color(int.parse(list[index].colorCode)),
-          height: 70,
+          color: colorList[index],
+          height: size.height * 0.085,
           width: size.width,
-          child: Text(
-            overflow: TextOverflow.fade,
-            list[index].description.toString(),
-            style: GoogleFonts.poppins(
-                color: Colors.black,
-                fontSize: size.height * 0.020,
-                fontWeight: FontWeight.w400),
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+                horizontal: size.width * 0.040, vertical: size.height * 0.005),
+            child: Text(
+              overflow: TextOverflow.fade,
+              list[index].description.toString(),
+              style: GoogleFonts.poppins(
+                  color: Colors.black,
+                  fontSize: size.height * 0.020,
+                  fontWeight: FontWeight.w400),
+            ),
           ),
         ));
-    // // return SizedBox(
-    // //   height: size.height * 0.070,
-    // //   width: size.width,
-    // //   child: ReuseableRow(
-    // //       color: Colors.white,
-    // //       sideContainer: Container(
-    // //         color: Color(int.parse(list[index].colorCode)),
-    // //         // width: 10,
-    // //       ),
-    // //       image: SizedBox(
-    // //           height: size.height * 0.20,
-    // //           width: size.width * 0.10,
-    // //           child: Image.network(
-    // //             ApiUrls.baseUrl + list[index].image,
-    // //             fit: BoxFit.scaleDown,
-    // //           )),
-    // //       tileText: Text(
-    // //         "${list[index].systemSdgsId}. ${list[index].title}",
-    // //         style: GoogleFonts.poppins(
-    // //             color: ColorConstants.landingPageTitleColor,
-    // //             fontSize: size.height * 0.020),
-    // //       ),
-    // //       dropDownButton: GestureDetector(
-    // //           onTap: () {
-    // //             debugPrint('ontap');
-    // //             setState(() {
-    // //               itemIndex = index;
-    // //             });
-    // //             //print(itemIndex.toString());
-    // //           },
-    // //           child: const Icon(
-    // //               Icons.expand_more_sharp)) // child: MyExpansionTile(
-
-    // //       ),
-    // );
   }
 
   Widget myEndDrawer() {

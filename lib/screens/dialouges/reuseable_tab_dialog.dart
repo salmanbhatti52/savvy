@@ -92,9 +92,7 @@ class _ReuseableTabDialogState extends State<ReuseableTabDialog>
                         ),
                       )
                     ],
-                  )
-                  
-                  ),
+                  )),
               SizedBox(
                 height: size.height * 0.008,
               ),
@@ -104,10 +102,10 @@ class _ReuseableTabDialogState extends State<ReuseableTabDialog>
                 children: [
                   Container(
                     height: size.height * 0.050,
-                    width: size.width * 0.55,
+                    width: size.width * 0.7,
                     decoration: BoxDecoration(
-                      color: const Color(0xFFF2F2F2),
-                      borderRadius: BorderRadius.circular(20),
+                      color: const Color(0xFF58E5AA).withOpacity(0.6),
+                      borderRadius: BorderRadius.circular(8),
                     ),
                     child: TabBar(
                       controller: _tabController,
@@ -126,12 +124,12 @@ class _ReuseableTabDialogState extends State<ReuseableTabDialog>
                         ),
                       ],
                       indicator: RectangularIndicator(
-                        horizontalPadding: 3,
-                        verticalPadding: 3,
-                        bottomLeftRadius: 20,
-                        topLeftRadius: 20,
-                        bottomRightRadius: 20,
-                        topRightRadius: 20,
+                        horizontalPadding: 0,
+                        verticalPadding: 0,
+                        bottomLeftRadius: 8,
+                        topLeftRadius: 8,
+                        bottomRightRadius: 8,
+                        topRightRadius: 8,
                         color: const Color(0xFF58E5AA),
                       ),
                     ),
@@ -186,7 +184,7 @@ class _ReuseableTabDialogState extends State<ReuseableTabDialog>
         ),
         //    verticalSpace(size),
         Flexible(
-          flex: 4,
+          flex: 5,
           child: Text(
             widget.description,
             textAlign: TextAlign.justify,
@@ -310,14 +308,14 @@ class _ReuseableTabDialogState extends State<ReuseableTabDialog>
 
   textStyleTwoo(Size size) {
     return GoogleFonts.lato(
-        fontSize: size.height * 0.010,
+        fontSize: size.height * 0.013,
         //   color: ColorConstants.introPageTextColor,
         fontWeight: FontWeight.w700);
   }
 
   myBoxDecorationn() {
     return BoxDecoration(
-      color: const Color(0xFF58E5AA),
+      color: const Color(0xFF58E5AA).withOpacity(0.6),
       borderRadius: BorderRadius.circular(10),
     );
   }

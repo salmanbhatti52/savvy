@@ -29,8 +29,6 @@ class PageViewScreenSix extends StatefulWidget {
 }
 
 class _PageViewScreenSixState extends State<PageViewScreenSix> {
-  // int itemsAdded = 0;
-  //bool isNotUndo = true;
   InfoDialog infoDialog = InfoDialog();
   DetailDialogs detailDialogs = DetailDialogs();
   InfoDialogs info = InfoDialogs(detailDialogs: DetailDialogs());
@@ -193,11 +191,7 @@ class _PageViewScreenSixState extends State<PageViewScreenSix> {
                           width: size.width * 0.24,
                           child: Draggable(
                             onDragCompleted: () {
-                              // selectedList = sdgListController.getSelectedSdgs();
-
-                              // var contain = selectedList.where(
-                              //   (element) => element.systemSdgsId == '1',
-                              // );
+                             
                               if (itemCount < 5) {
                                 var contain = isContains('1');
                                 if (contain.isEmpty) {

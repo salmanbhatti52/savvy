@@ -23,9 +23,17 @@ class DetailDialog {
                   children: [
                     Flexible(child: _title(context)),
                     Flexible(
-                        child: Text(
-                      'Info',
-                      style: GoogleFonts.poppins(),
+                        child: Container(
+                      alignment: Alignment.center,
+                      height: size.height * 0.04,
+                      width: size.width * 0.7,
+                      decoration: BoxDecoration(
+                          color: ColorConstants.buttonColorLight,
+                          borderRadius: BorderRadius.circular(8)),
+                      child: Text(
+                        'Info',
+                        style: GoogleFonts.poppins(),
+                      ),
                     )),
                   ],
                 )),
@@ -154,7 +162,7 @@ class DetailDialog {
 
   textStyleTwoo(Size size) {
     return GoogleFonts.lato(
-        fontSize: size.height * 0.010,
+        fontSize: size.height * 0.013,
         //   color: ColorConstants.introPageTextColor,
         fontWeight: FontWeight.w700);
   }
@@ -167,7 +175,7 @@ class DetailDialog {
 
   myBoxDecorationn() {
     return BoxDecoration(
-      color: const Color(0xFF58E5AA),
+      color: const Color(0xFF58E5AA).withOpacity(0.6),
       borderRadius: BorderRadius.circular(10),
     );
   }

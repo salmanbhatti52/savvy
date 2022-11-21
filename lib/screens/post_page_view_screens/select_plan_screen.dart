@@ -136,7 +136,7 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
           Flexible(
             flex: 1,
             child: Text(
-              'your planet impact'.toUpperCase(),
+              'your potential impact'.toUpperCase(),
               style: GoogleFonts.raleway(
                 fontWeight: FontWeight.bold,
                 color: ColorConstants.introPageTextColor,
@@ -177,7 +177,7 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
     ];
     List<String> svgsPath = [
       (r'assets/svgs/planpagsvg.svg'),
-      (r'assets/svgs/planpgsvg3.svg'),
+      (r'assets/svgs/planpgsvgg.svg'),
       (r'assets/svgs/planpgsvg2.svg'),
     ];
 
@@ -230,7 +230,7 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
                         width: size.width * 0.3,
                         child: SvgPicture.asset(
                           svgsPath[index],
-                          fit: BoxFit.fill,
+                          fit: BoxFit.fitHeight,
                         )))
               ],
             ),
@@ -257,22 +257,6 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // RichText(
-                  //         text: TextSpan(
-                  //             style: GoogleFonts.poppins(
-                  //                 color: Colors.black,
-                  //                 fontSize: size.height * 0.020),
-                  //             children: [
-                  //           const TextSpan(text: 'Your investments after '),
-                  //           TextSpan(
-                  //               text: ' Years',
-                  //               style: GoogleFonts.poppins(
-                  //                 fontWeight: FontWeight.bold,
-                  //                 fontSize: size.height * 0.020,
-                  //                 color: Colors.black,
-                  //               )),
-                  //         ]))
-
                   Flexible(
                     flex: 2,
                     child: Row(
@@ -297,7 +281,6 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
                       ],
                     ),
                   ),
-
                   SizedBox(
                     height: size.height * 0.0090,
                   ),
@@ -484,7 +467,7 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
       min: 0.0,
       max: 2000,
       value: permonthInvestment,
-      divisions: 50,
+      divisions: 40,
       onChanged: (value) {
         setState(() {
           permonthInvestment = value;

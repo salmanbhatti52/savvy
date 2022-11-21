@@ -41,9 +41,17 @@ class ReuseableDetialDialog extends StatelessWidget {
                   children: [
                     Flexible(child: _title(context)),
                     Flexible(
-                        child: Text(
-                      'info',
-                      style: GoogleFonts.poppins(),
+                        child: Container(
+                      alignment: Alignment.center,
+                      height: size.height * 0.04,
+                      width: size.width * 0.7,
+                      decoration: BoxDecoration(
+                          color: ColorConstants.buttonColorLight,
+                          borderRadius: BorderRadius.circular(8)),
+                      child: Text(
+                        'info',
+                        style: GoogleFonts.poppins(),
+                      ),
                     )),
                   ],
                 )),
@@ -76,10 +84,14 @@ class ReuseableDetialDialog extends StatelessWidget {
                     //    verticalSpace(size),
                     Flexible(
                       flex: 4,
-                      child: Text(
-                        textAlign: TextAlign.justify,
-                        description,
-                        style: textStyleTwoo(size),
+                      child: SingleChildScrollView(
+                        physics: const BouncingScrollPhysics(),
+                        child: Text(
+                          textAlign: TextAlign.justify,
+                          description,
+                          style: textStyleTwoo(size),
+                          overflow: TextOverflow.fade,
+                        ),
                       ),
                     ),
                     //     verticalSpace(size),
@@ -279,7 +291,7 @@ class ReuseableDetialDialog extends StatelessWidget {
 
   myBoxDecorationn() {
     return BoxDecoration(
-      color: const Color(0xFF58E5AA),
+      color: const Color(0xFF58E5AA).withOpacity(0.6),
       borderRadius: BorderRadius.circular(10),
     );
   }
@@ -291,7 +303,7 @@ class ReuseableDetialDialog extends StatelessWidget {
 
   textStyleTwoo(Size size) {
     return GoogleFonts.lato(
-        fontSize: size.height * 0.010,
+        fontSize: size.height * 0.013,
         //   color: ColorConstants.introPageTextColor,
         fontWeight: FontWeight.w700);
   }

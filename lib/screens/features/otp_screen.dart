@@ -35,6 +35,12 @@ class _OtpScreenState extends State<OtpScreen> {
     _emailController = TextEditingController();
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+    _emailController.dispose();
+  }
+
   late Size size;
   @override
   Widget build(BuildContext context) {

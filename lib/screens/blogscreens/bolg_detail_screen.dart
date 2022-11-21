@@ -157,27 +157,3 @@ We  need to do more in order to preserve our oceans and meet the sustainable dev
 }
 
 
-
-// Column(
-//       crossAxisAlignment: CrossAxisAlignment.start,
-//       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//       children: [
-//         Flexible(
-//             flex: 5,
-//             child: SizedBox(
-//               width: MediaQuery.of(context).size.width,
-//               child: Image.asset(
-//                 r'assets/images/Mask group_01.png',
-//                 fit: BoxFit.fill,
-//               ),
-//             )),
-//         Flexible(flex: 2, child: _blogTitle()),
-//         Flexible(flex: 1, child: _blogWriterName()),
-//         Flexible(
-//             flex: 9,
-//             child: SingleChildScrollView(
-//               child: _readBlog(),
-//             )),
-//         Flexible(flex: 1, child: _blogDate()),
-//       ],
-//     );
