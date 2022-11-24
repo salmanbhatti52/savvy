@@ -236,6 +236,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget _loginButton() {
     return MyButton(
       ontap: () async {
+        print('ontap');
         FocusScope.of(context).unfocus();
 
         setState(() {
@@ -251,21 +252,33 @@ class _LoginPageState extends State<LoginPage> {
           debugPrint(_emailController.text);
           debugPrint(_passwordController.text);
           //  pref.setBool("loggedIn", true);
-          var data = jsonDecode(response.body);
-          String userName = data["data"]["user"]["full_name"];
-          pref.setString('UserName', userName);
-          debugPrint("loginpageuser name   $userName");
-
-          if (response.statusCode == 200 && mounted) {
-            Navigator.popAndPushNamed(context, IntroPage.screenName);
-            pref.setBool('loggedIn', true);
+          try {
             var data = jsonDecode(response.body);
             String userName = data["data"]["user"]["full_name"];
-            pref.setString('LoggedInUserName', userName);
+            pref.setString('UserName', userName);
             debugPrint("loginpageuser name   $userName");
+          } catch (e) {
+            setState(() {
+              isClicked = true;
+            });
+            Fluttertoast.showToast(msg: 'Email Does Not Exsist.');
+          }
+          //  print(response.statusCode);
 
-            showToast('Login Successfull');
-          } else {
+          try {
+            if (response.statusCode == 200 && mounted) {
+              //   print('login response');
+              Navigator.popAndPushNamed(context, IntroPage.screenName);
+              pref.setBool('loggedIn', true);
+              var data = jsonDecode(response.body);
+              String userName = data["data"]["user"]["full_name"];
+              pref.setString('LoggedInUserName', userName);
+              debugPrint("loginpageuser name   $userName");
+
+              showToast('Login Successfull');
+            }
+          } catch (e) {
+            print(e.toString());
             setState(() {
               isClicked = true;
             });

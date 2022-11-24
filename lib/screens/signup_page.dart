@@ -161,39 +161,34 @@ class _SignUpPageState extends State<SignUpPage> {
             ),
           ),
           Flexible(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Flexible(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Flexible(
-                        child: Text(
-                          'Email',
-                          style: textStyle(),
-                        ),
+            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              Flexible(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Flexible(
+                      child: Text(
+                        'Email',
+                        style: textStyle(),
                       ),
-                      SizedBox(
-                        height: size.height * 0.007,
-                      ),
-                      Flexible(
-                        child: SignUpPageTextFeild(
-                            controller: _emailController,
-                            hintText: 'email@example.com',
-                            validator: ValidationBuilder()
-                                .email()
-                                .maxLength(50)
-                                .build(),
-                            autofocus: false,
-                            labelText: '',
-                            obscureText: false),
-                      )
-                    ],
-                  ),
+                    ),
+                    SizedBox(
+                      height: size.height * 0.007,
+                    ),
+                    Flexible(
+                      child: SignUpPageTextFeild(
+                          controller: _emailController,
+                          hintText: 'email@example.com',
+                          validator:
+                              ValidationBuilder().email().maxLength(50).build(),
+                          autofocus: false,
+                          labelText: '',
+                          obscureText: false),
+                    )
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ]),
           ),
           Flexible(
             child: Row(
