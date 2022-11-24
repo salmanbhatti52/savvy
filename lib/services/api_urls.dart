@@ -1,5 +1,5 @@
 class ApiUrls {
-  static const String baseUrl = 'https://savvy.eigix.net/';
+  static const String baseUrl = 'https://https://jrmies1.sg-host.com/';
 
   static const String endPointSignUp = 'webservices/signup';
 

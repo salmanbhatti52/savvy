@@ -1,4 +1,4 @@
-package com.savvy.app
+package com.savvy.apps
 
 import io.flutter.embedding.android.FlutterActivity
 
