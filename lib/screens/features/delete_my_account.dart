@@ -6,6 +6,8 @@ import 'package:savvy/common/widgets/custom_button.dart';
 import 'package:savvy/common/widgets/delete_account_row.dart';
 import 'package:savvy/utils/color_constants.dart';
 
+import '../../common/widgets/round_icon_button.dart';
+
 class DeleteMyAccount extends StatefulWidget {
   const DeleteMyAccount({super.key});
   static const String screenName = '/DeleteMyAcc';
@@ -28,6 +30,19 @@ class _DeleteMyAccountState extends State<DeleteMyAccount> {
 
     return Scaffold(
       appBar: AppBar(
+        leading: UnconstrainedBox(
+          child: SizedBox(
+            height: 40,
+            width: 30,
+            child: RoundButton(
+              onTap: () => Navigator.pop(context),
+              icon: const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Icon(Icons.arrow_back_ios, size: 18),
+              ),
+            ),
+          ),
+        ),
         systemOverlayStyle: const SystemUiOverlayStyle(
           statusBarColor: Colors.white,
           statusBarBrightness: Brightness.dark,
@@ -46,7 +61,7 @@ class _DeleteMyAccountState extends State<DeleteMyAccount> {
             ? const BouncingScrollPhysics()
             : const NeverScrollableScrollPhysics(),
         child: SizedBox(
-          height: size.height * 0.9,
+          height: size.height * 0.8,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
@@ -127,7 +142,7 @@ class _DeleteMyAccountState extends State<DeleteMyAccount> {
                           style: textStyle(),
                         ))),
                 Flexible(
-                    flex: 6,
+                    flex: 3,
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -139,7 +154,7 @@ class _DeleteMyAccountState extends State<DeleteMyAccount> {
                         const Expanded(
                           flex: 3,
                           child: TextField(
-                            maxLines: 30,
+                            maxLines: 20,
                             decoration: InputDecoration(
                               hintText:
                                   "Please Provide Additional Information Here",

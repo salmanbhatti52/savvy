@@ -139,19 +139,27 @@ class _OtpScreenState extends State<OtpScreen> {
           http.Response response = await _apiServices
               .getOtpWithApi(_emailController.text.toString());
 
-          if (response.statusCode == 200 && mounted) {
-            Navigator.pushNamed(context, ResetScreen.screenName);
-            var data = jsonDecode(response.body);
-            String userId = data["data"]["users_customers_id"];
+          try {
+            if (response.statusCode == 200 && mounted) {
+              Navigator.pushNamed(context, ResetScreen.screenName);
+              var data = jsonDecode(response.body);
+              String userId = data["data"]["users_customers_id"];
 
-            iDController.setUserId(userId);
+              iDController.setUserId(userId);
 
-            Fluttertoast.showToast(msg: 'Otp Sent to EmailAddress');
-          } else {
+              Fluttertoast.showToast(msg: 'Otp Sent to EmailAddress');
+            } else {
+              var data = jsonDecode(response.body);
+              setState(() {
+                isNotLoading = true;
+              });
+              Fluttertoast.showToast(msg: data['message']);
+            }
+          } catch (e) {
             setState(() {
               isNotLoading = true;
             });
-            Fluttertoast.showToast(msg: 'Something went Wrong');
+            Fluttertoast.showToast(msg: 'Something went wrong');
           }
         },
         radius: size.width * 0.07,

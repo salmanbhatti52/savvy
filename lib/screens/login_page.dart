@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:form_validator/form_validator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 import 'package:savvy/common/widgets/custom_button.dart';
@@ -147,7 +148,11 @@ class _LoginPageState extends State<LoginPage> {
                         child: SignUpPageTextFeild(
                             controller: _emailController,
                             hintText: 'email@example.com',
-                            validator: _emailValidate,
+                            validator: ValidationBuilder()
+                                .email()
+                                .minLength(5)
+                                .maxLength(50)
+                                .build(),
                             autofocus: false,
                             labelText: '',
                             obscureText: false),
@@ -179,7 +184,10 @@ class _LoginPageState extends State<LoginPage> {
                         child: SignUpPageTextFeild(
                             controller: _passwordController,
                             hintText: 'Minimum 5 Characters',
-                            validator: _passwordValidate,
+                            validator: ValidationBuilder()
+                                .minLength(5)
+                                .maxLength(50)
+                                .build(),
                             autofocus: false,
                             labelText: '',
                             obscureText: true),
@@ -258,10 +266,11 @@ class _LoginPageState extends State<LoginPage> {
             pref.setString('UserName', userName);
             debugPrint("loginpageuser name   $userName");
           } catch (e) {
+            var data = jsonDecode(response.body);
             setState(() {
               isClicked = true;
             });
-            Fluttertoast.showToast(msg: 'Email Does Not Exsist.');
+            Fluttertoast.showToast(msg: data['message']);
           }
           //  print(response.statusCode);
 
@@ -368,20 +377,6 @@ class _LoginPageState extends State<LoginPage> {
         msg: msg,
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.CENTER);
-  }
-
-  String? _emailValidate(String? value) {
-    if (value!.isEmpty) {
-      return 'please enter email';
-    }
-    return null;
-  }
-
-  String? _passwordValidate(String? value) {
-    if (value!.isEmpty && value.length < 5) {
-      return 'please enter password';
-    }
-    return null;
   }
 
   void socialLoginEnabled() async {

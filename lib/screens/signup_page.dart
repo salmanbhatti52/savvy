@@ -257,10 +257,11 @@ class _SignUpPageState extends State<SignUpPage> {
               userNameController.setUserName(_nameController.text);
               showToast('User Created Successfully');
             } else {
+              var data = jsonDecode(response.body);
               setState(() {
                 isClicked = true;
               });
-              showToast('Something went Wrong');
+              showToast(data['message']);
             }
           } else {
             setState(() {
