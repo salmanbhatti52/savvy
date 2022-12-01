@@ -39,9 +39,11 @@ class ApiServices {
   }
 
   Future<http.Response> getOtpWithApi(String email) async {
+    print('otp with api body');
     http.Response response = await http.post(
         Uri.parse(ApiUrls.baseUrl + ApiUrls.endPointGetOtp),
         body: jsonEncode({"user_email": email}));
+    print(response.statusCode.toString());
     return response;
   }
 

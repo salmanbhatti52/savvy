@@ -28,6 +28,7 @@ class _OtpScreenState extends State<OtpScreen> {
   final ApiServices _apiServices = ApiServices();
   final iDController = Get.put(UserIdController());
   bool isNotLoading = true;
+  final formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -63,7 +64,7 @@ class _OtpScreenState extends State<OtpScreen> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: SizedBox(
-        height: size.height,
+        height: size.height * 0.95,
         child: Column(
           children: [
             Flexible(
@@ -139,27 +140,33 @@ class _OtpScreenState extends State<OtpScreen> {
           http.Response response = await _apiServices
               .getOtpWithApi(_emailController.text.toString());
 
-          try {
-            if (response.statusCode == 200 && mounted) {
-              Navigator.pushNamed(context, ResetScreen.screenName);
-              var data = jsonDecode(response.body);
-              String userId = data["data"]["users_customers_id"];
+          if (formKey.currentState!.validate()) {
+            try {
+              if (response.statusCode == 200 && mounted) {
+                Navigator.pushNamed(context, ResetScreen.screenName);
+                var data = jsonDecode(response.body);
+                String userId = data["data"]["users_customers_id"];
 
-              iDController.setUserId(userId);
+                iDController.setUserId(userId);
 
-              Fluttertoast.showToast(msg: 'Otp Sent to EmailAddress');
-            } else {
-              var data = jsonDecode(response.body);
+                Fluttertoast.showToast(msg: 'Otp Sent to EmailAddress');
+              } else {
+                var data = jsonDecode(response.body);
+                setState(() {
+                  isNotLoading = true;
+                });
+                Fluttertoast.showToast(msg: data['message']);
+              }
+            } catch (e) {
               setState(() {
                 isNotLoading = true;
               });
-              Fluttertoast.showToast(msg: data['message']);
+              Fluttertoast.showToast(msg: 'Something went wrong');
             }
-          } catch (e) {
+          } else {
             setState(() {
               isNotLoading = true;
             });
-            Fluttertoast.showToast(msg: 'Something went wrong');
           }
         },
         radius: size.width * 0.07,
@@ -185,6 +192,7 @@ class _OtpScreenState extends State<OtpScreen> {
             children: [
               Flexible(
                 child: Form(
+                  key: formKey,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -200,8 +208,11 @@ class _OtpScreenState extends State<OtpScreen> {
                       Flexible(
                         child: OtpTextFeild(
                           controller: _emailController,
-                          validator:
-                              ValidationBuilder().email().maxLength(50).build(),
+                          validator: ValidationBuilder()
+                              .email()
+                              .minLength(7)
+                              .maxLength(50)
+                              .build(),
                           hintText: 'Enter Email',
                           autofocus: false,
                         ),
