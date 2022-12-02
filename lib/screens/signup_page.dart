@@ -31,6 +31,7 @@ class _SignUpPageState extends State<SignUpPage> {
   late TextEditingController _nameController;
   late TextEditingController _emailController;
   late TextEditingController _passwordController;
+  late TextEditingController _lastNameController;
   final ApiServices _apiServices = ApiServices();
   final _formKey = GlobalKey<FormState>();
   bool isClicked = true;
@@ -44,6 +45,7 @@ class _SignUpPageState extends State<SignUpPage> {
     _nameController = TextEditingController();
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
+    _lastNameController = TextEditingController();
   }
 
   @override
@@ -51,6 +53,7 @@ class _SignUpPageState extends State<SignUpPage> {
     _emailController.dispose();
     _nameController.dispose();
     _passwordController.dispose();
+    _lastNameController.dispose();
     super.dispose();
   }
 
@@ -80,10 +83,10 @@ class _SignUpPageState extends State<SignUpPage> {
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: size.height * 0.060),
         child:
-            Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+            Column(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
           //const Flexible(flex: 1, child: SizedBox()),
-          Flexible(flex: 1, child: _title()),
-          Flexible(flex: 6, child: _textFeilds()),
+          Flexible(flex: 2, child: _title()),
+          Flexible(flex: 9, child: _textFeilds()),
           Flexible(flex: 2, child: _loginButton()),
           //const Flexible(flex: 1, child: SizedBox()),
           Flexible(
@@ -149,6 +152,38 @@ class _SignUpPageState extends State<SignUpPage> {
                         child: SignUpPageTextFeild(
                             controller: _nameController,
                             hintText: 'Ellen',
+                            autofocus: false,
+                            validator: _nameValidate,
+                            labelText: '',
+                            obscureText: false),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Flexible(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Flexible(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Flexible(
+                        child: Text(
+                          'Last Name',
+                          style: textStyle(),
+                        ),
+                      ),
+                      SizedBox(
+                        height: size.height * 0.007,
+                      ),
+                      Flexible(
+                        child: SignUpPageTextFeild(
+                            controller: _lastNameController,
+                            hintText: '',
                             autofocus: false,
                             validator: _nameValidate,
                             labelText: '',
@@ -243,14 +278,21 @@ class _SignUpPageState extends State<SignUpPage> {
             http.Response response = await _apiServices.signUpWithApi(
                 CreateUser(
                     onesignalId: "",
-                    fullName: _nameController.text,
+                    firstName: _nameController.text,
+                    lastName: _lastNameController.text,
                     userEmail: _emailController.text,
                     userPassword: _passwordController.text,
                     notificationSwitch: "yes"));
 
+            print(_nameController.text);
+            print(_lastNameController.text);
+            print(_emailController.text);
+
+            print(_passwordController.text);
+
             if (response.statusCode == 200 && mounted) {
               var data = jsonDecode(response.body);
-              String userName = data["data"]["user"]["full_name"];
+              String userName = data["data"]["user"]["first_name"];
               pref.setString('UserName', userName);
               debugPrint("loginpageuser name   $userName");
               Navigator.popAndPushNamed(context, IntroPage.screenName);
@@ -345,7 +387,7 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 
-  textStyle() {
+  TextStyle textStyle() {
     return GoogleFonts.lato(
       color: ColorConstants.introPageTextColor,
       fontSize: size.height * 0.02,

@@ -10,6 +10,7 @@ import 'package:savvy/services/api_urls.dart';
 
 class ApiServices {
   Future<http.Response> signUpWithApi(CreateUser user) async {
+    print('Sign up with api body');
     http.Response signUpResponse = await http.post(
       Uri.parse(ApiUrls.baseUrl + ApiUrls.endPointSignUp),
       body: jsonEncode(user.toMap()),

@@ -262,7 +262,7 @@ class _LoginPageState extends State<LoginPage> {
           //  pref.setBool("loggedIn", true);
           try {
             var data = jsonDecode(response.body);
-            String userName = data["data"]["user"]["full_name"];
+            String userName = data["data"]["user"]["first_name"];
             pref.setString('UserName', userName);
             debugPrint("loginpageuser name   $userName");
           } catch (e) {
@@ -280,7 +280,7 @@ class _LoginPageState extends State<LoginPage> {
               Navigator.popAndPushNamed(context, IntroPage.screenName);
               pref.setBool('loggedIn', true);
               var data = jsonDecode(response.body);
-              String userName = data["data"]["user"]["full_name"];
+              String userName = data["data"]["user"]["first_name"];
               pref.setString('LoggedInUserName', userName);
               debugPrint("loginpageuser name   $userName");
 

@@ -3,14 +3,16 @@ import 'dart:convert';
 class CreateUser {
   CreateUser({
     this.onesignalId,
-    required this.fullName,
+    required this.firstName,
+    required this.lastName,
     required this.userEmail,
     required this.userPassword,
     this.notificationSwitch,
   });
 
   String? onesignalId;
-  String fullName;
+  String firstName;
+  String lastName;
   String userEmail;
   String userPassword;
   String? notificationSwitch;
@@ -22,7 +24,8 @@ class CreateUser {
 
   factory CreateUser.fromMap(Map<String, dynamic> json) => CreateUser(
         onesignalId: json["onesignal_id"],
-        fullName: json["full_name"],
+        firstName: json["first_name"],
+        lastName: json["last_name"],
         userEmail: json["user_email"],
         userPassword: json["user_password"],
         notificationSwitch: json["notification_switch"],
@@ -30,7 +33,8 @@ class CreateUser {
 
   Map<String, dynamic> toMap() => {
         "onesignal_id": onesignalId,
-        "full_name": fullName,
+        "first_name": firstName,
+        "last_name": lastName,
         "user_email": userEmail,
         "user_password": userPassword,
         "notification_switch": notificationSwitch,
