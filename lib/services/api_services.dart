@@ -8,6 +8,8 @@ import 'package:savvy/models/sdgs_models/update_sdgs_list.dart';
 import 'package:savvy/models/user.dart';
 import 'package:savvy/services/api_urls.dart';
 
+import '../models/get_blogs_model.dart';
+
 class ApiServices {
   Future<http.Response> signUpWithApi(CreateUser user) async {
     print('Sign up with api body');
@@ -23,7 +25,6 @@ class ApiServices {
       Uri.parse(ApiUrls.baseUrl + ApiUrls.endPointLogin),
       body: jsonEncode(user.toMap()),
     );
-
     return loginResponse;
   }
 
@@ -35,7 +36,6 @@ class ApiServices {
       Uri.parse(ApiUrls.baseUrl + ApiUrls.endPointUpdate + id),
       body: jsonEncode(updated.toMap()),
     );
-
     return response;
   }
 
@@ -49,35 +49,33 @@ class ApiServices {
   }
 
   Future<http.Response> resetPasswordWithApi(
-      String id, otp, newpassword, confirmpassword) async {
+      String id, otp, newPassword, confirmPassword) async {
     http.Response response = await http.post(
         Uri.parse(ApiUrls.baseUrl + ApiUrls.endPointChangePassword),
         body: jsonEncode({
           "users_customers_id": id,
           "otp": otp,
-          "new_password": newpassword,
-          "confirm_password": confirmpassword
+          "new_password": newPassword,
+          "confirm_password": confirmPassword
         }));
     return response;
   }
 
   Future<http.Response> calculatePlan(
-      String years, initialInvestmet, permonthInvestment) async {
+      String years, initialInvestment, permonthInvestment) async {
     http.Response response =
         await http.post(Uri.parse(ApiUrls.baseUrl + ApiUrls.endPointCalculator),
             body: jsonEncode({
               "years": years,
-              "initial_investment": initialInvestmet,
+              "initial_investment": initialInvestment,
               "permonth_investment": permonthInvestment
             }));
     debugPrint('create Plan Body APi');
-
     return response;
   }
 
   Future<List<UpdatedSdgsList>> getAllSdgs() async {
-    http.Response response =
-        await http.get(Uri.parse(ApiUrls.baseUrl + ApiUrls.endPointGetAllSdgs));
+    http.Response response = await http.get(Uri.parse(ApiUrls.baseUrl + ApiUrls.endPointGetAllSdgs));
 
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
@@ -95,7 +93,7 @@ class ApiServices {
   Future<http.Response> getSocialLogin() async {
     http.Response response = await http
         .get(Uri.parse(ApiUrls.baseUrl + ApiUrls.endPointSocialLogin));
-
     return response;
   }
+
 }

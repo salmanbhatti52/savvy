@@ -7,14 +7,13 @@ import 'package:savvy/screens/features/reset_screen.dart';
 import 'package:savvy/screens/intro_page.dart';
 import 'package:savvy/screens/landing_page.dart';
 import 'package:savvy/screens/login_page.dart';
-import 'package:savvy/screens/post_page_view_screens/chosed_goals_screen.dart';
-import 'package:savvy/screens/post_page_view_screens/portfolio_screen.dart';
-import 'package:savvy/screens/post_page_view_screens/select_plan_screen.dart';
-import 'package:savvy/screens/post_page_view_screens/selected_screen.dart';
 import 'package:savvy/screens/signup_page.dart';
 import 'package:savvy/screens/splash_screen.dart';
-
 import 'controllers/screen_six_controller/selected_sds_list.dart';
+import 'screens/post_page_view_screens/chosed_goals_Screen.dart';
+import 'screens/post_page_view_screens/portfolio_screen.dart';
+import 'screens/post_page_view_screens/select_plan_screen.dart';
+import 'screens/post_page_view_screens/selected_screen.dart';
 
 void main() {
   Get.put(SdgsListController());

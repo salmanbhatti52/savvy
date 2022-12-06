@@ -4,15 +4,28 @@ import 'package:expandable_text/expandable_text.dart';
 import 'package:savvy/common/widgets/round_icon_button.dart';
 import 'package:savvy/utils/color_constants.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../../services/api_urls.dart';
+import 'package:flutter_html/flutter_html.dart';
+import 'package:html/dom.dart' as dom;
 
 class BlogDetail extends StatefulWidget {
-  const BlogDetail({super.key});
+ String?image, title, date, author, description;
+  BlogDetail({super.key, this.image, this.title, this.date, this.author, this.description});
 
   @override
   State<BlogDetail> createState() => _BlogDetailState();
 }
 
 class _BlogDetailState extends State<BlogDetail> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print("title1: ${widget.title}");
+    print("date1: ${widget.date}");
+    print("image1: ${widget.image}");
+  }
   String readbolog =
       '''The health of the ocean is spiraling downwards far more rapidly than we had thought. We are seeing greater change, happening faster, and the effects are more imminent than previously anticipated.The two main drivers of these changes are the degradation of the water quality induced by human activity and the loss of marine biodiversity due to overfishing. The ocean is absorbing much of the human-induced warming as well as unprecedented levels of carbon dioxide. Before the industrial era, the ocean was actually a net source of CO2. However, the increasing atmospheric CO2 concentration, driven by man-made emissions, is forcing the ocean to now absorb this gas.  While the ability of the ocean to capture and store carbon has helped to slow the accumulation of atmospheric CO2 – and, hence, the pace of global warming – it has come at a cost. Increasing CO2 in the ocean alters the chemistry of seawater – an effect known as ocean acidification – which has negative impacts on marine life. Ocean acidification can affect these fisheries by changing the food web. Increasing ocean acidity also impairs the ability of shellfish, corals, and small marine creatures at the foundation of the ocean food web from building skeletons or shells. This has an impact on the whole food chain up to apex predators such as sharks or orcas. In terms of overfishing, is it important to be aware of the following facts:
 
@@ -51,10 +64,11 @@ We  need to do more in order to preserve our oceans and meet the sustainable dev
                 child: SizedBox(
                   width: MediaQuery.of(context).size.width,
                   //clipBehavior: Clip.hardEdge,
-                  child: Image.asset(
-                    r'assets/images/Mask group_01.png',
-                    fit: BoxFit.fill,
-                  ),
+                  child: Image.network(ApiUrls.baseUrl+"${widget.image}", fit: BoxFit.fill,),
+                  // Image.asset(
+                  //   r'assets/images/Mask group_01.png',
+                  //   fit: BoxFit.fill,
+                  // ),
                 )),
             Flexible(flex: 2, child: _blogTitle()),
             Flexible(flex: 1, child: _blogWriterName()),
@@ -87,7 +101,7 @@ We  need to do more in order to preserve our oceans and meet the sustainable dev
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Text(
-        'What is ocean acidification and how we can we preserve our oceans?',
+        widget.title!,
         style: _blogTitleStyle(),
       ),
     );
@@ -97,7 +111,7 @@ We  need to do more in order to preserve our oceans and meet the sustainable dev
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Text(
-        'WRITTEN BY Jérémie Layani',
+        'WRITTEN BY ${widget.author}',
         textAlign: TextAlign.start,
         style: _blogWriterNameStyle(),
       ),
@@ -119,18 +133,20 @@ We  need to do more in order to preserve our oceans and meet the sustainable dev
   _readBlog() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: ExpandableText(
-        expandText: 'More',
-        readbolog,
-        maxLines: 20,
-        expandOnTextTap: true,
-        collapseText: 'less',
-        linkColor: Colors.black,
-        style: readbologStyle(),
-        onExpandedChanged: (value) {
-          _launchURL();
-        },
-      ),
+      child: Html(data:"<p>${widget.description} <p>"),
+      // ExpandableText(
+      //   expandText: 'More',
+      //   textAlign: TextAlign.left,
+      //   "${widget.description}",
+      //   maxLines: 20,
+      //   expandOnTextTap: true,
+      //   collapseText: 'less',
+      //   linkColor: Colors.black,
+      //   style: readbologStyle(),
+      //   onExpandedChanged: (value) {
+      //     _launchURL();
+      //   },
+      // ),
     );
   }
 
@@ -149,9 +165,9 @@ We  need to do more in order to preserve our oceans and meet the sustainable dev
   }
 
   _blogDate() {
-    return const Padding(
+    return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16),
-      child: Text('29 August 2022'),
+      child: Text("${widget.date}"),
     );
   }
 }
