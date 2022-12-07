@@ -61,7 +61,7 @@ class _PortFolioScreenState extends State<PortFolioScreen> {
     Map<String, double> chartMap = {};
     for (int i = 0; i < list.length; i++) {
       chartMap[i.toString()] = 100 / list.length;
-      colorList.add(Color(int.parse(list[i].colorCode)));
+      colorList.add(Color(int.parse(list[i].colorCode.toString())));
       // debugPrint(chartMap[i.toString()].toString());
       // debugPrint((100 / list.length).toString());
     }
@@ -239,7 +239,7 @@ class _PortFolioScreenState extends State<PortFolioScreen> {
           height: size.height * 0.20,
           width: size.width * 0.10,
           child: Image.network(
-            ApiUrls.baseUrl + list[index].image,
+            ApiUrls.baseUrl + list[index].image.toString(),
             fit: BoxFit.scaleDown,
           ),
         ),

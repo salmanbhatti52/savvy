@@ -32,7 +32,7 @@ class SdgsListController extends GetxController {
 
   void getColors() {
     for (int i = 0; i <= selectedSds.length; i++) {
-      sdgsColors.add(selectedSds[i].colorCode);
+      sdgsColors.add(selectedSds[i].colorCode.toString());
     }
   }
 }

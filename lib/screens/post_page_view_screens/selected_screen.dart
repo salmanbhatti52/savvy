@@ -78,7 +78,9 @@ class _SelectedScreenState extends State<SelectedScreen> {
     Map<String, double> chartMap = {};
     for (int i = 0; i < list.length; i++) {
       chartMap[i.toString()] = 100 / list.length;
-      colorList.add(Color(int.parse(list[i].colorCode)));
+      print("colorCode ${list[i].colorCode}");
+      // colorList.add(Color(int.parse(list[i].colorCode!)));
+      // colorList.add(Color(list[i].colorCode));
     }
     return chartMap;
   }
@@ -257,7 +259,7 @@ class _SelectedScreenState extends State<SelectedScreen> {
           height: size.height * 0.20,
           width: size.width * 0.10,
           child: Image.network(
-            ApiUrls.baseUrl + list[index].image,
+            ApiUrls.baseUrl + list[index].image.toString(),
             fit: BoxFit.scaleDown,
           ),
         ),

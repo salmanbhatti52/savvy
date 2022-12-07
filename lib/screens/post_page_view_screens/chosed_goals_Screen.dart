@@ -253,8 +253,8 @@ class _ChoosedGoalsScreenState extends State<ChoosedGoalsScreen> {
             }
           },
           title: "${list[index].systemSdgsId}. ${list[index].title}",
-          subtitle: list[index].description,
-          leading: Image.network(ApiUrls.baseUrl + list[index].image)),
+          subtitle: list[index].description == null? "no description": list[index].description.toString(),
+          leading: Image.network(ApiUrls.baseUrl + list[index].image!)),
     );
   }
 

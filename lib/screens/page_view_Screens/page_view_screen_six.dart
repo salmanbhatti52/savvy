@@ -129,9 +129,9 @@ class _PageViewScreenSixState extends State<PageViewScreenSix> {
             child: SizedBox(
               child: MyButton(
                   ontap: () {
+                    print("bucketLength: ${sdgListController.selectedSds.length}");
                     if (sdgListController.selectedSds.length >= 5) {
-                      Navigator.pushNamed(
-                          context, ChoosedGoalsScreen.screenName);
+                      Navigator.pushNamed(context, ChoosedGoalsScreen.screenName);
                     } else {
                       Fluttertoast.showToast(
                           gravity: ToastGravity.CENTER,

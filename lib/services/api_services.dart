@@ -81,7 +81,7 @@ class ApiServices {
       var data = jsonDecode(response.body);
       List<UpdatedSdgsList> list = [];
       for (int i = 0; i <= 16; i++) {
-        var item = UpdatedSdgsList.fromMap(data["data"][i]);
+        var item = UpdatedSdgsList.fromJson(data["data"][i]);
         list.add(item);
       }
       return list;
