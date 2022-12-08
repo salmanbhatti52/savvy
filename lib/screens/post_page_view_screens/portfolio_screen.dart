@@ -33,14 +33,14 @@ class _PortFolioScreenState extends State<PortFolioScreen> {
   late Size size;
   int selected = -1;
   // int itemIndex = -1;
-  int sepratorIndex = 0;
+  int separatorIndex = 0;
   final controller = Get.find<SdgsListController>();
 
   PortfolioUtils portfolioUtils = PortfolioUtils();
   List<String> leading = [];
   late List<UpdatedSdgsList> list;
   // List<Color> colorList = [];
-  Color sytemUiOverlayColor = Colors.white;
+  Color systemUiOverlayColor = Colors.white;
   Map<String, double> pieChartMap = {};
   List<Color> colorList = [
     const Color(0xFFDCD4F8),
@@ -61,7 +61,7 @@ class _PortFolioScreenState extends State<PortFolioScreen> {
     Map<String, double> chartMap = {};
     for (int i = 0; i < list.length; i++) {
       chartMap[i.toString()] = 100 / list.length;
-      colorList.add(Color(int.parse(list[i].colorCode.toString())));
+      // colorList.add(Color(int.parse(list[i].colorCode!)));
       // debugPrint(chartMap[i.toString()].toString());
       // debugPrint((100 / list.length).toString());
     }
@@ -77,11 +77,11 @@ class _PortFolioScreenState extends State<PortFolioScreen> {
       onEndDrawerChanged: (isOpened) {
         if (isOpened == true) {
           setState(() {
-            sytemUiOverlayColor = const Color(0xFFCBF6E8);
+            systemUiOverlayColor = const Color(0xFFCBF6E8);
           });
         } else {
           setState(() {
-            sytemUiOverlayColor = Colors.white;
+            systemUiOverlayColor = Colors.white;
           });
         }
       },
@@ -93,7 +93,7 @@ class _PortFolioScreenState extends State<PortFolioScreen> {
   AppBar _buildAppBar() {
     return AppBar(
       systemOverlayStyle: SystemUiOverlayStyle(
-        statusBarColor: sytemUiOverlayColor,
+        statusBarColor: systemUiOverlayColor,
         statusBarIconBrightness: Brightness.dark,
       ),
       elevation: 0,
@@ -148,12 +148,12 @@ class _PortFolioScreenState extends State<PortFolioScreen> {
                 );
               },
             )),
-        Flexible(flex: 1, child: acitionButton()),
+        Flexible(flex: 1, child: actionButton()),
       ],
     );
   }
 
-  Widget acitionButton() {
+  Widget actionButton() {
     return MyButton(
         ontap: () {
           Navigator.push(context, MaterialPageRoute(
@@ -168,13 +168,10 @@ class _PortFolioScreenState extends State<PortFolioScreen> {
         height: size.height * 0.07,
         width: size.width * 0.6,
         spreadRadius: size.height * 0.002,
-        child: Text(
-          '''RESELECT SDG'S''',
-          style: GoogleFonts.poppins(
-            color: Colors.white,
-            fontSize: size.height * 0.025,
-          ),
-        ));
+        child: Text('''RESELECT SDG'S''', style: GoogleFonts.poppins(
+          color: Colors.white, fontSize: size.height * 0.025,),
+        ),
+    );
   }
 
   Widget pieChart() {

@@ -165,7 +165,7 @@ class _ChoosedGoalsScreenState extends State<ChoosedGoalsScreen> {
   Widget _itemBuilder(BuildContext context, int index) {
     // DetailDialogs detailDialogs = DetailDialogs();
     return SizedBox(
-      height: size.height * 0.12,
+      height: size.height * 0.14,
       child: ChoosedRow(
           ontap: () {
             if (list[index].systemSdgsId == '1') {
@@ -266,11 +266,10 @@ class _ChoosedGoalsScreenState extends State<ChoosedGoalsScreen> {
   }
 }
 
-
-   // Flexible(
+// Flexible(
           //     flex: 1,
           //     child: ChoosedRow(
-          //         ontap: () {
+          //         onTap: () {
           //           showDialog(
           //             context: context,
           //             builder: (context) {
@@ -284,7 +283,7 @@ class _ChoosedGoalsScreenState extends State<ChoosedGoalsScreen> {
           // Flexible(
           //     flex: 1,
           //     child: ChoosedRow(
-          //         ontap: () {},
+          //         onTap: () {},
           //         title: '2. Zero Hunger',
           //         subtitle: 'Fund: UBS ETF Sustainable Development Bank Bond..',
           //         leading: Image.asset(r'assets/images/chosenpng2.png'))),

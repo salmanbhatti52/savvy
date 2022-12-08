@@ -166,12 +166,12 @@ class _SelectedScreenState extends State<SelectedScreen> {
                 );
               },
             )),
-        Flexible(flex: 1, child: acitionButton()),
+        Flexible(flex: 1, child: actionButton()),
       ],
     );
   }
 
-  Widget acitionButton() {
+  Widget actionButton() {
     return MyButton(
         ontap: () {
           Navigator.push(context, MaterialPageRoute(
